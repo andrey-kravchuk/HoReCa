@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bill")
-public class BillController {
+public class BillController extends ExceptionHandlerController {
 
   @Autowired
   private BillService billService;
