@@ -2,6 +2,7 @@ package cabare.service;
 
 import cabare.entity.model.Dish;
 import cabare.exception.DishNotFoundException;
+import cabare.exception.DishNotSpecifiedException;
 import cabare.repository.DishRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class DishService {
   private DishRepository dishRepository;
 
   public Dish findByid(Long dishId) {
+    if (dishId == null) {
+      throw new DishNotSpecifiedException();
+    }
     return dishRepository.findById(dishId).orElseThrow(() -> new DishNotFoundException());
   }
 }

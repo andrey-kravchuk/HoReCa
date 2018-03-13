@@ -2,6 +2,7 @@ package cabare.service;
 
 import cabare.entity.model.Employee;
 import cabare.exception.EmployeeNotFoundException;
+import cabare.exception.EmployeeNotSpecifiedException;
 import cabare.repository.EmployeeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class EmployeeService {
   private EmployeeRepository employeeRepository;
 
   public Employee getById(Long employeeId) {
+    if (employeeId == null) {
+      throw new EmployeeNotSpecifiedException();
+    }
     return employeeRepository.findById(employeeId)
         .orElseThrow(() -> new EmployeeNotFoundException());
   }
