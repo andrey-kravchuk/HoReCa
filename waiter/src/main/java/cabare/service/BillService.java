@@ -44,7 +44,7 @@ public class BillService {
     bill.setNumberOfPersons(billDto.getNumberOfPersons());
     bill.setTableNumber(billDto.getTableNumber());
     bill.setSaleType(billDto.getSaleType());
-    bill.setOrderItems(orderItems);
+    bill.addOrderItems(orderItems);
 
     bill.setEmployee(employee);
     bill.setOpenBillTime(currentTime);

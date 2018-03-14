@@ -8,6 +8,7 @@ import cabare.entity.domain.SaleType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,7 +31,7 @@ import javax.persistence.Table;
 public class Bill {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "open_bill_time", columnDefinition = "datetime")
@@ -82,6 +83,10 @@ public class Bill {
   public void addOrderItem(OrderItem orderItem) {
     this.orderItems.add(orderItem);
     orderItem.setBill(this);
+  }
+
+  public void addOrderItems(Collection<OrderItem> orderItems) {
+    orderItems.stream().forEach(oi -> this.addOrderItem(oi));
   }
 
   public void removeOrderItem(OrderItem orderItem) {
