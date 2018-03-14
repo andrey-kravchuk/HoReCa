@@ -11,5 +11,9 @@ CREATE TABLE bill (
   pay_status_id     INT              NOT NULL,
   money_paid        BIGINT           NULL,
   is_opened         BIT DEFAULT b'1' NOT NULL,
-  is_active_shift   BIT DEFAULT b'1' NOT NULL
+  is_active_shift   BIT DEFAULT b'1' NOT NULL,
+  CONSTRAINT fk_bill_discount
+  FOREIGN KEY (discount_id) REFERENCES discount (id),
+  CONSTRAINT fk_bill_employee
+  FOREIGN KEY (employee_id) REFERENCES employee (id)
 )
