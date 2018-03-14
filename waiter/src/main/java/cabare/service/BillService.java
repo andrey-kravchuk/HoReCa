@@ -1,5 +1,6 @@
 package cabare.service;
 
+import cabare.data.BillRepository;
 import cabare.dto.BillDto;
 import cabare.dto.OrderIn;
 import cabare.dto.OrderPrint;
@@ -9,7 +10,6 @@ import cabare.entity.model.Bill;
 import cabare.entity.model.Dish;
 import cabare.entity.model.Employee;
 import cabare.entity.model.OrderItem;
-import cabare.repository.BillRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

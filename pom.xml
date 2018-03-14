@@ -13,6 +13,7 @@
   <modules>
     <module>entities</module>
     <module>waiter</module>
+    <module>data</module>
   </modules>
 
 

@@ -2,7 +2,7 @@ package cabare.service;
 
 
 import cabare.entity.model.OrderCounter;
-import cabare.repository.OrderCounterRepository;
+import cabare.data.OrderCounterRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
