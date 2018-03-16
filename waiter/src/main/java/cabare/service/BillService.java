@@ -1,6 +1,7 @@
 package cabare.service;
 
 import static cabare.entity.domain.PayStatus.AWAIT;
+import static cabare.entity.domain.PayStatus.PAID;
 
 import cabare.data.BillRepository;
 import cabare.dto.BillDto;
@@ -134,5 +135,17 @@ public class BillService {
       billRepository.save(bill);
     }
     return new BillPrint(bill);
+  }
+
+  public void close(Long billId) {
+    Employee employeeFromSession = securityService.getEmployeeFromSession();
+    Bill bill = getBill(billId);
+    if (!bill.getEmployee().getId().equals(employeeFromSession.getId())) {
+      throw new DeniedException();
+    }
+    bill.setPayStatus(PAID);
+    bill.setOpened(false);
+    bill.setCloseBillTime(timeService.getCurrentTime());
+    billRepository.save(bill);
   }
 }

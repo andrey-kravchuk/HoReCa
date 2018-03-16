@@ -43,4 +43,11 @@ public class BillController extends ExceptionHandlerController {
       @RequestParam(name = "discount_id") Long discountId) {
     return billService.print(billId, discountId);
   }
+
+  @RequestMapping(value = "/close", method = RequestMethod.POST)
+  public void close(@RequestParam(name = "bill_id") Long billId,
+      @RequestParam Long employeeId) {
+    securityService.authorizeEmployee(employeeId);
+    billService.close(billId);
+  }
 }
