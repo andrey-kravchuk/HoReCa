@@ -10,6 +10,10 @@ import cabare.entity.model.Bill;
 import cabare.entity.model.Dish;
 import cabare.entity.model.Employee;
 import cabare.entity.model.OrderItem;
+import cabare.exception.BillAllreadyClosedException;
+import cabare.exception.BillNotFoundException;
+import cabare.exception.DeniedException;
+import cabare.exception.EmptyOrderListException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,10 +37,12 @@ public class BillService {
   private DishService dishService;
   @Autowired
   private OrderCounterService counterService;
+  @Autowired
+  private SecurityService securityService;
 
   @Transactional
-  public List<OrderPrint> openBill(BillDto billDto, Long employeeId) {
-    Employee employee = employeeService.getById(employeeId);
+  public List<OrderPrint> openBill(BillDto billDto) {
+    Employee employee = securityService.getEmployeeFromSession();
     List<OrderItem> orderItems = orderInsToOrderItems(billDto.getOrderIns());
     LocalDateTime currentTime = timeService.getCurrentTime();
 
@@ -71,5 +77,26 @@ public class BillService {
               return new OrderItem(dish, orderIn.getQuantity(), orderIn.getComments(), orderNumber);
             }
         ).collect(Collectors.toList());
+  }
+
+  @Transactional
+  public List<OrderPrint> addOrders(long billId, List<OrderIn> orderIns) {
+    if (orderIns.isEmpty()) {
+      throw new EmptyOrderListException();
+    }
+    Bill bill = billRepository.findById(billId).orElseThrow(() -> new BillNotFoundException());
+    if (!bill.isOpened()) {
+      throw new BillAllreadyClosedException();
+    }
+    if (!securityService.getEmployeeFromSession().getId().equals(bill.getEmployee().getId())) {
+      throw new DeniedException();
+    }
+    List<OrderItem> orderItems = orderInsToOrderItems(orderIns);
+    bill.addOrderItems(orderItems);
+    bill = billRepository.save(bill);
+
+    return bill.getOrderItems().stream()
+        .map(orderItem -> new OrderPrint(orderItem))
+        .collect(Collectors.toList());
   }
 }

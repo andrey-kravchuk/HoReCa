@@ -1,8 +1,10 @@
 package cabare.controller;
 
 import cabare.dto.BillDto;
+import cabare.dto.OrderIn;
 import cabare.dto.OrderPrint;
 import cabare.service.BillService;
+import cabare.service.SecurityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +21,19 @@ public class BillController extends ExceptionHandlerController {
 
   @Autowired
   private BillService billService;
+  @Autowired
+  private SecurityService securityService;
 
   @RequestMapping(value = "/open", method = RequestMethod.PUT)
   public List<OrderPrint> openBill(@RequestBody BillDto billDto, @RequestParam Long employeeId) {
-    return billService.openBill(billDto, employeeId);
+    securityService.authorizeEmployee(employeeId);
+    return billService.openBill(billDto);
+  }
+
+  @RequestMapping(value = "/add/orderitems", method = RequestMethod.PUT)
+  public List<OrderPrint> addOrder(@RequestParam Long billId, @RequestBody List<OrderIn> orderIns,
+      @RequestParam Long employeeId) {
+    securityService.authorizeEmployee(employeeId);
+    return billService.addOrders(billId, orderIns);
   }
 }
