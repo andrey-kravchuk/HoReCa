@@ -1,6 +1,7 @@
 package cabare.controller;
 
 import cabare.dto.BillDto;
+import cabare.dto.BillPrint;
 import cabare.dto.OrderIn;
 import cabare.dto.OrderPrint;
 import cabare.service.BillService;
@@ -35,5 +36,11 @@ public class BillController extends ExceptionHandlerController {
       @RequestParam Long employeeId) {
     securityService.authorizeEmployee(employeeId);
     return billService.addOrders(billId, orderIns);
+  }
+
+  @RequestMapping(value = "/print", method = RequestMethod.POST)
+  public BillPrint preCloseBill(@RequestParam(name = "bill_id") Long billId,
+      @RequestParam(name = "discount_id") Long discountId) {
+    return billService.print(billId, discountId);
   }
 }

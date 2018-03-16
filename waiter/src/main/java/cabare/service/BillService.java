@@ -1,12 +1,15 @@
 package cabare.service;
 
+import static cabare.entity.domain.PayStatus.AWAIT;
+
 import cabare.data.BillRepository;
 import cabare.dto.BillDto;
+import cabare.dto.BillPrint;
 import cabare.dto.OrderIn;
 import cabare.dto.OrderPrint;
 import cabare.entity.domain.Money;
-import cabare.entity.domain.PayStatus;
 import cabare.entity.model.Bill;
+import cabare.entity.model.Discount;
 import cabare.entity.model.Dish;
 import cabare.entity.model.Employee;
 import cabare.entity.model.OrderItem;
@@ -39,6 +42,8 @@ public class BillService {
   private OrderCounterService counterService;
   @Autowired
   private SecurityService securityService;
+  @Autowired
+  private DiscountService discountService;
 
   @Transactional
   public List<OrderPrint> openBill(BillDto billDto) {
@@ -57,7 +62,7 @@ public class BillService {
     bill.setOpened(true);
     bill.setActiveShift(true);
     bill.setMoneyPaid(Money.ZERO);
-    bill.setPayStatus(PayStatus.AWAIT);
+    bill.setPayStatus(AWAIT);
     bill = billRepository.save(bill);
 
     return bill.getOrderItems().stream()
@@ -84,7 +89,7 @@ public class BillService {
     if (orderIns.isEmpty()) {
       throw new EmptyOrderListException();
     }
-    Bill bill = billRepository.findById(billId).orElseThrow(() -> new BillNotFoundException());
+    Bill bill = getBill(billId);
     if (!bill.isOpened()) {
       throw new BillAllreadyClosedException();
     }
@@ -98,5 +103,36 @@ public class BillService {
     return bill.getOrderItems().stream()
         .map(orderItem -> new OrderPrint(orderItem))
         .collect(Collectors.toList());
+  }
+
+  private Bill getBill(long billId) {
+    return billRepository.findById(billId).orElseThrow(() -> new BillNotFoundException());
+  }
+
+  @Transactional
+  public BillPrint print(Long billId, Long discountId) {
+    Bill bill = getBill(billId);
+    if (bill.isOpened()) {
+      if (discountId != null) {
+        Discount discount = discountService.findById(discountId);
+        if (discount.isActivated()) {
+          bill.setDiscount(discount);
+          Money totalPrice = bill.getTotalPrice();
+          int discountSize = bill.getDiscount().getSize();
+          Money discountedSum = totalPrice.multiply(discountSize / 100f);
+          Money toPaid = totalPrice.subtract(discountedSum);
+          bill.setMoneyDiscounted(discountedSum);
+          bill.setMoneyPaid(toPaid);
+        }
+      } else {
+        bill.setDiscount(null);
+        Money totalPrice = bill.getTotalPrice();
+        bill.setMoneyPaid(totalPrice);
+        bill.setMoneyDiscounted(Money.ZERO);
+      }
+      bill.setPayStatus(AWAIT);
+      billRepository.save(bill);
+    }
+    return new BillPrint(bill);
   }
 }
