@@ -148,4 +148,12 @@ public class BillService {
     bill.setCloseBillTime(timeService.getCurrentTime());
     billRepository.save(bill);
   }
+
+  public List<BillPrint> getOpened() {
+    Employee employee = securityService.getEmployeeFromSession();
+    return billRepository.findOpenedByEmployee(employee)
+        .stream()
+        .map(item -> new BillPrint(item))
+        .collect(Collectors.toList());
+  }
 }

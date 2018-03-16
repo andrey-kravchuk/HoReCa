@@ -52,4 +52,10 @@ public class BillController extends ExceptionHandlerController {
     securityService.authorizeEmployee(employeeId);
     billService.close(billId);
   }
+
+  @RequestMapping(value = "/opened", method = RequestMethod.POST)
+  public List<BillPrint> getOpened(@RequestParam(name = "employee_id") Long employeeId) {
+    securityService.authorizeEmployee(employeeId);
+    return billService.getOpened();
+  }
 }
