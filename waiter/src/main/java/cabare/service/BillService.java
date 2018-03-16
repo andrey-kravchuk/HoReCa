@@ -9,6 +9,7 @@ import cabare.dto.BillPrint;
 import cabare.dto.OrderIn;
 import cabare.dto.OrderPrint;
 import cabare.entity.domain.Money;
+import cabare.entity.domain.PayType;
 import cabare.entity.model.Bill;
 import cabare.entity.model.Discount;
 import cabare.entity.model.Dish;
@@ -137,12 +138,13 @@ public class BillService {
     return new BillPrint(bill);
   }
 
-  public void close(Long billId) {
+  public void close(Long billId, PayType payType) {
     Employee employeeFromSession = securityService.getEmployeeFromSession();
     Bill bill = getBill(billId);
     if (!bill.getEmployee().getId().equals(employeeFromSession.getId())) {
       throw new DeniedException();
     }
+    bill.setPayType(payType);
     bill.setPayStatus(PAID);
     bill.setOpened(false);
     bill.setCloseBillTime(timeService.getCurrentTime());

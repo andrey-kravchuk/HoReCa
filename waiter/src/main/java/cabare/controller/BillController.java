@@ -4,6 +4,7 @@ import cabare.dto.BillDto;
 import cabare.dto.BillPrint;
 import cabare.dto.OrderIn;
 import cabare.dto.OrderPrint;
+import cabare.entity.domain.PayType;
 import cabare.service.BillService;
 import cabare.service.SecurityService;
 
@@ -48,9 +49,10 @@ public class BillController extends ExceptionHandlerController {
 
   @RequestMapping(value = "/close", method = RequestMethod.POST)
   public void close(@RequestParam(name = "bill_id") Long billId
+      , @RequestParam(name = "pay_type") PayType payType
       , @RequestParam(name = "employee_id") Long employeeId) {
     securityService.authorizeEmployee(employeeId);
-    billService.close(billId);
+    billService.close(billId, payType);
   }
 
   @RequestMapping(value = "/opened", method = RequestMethod.POST)
