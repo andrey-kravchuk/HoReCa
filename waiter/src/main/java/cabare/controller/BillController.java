@@ -26,27 +26,29 @@ public class BillController extends ExceptionHandlerController {
   private SecurityService securityService;
 
   @RequestMapping(value = "/open", method = RequestMethod.PUT)
-  public List<OrderPrint> openBill(@RequestBody BillDto billDto, @RequestParam Long employeeId) {
+  public List<OrderPrint> openBill(@RequestBody BillDto billDto
+      , @RequestParam(name = "employee_id") Long employeeId) {
     securityService.authorizeEmployee(employeeId);
     return billService.openBill(billDto);
   }
 
   @RequestMapping(value = "/add/orderitems", method = RequestMethod.PUT)
-  public List<OrderPrint> addOrder(@RequestParam Long billId, @RequestBody List<OrderIn> orderIns,
-      @RequestParam Long employeeId) {
+  public List<OrderPrint> addOrder(@RequestParam Long billId
+      , @RequestBody List<OrderIn> orderIns
+      , @RequestParam(name = "employee_id") Long employeeId) {
     securityService.authorizeEmployee(employeeId);
     return billService.addOrders(billId, orderIns);
   }
 
   @RequestMapping(value = "/print", method = RequestMethod.POST)
-  public BillPrint preCloseBill(@RequestParam(name = "bill_id") Long billId,
-      @RequestParam(name = "discount_id") Long discountId) {
+  public BillPrint preCloseBill(@RequestParam(name = "bill_id") Long billId
+      , @RequestParam(name = "discount_id") Long discountId) {
     return billService.print(billId, discountId);
   }
 
   @RequestMapping(value = "/close", method = RequestMethod.POST)
-  public void close(@RequestParam(name = "bill_id") Long billId,
-      @RequestParam Long employeeId) {
+  public void close(@RequestParam(name = "bill_id") Long billId
+      , @RequestParam(name = "employee_id") Long employeeId) {
     securityService.authorizeEmployee(employeeId);
     billService.close(billId);
   }
