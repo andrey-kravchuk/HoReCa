@@ -30,7 +30,7 @@ public class Discount {
   private Integer size;
 
   @Column(name = "activated")
-  private Boolean activated;
+  private Boolean activated = true;
 
   public Long getId() {
     return id;
@@ -64,7 +64,7 @@ public class Discount {
     this.size = size;
   }
 
-  public Boolean getActivated() {
+  public Boolean isActivated() {
     return activated;
   }
 

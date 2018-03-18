@@ -6,6 +6,7 @@ CREATE TABLE bill (
   table_number      INT              NULL,
   number_of_persons INT              NULL,
   discount_id       BIGINT           NULL,
+  discounted_sum    BIGINT           NULL,
   sale_type_id      INT              NOT NULL,
   pay_type_id       INT              NULL,
   pay_status_id     INT              NOT NULL,
