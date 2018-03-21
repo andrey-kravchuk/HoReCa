@@ -17,4 +17,7 @@ public interface BillRepository extends CrudRepository<Bill, Long> {
 
   @Query("select b from Bill b where b.opened = true and b.employee = ?1")
   List<Bill> findOpenedByEmployee(Employee employee);
+
+  @Query("select b from Bill b where b.activeShift = true and b.employee = ?1")
+  List<Bill> findCurrentShiftBillsByEmployee(Employee employee);
 }
