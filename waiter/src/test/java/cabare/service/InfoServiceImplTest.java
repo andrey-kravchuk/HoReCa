@@ -4,6 +4,7 @@ import static cabare.entity.domain.PayType.CASH;
 import static cabare.entity.domain.PayType.CASHLESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import cabare.dto.CurrentInfo;
@@ -29,7 +30,8 @@ public class InfoServiceImplTest {
   private InfoServiceImpl infoService;
   @Mock
   private BillService billService;
-  private Employee employee;
+  @Mock
+  private EmployeeService employeeService;
 
   @Before
   public void init() {
@@ -42,13 +44,14 @@ public class InfoServiceImplTest {
     );
 
     when(billService.getCurrentShiftBills(any())).thenReturn(bills);
+    when(employeeService.getById(any())).thenReturn(new Employee());
   }
 
   @Test
   public void getCurrentInfo() throws Exception {
-    CurrentInfo currentInfo = infoService.getCurrentInfo(employee);
+    CurrentInfo currentInfo = infoService.getCurrentInfo(1L);
     assertThat(currentInfo.getOpenedBillCount()).isEqualTo(1);
-    assertThat(currentInfo.getOpenedBillSum()).isEqualTo("50.00");
+    assertThat(currentInfo.getOpenedBillSum()).isEqualTo("100.00");
 
     assertThat(currentInfo.getClosedBillCount()).isEqualTo(4);
     assertThat(currentInfo.getClosedCashlessSum()).isEqualTo("110.00");
@@ -58,7 +61,8 @@ public class InfoServiceImplTest {
   }
 
   private Bill buildBill(Boolean isOpened, Money moneyPaid, PayType payType) {
-    Bill bill = new Bill();
+    Bill bill = spy(new Bill());
+    when(bill.getTotalPrice()).thenReturn(new Money("50.00"));
     bill.setOpened(isOpened);
     bill.setMoneyPaid(moneyPaid);
     bill.setPayType(payType);

@@ -16,9 +16,12 @@ class InfoServiceImpl implements InfoService {
 
   @Autowired
   private BillService billService;
+  @Autowired
+  private EmployeeService employeeService;
 
   @Override
-  public CurrentInfo getCurrentInfo(Employee employee) {
+  public CurrentInfo getCurrentInfo(Long employeeId) {
+    Employee employee = employeeService.getById(employeeId);
     List<Bill> bills = billService.getCurrentShiftBills(employee);
 
     int openedBillCount = 0;
@@ -31,6 +34,7 @@ class InfoServiceImpl implements InfoService {
       Money moneyPaid = bill.getMoneyPaid();
       if (bill.isOpened()) {
         openedBillCount++;
+        moneyPaid = moneyPaid.add(bill.getTotalPrice());
         openedBillSum = openedBillSum.add(moneyPaid);
       } else {
         closedBillCount++;
