@@ -10,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DishServiceImpl implements DishService {
 
   @Autowired
   private DishRepository dishRepository;
+  @Autowired
+  private TimeService timeService;
 
   @Override
   public Dish findByid(Long dishId) {
@@ -42,6 +45,9 @@ public class DishServiceImpl implements DishService {
 
   @Override
   public List<DishDto> getStopList() {
-    return null;
+    int dayOfYear = timeService.getCurrentDate().getDayOfYear();
+    return dishRepository.getStopList(dayOfYear).stream()
+        .map(dish -> new DishDto(dish))
+        .collect(Collectors.toList());
   }
 }
