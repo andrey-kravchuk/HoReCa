@@ -9,7 +9,7 @@ CREATE TABLE dish
   price            BIGINT            NULL,
   is_archived      BIT DEFAULT b'0'  NOT NULL,
   dish_category_id BIGINT            NOT NULL,
+  quantity         INT DEFAULT '-1'  NOT NULL,
   CONSTRAINT fk_dish_dishcategory
   FOREIGN KEY (dish_category_id) REFERENCES dish_category (id)
-
 )

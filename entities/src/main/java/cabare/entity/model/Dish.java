@@ -46,7 +46,7 @@ public class Dish {
   private Boolean isArchived = false;
 
   @Column(name = "quantity")
-  public Integer quantity;
+  public Integer quantity = -1;
 
   @ManyToOne
   @JoinColumn(name = "dish_category_id", nullable = false)
