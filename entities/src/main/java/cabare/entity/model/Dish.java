@@ -45,6 +45,9 @@ public class Dish {
   @Column(name = "is_archived", columnDefinition = "BIT(1) DEFAULT 0")
   private Boolean isArchived = false;
 
+  @Column(name = "quantity")
+  public Integer quantity;
+
   @ManyToOne
   @JoinColumn(name = "dish_category_id", nullable = false)
   private DishCategory dishCategory;
@@ -124,6 +127,14 @@ public class Dish {
 
   public void setArchived(Boolean archived) {
     isArchived = archived;
+  }
+
+  public Integer getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
   }
 
   @Override
