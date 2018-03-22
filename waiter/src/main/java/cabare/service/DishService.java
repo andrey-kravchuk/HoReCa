@@ -1,23 +1,17 @@
 package cabare.service;
 
+import cabare.dto.DishDto;
 import cabare.entity.model.Dish;
-import cabare.exception.DishNotFoundException;
-import cabare.exception.DishNotSpecifiedException;
-import cabare.data.DishRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class DishService {
+public interface DishService {
 
-  @Autowired
-  private DishRepository dishRepository;
+  Dish findByid(Long dishId);
 
-  public Dish findByid(Long dishId) {
-    if (dishId == null) {
-      throw new DishNotSpecifiedException();
-    }
-    return dishRepository.findById(dishId).orElseThrow(() -> new DishNotFoundException());
-  }
+  void addDish(DishDto dishDto);
+
+  void updateDish(DishDto dishDto);
+
+  List<DishDto> getDishByCategory(Long dishCategoryId);
 }
