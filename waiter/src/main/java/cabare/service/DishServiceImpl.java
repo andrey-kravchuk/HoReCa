@@ -17,6 +17,7 @@ public class DishServiceImpl implements DishService {
   @Autowired
   private DishRepository dishRepository;
 
+  @Override
   public Dish findByid(Long dishId) {
     if (dishId == null) {
       throw new DishNotSpecifiedException();
@@ -36,6 +37,11 @@ public class DishServiceImpl implements DishService {
 
   @Override
   public List<DishDto> getDishByCategory(Long dishCategoryId) {
+    return null;
+  }
+
+  @Override
+  public List<DishDto> getStopList() {
     return null;
   }
 }
