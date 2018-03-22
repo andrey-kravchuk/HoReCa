@@ -5,5 +5,5 @@ import cabare.entity.model.Employee;
 
 public interface InfoService {
 
-  CurrentInfo getCurrentInfo(Employee employee);
+  CurrentInfo getCurrentInfo(Long employeeId);
 }
