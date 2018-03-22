@@ -33,4 +33,9 @@ public class DishController {
   public List<DishDto> getDishes(@RequestParam(name = "dish_category_id") Long dishCategoryId) {
     return dishService.getDishByCategory(dishCategoryId);
   }
+
+  @RequestMapping(value = "/stoplist")
+  public List<DishDto> getStopList() {
+    return dishService.getStopList();
+  }
 }

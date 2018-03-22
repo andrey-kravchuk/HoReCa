@@ -14,4 +14,6 @@ public interface DishService {
   void updateDish(DishDto dishDto);
 
   List<DishDto> getDishByCategory(Long dishCategoryId);
+
+  List<DishDto> getStopList();
 }
