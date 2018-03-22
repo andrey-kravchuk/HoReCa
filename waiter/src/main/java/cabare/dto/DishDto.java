@@ -1,5 +1,7 @@
 package cabare.dto;
 
+import cabare.entity.model.Dish;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DishDto {
@@ -30,6 +32,21 @@ public class DishDto {
 
   @JsonProperty("quantity")
   public Integer quantity;
+
+  public DishDto() {
+  }
+
+  public DishDto(Dish dish) {
+    this.id = dish.getId();
+    this.name = dish.getName();
+    this.photo = dish.getPhoto();
+    this.dishOut = dish.getDishOut();
+    this.price = dish.getPrice().toString();
+    this.categoryId = dish.getDishCategory().getId();
+    this.startDay = dish.getStartDay();
+    this.endDay = dish.getEndDay();
+    this.quantity = dish.getQuantity();
+  }
 
   public Long getId() {
     return id;
