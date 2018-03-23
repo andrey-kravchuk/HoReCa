@@ -158,4 +158,8 @@ public class BillService {
         .map(item -> new BillPrint(item))
         .collect(Collectors.toList());
   }
+
+  List<Bill> getCurrentShiftBills(Employee employee) {
+    return billRepository.findCurrentShiftBillsByEmployee(employee);
+  }
 }
