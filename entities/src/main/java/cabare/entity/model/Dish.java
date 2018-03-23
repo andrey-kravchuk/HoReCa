@@ -40,7 +40,7 @@ public class Dish {
 
   @Column(name = "price")
   @Convert(converter = MoneyConverter.class)
-  private Money price;
+  private Money price = Money.ZERO;
 
   @Column(name = "is_archived", columnDefinition = "BIT(1) DEFAULT 0")
   private Boolean isArchived = false;
