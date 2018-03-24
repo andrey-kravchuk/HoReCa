@@ -84,6 +84,10 @@ public class Money implements Serializable {
     return valueOf(((long) (this.rawValue * value)));
   }
 
+  public Money divide(long value) {
+    return valueOf(this.rawValue / value);
+  }
+
   public boolean isMoreThan(Money money) {
     return rawValue > money.rawValue;
   }
@@ -119,6 +123,6 @@ public class Money implements Serializable {
 
   @Override
   public String toString() {
-    return String.format("%d.%02d", rawValue / 100, rawValue % 100);
+    return getValue();
   }
 }

@@ -70,11 +70,15 @@ public class Bill {
   @Column(name = "money_paid")
   private Money moneyPaid = Money.ZERO;
 
+  @Convert(converter = MoneyConverter.class)
+  @Column(name = "discounted_sum")
+  private Money moneyDiscounted = Money.ZERO;
+
   @Column(name = "is_opened", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
-  private Boolean opened = true;
+  private boolean opened = true;
 
   @Column(name = "is_active_shift", columnDefinition = "BIT(1) DEFAULT 1")
-  private Boolean activeShift = true;
+  private boolean activeShift = true;
 
   @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
   private List<OrderItem> orderItems = new ArrayList<>();
@@ -190,30 +194,36 @@ public class Bill {
     this.moneyPaid = moneyPaid;
   }
 
-  public Boolean getOpened() {
+  public Money getMoneyDiscounted() {
+    return moneyDiscounted;
+  }
+
+  public void setMoneyDiscounted(Money moneyDiscounted) {
+    this.moneyDiscounted = moneyDiscounted;
+  }
+
+  public boolean isOpened() {
     return opened;
   }
 
-  public void setOpened(Boolean opened) {
+  public void setOpened(boolean opened) {
     this.opened = opened;
   }
 
-  public Boolean getActiveShift() {
+  public boolean isActiveShift() {
     return activeShift;
   }
 
-  public void setActiveShift(Boolean activeShift) {
+  public void setActiveShift(boolean activeShift) {
     this.activeShift = activeShift;
   }
 
-  public Money getBillPrice() {
+  public Money getTotalPrice() {
     Money cost = Money.ZERO;
     for (OrderItem orderItem : this.getOrderItems()) {
       cost = cost.add(orderItem.getTotalPrice());
     }
-    return discount != null
-        ? cost.multiply(discount.getSize() / 100f)
-        : cost;
+    return cost;
   }
 
   public void addPayment(Money payment) {

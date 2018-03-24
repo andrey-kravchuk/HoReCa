@@ -40,10 +40,13 @@ public class Dish {
 
   @Column(name = "price")
   @Convert(converter = MoneyConverter.class)
-  private Money price;
+  private Money price = Money.ZERO;
 
   @Column(name = "is_archived", columnDefinition = "BIT(1) DEFAULT 0")
   private Boolean isArchived = false;
+
+  @Column(name = "quantity")
+  public Integer quantity = -1;
 
   @ManyToOne
   @JoinColumn(name = "dish_category_id", nullable = false)
@@ -124,6 +127,14 @@ public class Dish {
 
   public void setArchived(Boolean archived) {
     isArchived = archived;
+  }
+
+  public Integer getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
   }
 
   @Override
