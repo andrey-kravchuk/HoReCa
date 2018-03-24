@@ -79,5 +79,19 @@ public class DishRepositoryTest {
         result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
         assertEquals(result.getContent(), testList);
     }
+
+    @Test
+    //several dishes, several pages
+    public void testFindDishesByDishCategoryByPages() {
+        testList.add(dish);
+        testList.add(dish1);
+        pageable = new PageRequest(0, 1);
+        dishRepository.save(dish1);
+        result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+        assertEquals(result.getContent().get(0), testList.get(0));
+        pageable = new PageRequest(1, 1);
+        result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+        assertEquals(result.getContent().get(0), testList.get(1));
+    }
 }
 
