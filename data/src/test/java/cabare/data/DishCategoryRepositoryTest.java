@@ -50,6 +50,7 @@ public class DishCategoryRepositoryTest {
     @Test
     public void testDishCategoryGetAll() {
         List<DishCategory> dishCategoryList = dishCategoryRepository.findAll();
+        assertThat(dishCategoryList.isEmpty()).isFalse();
         assertThat(dishCategoryList.get(0).getName()).isEqualTo(testNameDishCategory);
     }
 
