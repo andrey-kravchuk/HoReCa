@@ -25,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -177,5 +178,13 @@ public class BillService {
 
   List<Bill> getCurrentShiftBills(Employee employee) {
     return billRepository.findCurrentShiftBillsByEmployee(employee);
+  }
+
+  public List<Bill> findBillsByPeriodAndEmployee(LocalDate startDate, LocalDate endDate,
+      Employee employee) {
+    return billRepository.findBillsByPeriodAndEmployee(
+        startDate.atStartOfDay()
+        , endDate.atStartOfDay()
+        , employee);
   }
 }
