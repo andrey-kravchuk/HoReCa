@@ -7,7 +7,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import cabare.dto.CurrentInfo;
+import cabare.dto.WaiterStatistic;
 import cabare.entity.domain.Money;
 import cabare.entity.domain.PayType;
 import cabare.entity.model.Bill;
@@ -49,15 +49,19 @@ public class InfoServiceImplTest {
 
   @Test
   public void getCurrentInfo() throws Exception {
-    CurrentInfo currentInfo = infoService.getCurrentInfo(1L);
-    assertThat(currentInfo.getOpenedBillCount()).isEqualTo(1);
-    assertThat(currentInfo.getOpenedBillSum()).isEqualTo("100.00");
+    WaiterStatistic waiterStatistic = infoService.getCurrentInfo(1L);
+    assertThat(waiterStatistic.getOpenedBillCount()).isEqualTo(1);
+    assertThat(waiterStatistic.getOpenedBillSum()).isEqualTo("50.00");
 
-    assertThat(currentInfo.getClosedBillCount()).isEqualTo(4);
-    assertThat(currentInfo.getClosedCashlessSum()).isEqualTo("110.00");
-    assertThat(currentInfo.getClosedCashSum()).isEqualTo("70.00");
-    assertThat(currentInfo.getClosedTotalSum()).isEqualTo("180.00");
-    assertThat(currentInfo.getAverageCheckSum()).isEqualTo("45.00");
+    assertThat(waiterStatistic.getClosedBillCount()).isEqualTo(4);
+    assertThat(waiterStatistic.getClosedCashlessSum()).isEqualTo("110.00");
+    assertThat(waiterStatistic.getClosedCashSum()).isEqualTo("70.00");
+    assertThat(waiterStatistic.getClosedTotalSum()).isEqualTo("180.00");
+    assertThat(waiterStatistic.getAverageCheckSum()).isEqualTo("45.00");
+    assertThat(waiterStatistic.getMinCheck()).isEqualTo("10.00");
+    assertThat(waiterStatistic.getMaxCheck()).isEqualTo("100.00");
+    assertThat(waiterStatistic.getVisitorsServed()).isEqualTo(4);
+    assertThat(waiterStatistic.getServedTables()).isEqualTo(1);
   }
 
   private Bill buildBill(Boolean isOpened, Money moneyPaid, PayType payType) {
@@ -66,6 +70,7 @@ public class InfoServiceImplTest {
     bill.setOpened(isOpened);
     bill.setMoneyPaid(moneyPaid);
     bill.setPayType(payType);
+    bill.setNumberOfPersons(1);
     return bill;
   }
 
