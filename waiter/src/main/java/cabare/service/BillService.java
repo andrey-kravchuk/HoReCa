@@ -19,6 +19,7 @@ import cabare.exception.BillAllreadyClosedException;
 import cabare.exception.BillNotFoundException;
 import cabare.exception.DeniedException;
 import cabare.exception.EmptyOrderListException;
+import cabare.exception.NoCheckPrintException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -160,6 +161,9 @@ public class BillService {
     Bill bill = getBill(billId);
     if (!bill.getEmployee().getId().equals(employeeFromSession.getId())) {
       throw new DeniedException();
+    }
+    if (bill.getMoneyPaid() == Money.ZERO) {
+      throw new NoCheckPrintException();
     }
     bill.setPayType(payType);
     bill.setPayStatus(PAID);
