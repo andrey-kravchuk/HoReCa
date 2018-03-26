@@ -21,12 +21,14 @@ import cabare.exception.DeniedException;
 import cabare.exception.EmptyOrderListException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,6 +68,20 @@ public class BillService {
     bill.setMoneyPaid(Money.ZERO);
     bill.setPayStatus(AWAIT);
     bill = billRepository.save(bill);
+
+    Optional<Bill> first = billRepository
+        .getBillByOpenedTable(employee, billDto.getTableNumber(), new PageRequest(0, 2))
+        .getContent()
+        .stream()
+        .filter(b -> b.getServedTable() != null)
+        .findFirst();
+    if (first.isPresent()) {
+      Bill billSliced = first.get();
+      bill.setServedTable(billSliced.getServedTable());
+    } else {
+      bill.setServedTable(bill.getId());
+    }
+    billRepository.save(bill);
 
     return bill.getOrderItems().stream()
         .map(orderItem -> new OrderPrint(orderItem))
