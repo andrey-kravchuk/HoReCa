@@ -83,7 +83,7 @@ public class Bill {
   @Column(name = "is_active_shift", columnDefinition = "BIT(1) DEFAULT 1")
   private boolean activeShift = true;
 
-  @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<OrderItem> orderItems = new ArrayList<>();
 
 
