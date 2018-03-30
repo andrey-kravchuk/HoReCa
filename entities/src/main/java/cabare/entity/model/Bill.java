@@ -34,6 +34,9 @@ public class Bill {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "served_table")
+  private Long servedTable;
+
   @Column(name = "open_bill_time", columnDefinition = "datetime")
   private LocalDateTime openBillTime;
 
@@ -104,6 +107,14 @@ public class Bill {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getServedTable() {
+    return servedTable;
+  }
+
+  public void setServedTable(Long servedTable) {
+    this.servedTable = servedTable;
   }
 
   public LocalDateTime getOpenBillTime() {
