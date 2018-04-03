@@ -7,7 +7,6 @@ import cabare.service.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +19,7 @@ public class ReportController {
   @Autowired
   private InfoService infoService;
 
-  @RequestMapping(value = "/quick_report", method = RequestMethod.POST)
+  @RequestMapping(value = "/quick_report")
   public WaiterStatistic quickReport(@RequestParam(name = "employee_id") Long employeeId) {
     return infoService.getCurrentInfo(employeeId);
   }

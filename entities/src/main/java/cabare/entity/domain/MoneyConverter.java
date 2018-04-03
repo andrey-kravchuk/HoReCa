@@ -13,6 +13,6 @@ public class MoneyConverter implements AttributeConverter<Money, Long> {
 
   @Override
   public Money convertToEntityAttribute(Long dbData) {
-    return dbData.equals(0L) ? Money.ZERO : Money.valueOf(dbData);
+    return dbData == null || dbData.equals(0L) ? Money.ZERO : Money.valueOf(dbData);
   }
 }
