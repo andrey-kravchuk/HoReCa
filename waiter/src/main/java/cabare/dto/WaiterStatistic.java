@@ -4,7 +4,7 @@ import cabare.entity.domain.Money;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CurrentInfo {
+public class WaiterStatistic {
 
   @JsonProperty(value = "opened_bill_count")
   private Integer openedBillCount;
@@ -22,6 +22,15 @@ public class CurrentInfo {
 
   @JsonProperty(value = "average_check_sum")
   private String averageCheckSum;
+  @JsonProperty(value = "min_check")
+  private String minCheck;
+  @JsonProperty(value = "max_check")
+  private String maxCheck;
+
+  @JsonProperty(value = "served_tables")
+  private Integer servedTables;
+  @JsonProperty(value = "visitors_served")
+  private Integer visitorsServed;
 
 
   public void setOpenedBillCount(Integer openedBillCount) {
@@ -78,5 +87,37 @@ public class CurrentInfo {
 
   public String getAverageCheckSum() {
     return averageCheckSum;
+  }
+
+  public String getMinCheck() {
+    return minCheck;
+  }
+
+  public void setMinCheck(Money minCheck) {
+    this.minCheck = minCheck.toString();
+  }
+
+  public String getMaxCheck() {
+    return maxCheck;
+  }
+
+  public void setMaxCheck(Money maxCheck) {
+    this.maxCheck = maxCheck.toString();
+  }
+
+  public Integer getServedTables() {
+    return servedTables;
+  }
+
+  public void setServedTables(Integer servedTables) {
+    this.servedTables = servedTables;
+  }
+
+  public Integer getVisitorsServed() {
+    return visitorsServed;
+  }
+
+  public void setVisitorsServed(Integer visitorsServed) {
+    this.visitorsServed = visitorsServed;
   }
 }

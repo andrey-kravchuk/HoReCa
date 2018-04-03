@@ -29,7 +29,7 @@ public class DishController {
     dishService.updateDish(dishDto);
   }
 
-  @RequestMapping(value = "by_category")
+  @RequestMapping(value = "/by_category")
   public List<DishDto> getDishes(@RequestParam(name = "dish_category_id") Long dishCategoryId) {
     return dishService.getDishByCategory(dishCategoryId);
   }

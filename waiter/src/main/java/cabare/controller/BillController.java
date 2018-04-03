@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bill")
-public class BillController extends ExceptionHandlerController {
+public class BillController {
 
   @Autowired
   private BillService billService;
@@ -33,8 +33,8 @@ public class BillController extends ExceptionHandlerController {
     return billService.openBill(billDto);
   }
 
-  @RequestMapping(value = "/add/orderitems", method = RequestMethod.PUT)
-  public List<OrderPrint> addOrder(@RequestParam Long billId
+  @RequestMapping(value = "/add/orderitems", method = RequestMethod.POST)
+  public List<OrderPrint> addOrder(@RequestParam(name = "bill_id") Long billId
       , @RequestBody List<OrderIn> orderIns
       , @RequestParam(name = "employee_id") Long employeeId) {
     securityService.authorizeEmployee(employeeId);

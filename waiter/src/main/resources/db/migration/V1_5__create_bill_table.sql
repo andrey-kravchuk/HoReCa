@@ -1,5 +1,6 @@
 CREATE TABLE bill (
   id                BIGINT PRIMARY KEY AUTO_INCREMENT,
+  served_table      BIGINT,
   open_bill_time    DATETIME         NOT NULL,
   close_bill_time   DATETIME         NULL,
   employee_id       BIGINT           NOT NULL,

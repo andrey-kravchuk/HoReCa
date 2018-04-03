@@ -28,8 +28,8 @@ public class BillPrint {
   @JsonProperty("discount_size")
   private int discountSize;
 
-  @JsonProperty("bill_number")
-  private String billNumber;
+  @JsonProperty("bill_id")
+  private String billId;
 
   @JsonProperty(value = "open_bill_date")
   @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
@@ -60,7 +60,7 @@ public class BillPrint {
     if (bill.getDiscount() != null) {
       this.discountSize = bill.getDiscount().getSize();
     }
-    this.billNumber = bill.getId().toString();
+    this.billId = bill.getId().toString();
     this.closeBillDate = bill.getCloseBillTime();
     this.openBillDate = bill.getOpenBillTime();
     this.employeeName = bill.getEmployee().getName();
@@ -87,8 +87,8 @@ public class BillPrint {
     this.discountSize = discountSize;
   }
 
-  public void setBillNumber(String billNumber) {
-    this.billNumber = billNumber;
+  public void setBillId(String billId) {
+    this.billId = billId;
   }
 
   public void setOpenBillDate(LocalDateTime openBillDate) {
