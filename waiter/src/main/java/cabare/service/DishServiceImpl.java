@@ -1,6 +1,5 @@
 package cabare.service;
 
-import cabare.data.DishCategoryRepository;
 import cabare.data.DishRepository;
 import cabare.dto.DishDto;
 import cabare.entity.domain.Money;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +24,7 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private TimeService timeService;
     @Autowired
-    private DishCategoryRepository dishCategoryServices;
+    private DishCategoryServiceImpl dishCategoryServices;
     private int page;
     private int size;
 
@@ -39,7 +37,6 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-
     public void addDish(DishDto dishDto) {
         Dish dish = new Dish();
         dish.setName(dishDto.getName());
@@ -49,8 +46,7 @@ public class DishServiceImpl implements DishService {
         dish.setEndDay(dishDto.getEndDay());
         dish.setPrice(new Money(dishDto.getPrice()));
         dish.setArchived(false);
-        Optional<DishCategory> dishCategory = dishCategoryServices.findById(dishDto.getCategoryId());
-        dish.setDishCategory(dishCategory.get());
+        dish.setDishCategory(dishCategoryServices.findById(dishDto.getCategoryId()));
 
         dishRepository.save(dish);
     }
@@ -79,15 +75,17 @@ public class DishServiceImpl implements DishService {
         if (dishDto.getQuantity() != null) {
             dish.setQuantity(dishDto.getQuantity());
         }
-        Optional<DishCategory> dishCategory = dishCategoryServices.findById(dishDto.getCategoryId());
-        dishCategory.ifPresent(dish::setDishCategory);
+        DishCategory dishCategory = dishCategoryServices.findById(dishDto.getCategoryId());
+        if (dishCategory != null) {
+            dish.setDishCategory(dishCategory);
+        }
 
         dishRepository.save(dish);
     }
 
     @Override
     public List<DishDto> getDishByCategory(Long dishCategoryId) {
-        DishCategory dishCategory = new DishCategory();
+        DishCategory dishCategory = dishCategoryServices.findById(dishCategoryId);
         Pageable pageable = new PageRequest(page,size);
         return dishRepository.findDishesByDishCategory(dishCategory, pageable).getContent().stream()
                 .map(dish -> new DishDto(dish))

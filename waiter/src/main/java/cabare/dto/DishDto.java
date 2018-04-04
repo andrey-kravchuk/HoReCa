@@ -76,7 +76,7 @@ public class DishDto {
     return dishOut;
   }
 
-  public void setDishOut(int dishOut) {
+  public void setDishOut(Integer dishOut) {
     this.dishOut = dishOut;
   }
 
