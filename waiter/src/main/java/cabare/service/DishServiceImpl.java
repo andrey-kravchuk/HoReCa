@@ -24,7 +24,7 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private TimeService timeService;
     @Autowired
-    private DishCategoryServiceImpl dishCategoryServices;
+    private DishCategoryService dishCategoryServices;
     private int page;
     private int size;
 
