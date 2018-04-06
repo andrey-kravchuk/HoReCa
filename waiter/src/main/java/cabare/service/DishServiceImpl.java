@@ -9,7 +9,6 @@ import cabare.exception.DishNotFoundException;
 import cabare.exception.DishNotSpecifiedException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +24,6 @@ public class DishServiceImpl implements DishService {
     private TimeService timeService;
     @Autowired
     private DishCategoryService dishCategoryServices;
-    private int page;
-    private int size;
 
     @Override
     public Dish findByid(Long dishId) {
@@ -53,7 +50,7 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public void updateDish(DishDto dishDto) {
-        Dish dish = new Dish();
+        Dish dish = findByid(dishDto.getId());
         if (dishDto.getName() != null) {
             dish.setName(dishDto.getName());
         }
@@ -84,9 +81,8 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<DishDto> getDishByCategory(Long dishCategoryId) {
+    public List<DishDto> getDishesByCategory(Long dishCategoryId, Pageable pageable) {
         DishCategory dishCategory = dishCategoryServices.findById(dishCategoryId);
-        Pageable pageable = new PageRequest(page,size);
         return dishRepository.findDishesByDishCategory(dishCategory, pageable).getContent().stream()
                 .map(dish -> new DishDto(dish))
                 .collect(Collectors.toList());
