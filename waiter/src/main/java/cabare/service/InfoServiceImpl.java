@@ -20,18 +20,18 @@ class InfoServiceImpl implements InfoService {
   @Autowired
   private BillService billService;
   @Autowired
-  private EmployeeService employeeService;
+  private SecurityService securityService;
 
   @Override
-  public WaiterStatistic getCurrentInfo(Long employeeId) {
-    Employee employee = employeeService.getById(employeeId);
+  public WaiterStatistic getCurrentInfo() {
+    Employee employee = securityService.getEmployeeFromSession();
     List<Bill> bills = billService.getCurrentShiftBills(employee);
     return createReport(bills);
   }
 
   @Override
-  public WaiterStatistic getInfoForPeriod(LocalDate startDate, LocalDate endDate, Long employeeId) {
-    Employee employee = employeeService.getById(employeeId);
+  public WaiterStatistic getInfoForPeriod(LocalDate startDate, LocalDate endDate) {
+    Employee employee = securityService.getEmployeeFromSession();
     List<Bill> bills = billService.findBillsByPeriodAndEmployee(startDate, endDate, employee);
     return createReport(bills);
   }

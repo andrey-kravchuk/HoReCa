@@ -6,7 +6,6 @@ import cabare.dto.OrderIn;
 import cabare.dto.OrderPrint;
 import cabare.entity.domain.PayType;
 import cabare.service.BillService;
-import cabare.service.SecurityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,21 +22,15 @@ public class BillController {
 
   @Autowired
   private BillService billService;
-  @Autowired
-  private SecurityService securityService;
 
   @RequestMapping(value = "/open", method = RequestMethod.PUT)
-  public List<OrderPrint> openBill(@RequestBody BillDto billDto
-      , @RequestParam(name = "employee_id") Long employeeId) {
-    securityService.authorizeEmployee(employeeId);
+  public List<OrderPrint> openBill(@RequestBody BillDto billDto) {
     return billService.openBill(billDto);
   }
 
   @RequestMapping(value = "/add/orderitems", method = RequestMethod.POST)
   public List<OrderPrint> addOrder(@RequestParam(name = "bill_id") Long billId
-      , @RequestBody List<OrderIn> orderIns
-      , @RequestParam(name = "employee_id") Long employeeId) {
-    securityService.authorizeEmployee(employeeId);
+      , @RequestBody List<OrderIn> orderIns) {
     return billService.addOrders(billId, orderIns);
   }
 
@@ -49,15 +42,12 @@ public class BillController {
 
   @RequestMapping(value = "/close", method = RequestMethod.POST)
   public void close(@RequestParam(name = "bill_id") Long billId
-      , @RequestParam(name = "pay_type") PayType payType
-      , @RequestParam(name = "employee_id") Long employeeId) {
-    securityService.authorizeEmployee(employeeId);
+      , @RequestParam(name = "pay_type") PayType payType) {
     billService.close(billId, payType);
   }
 
-  @RequestMapping(value = "/opened", method = RequestMethod.POST)
-  public List<BillPrint> getOpened(@RequestParam(name = "employee_id") Long employeeId) {
-    securityService.authorizeEmployee(employeeId);
+  @RequestMapping(value = "/opened")
+  public List<BillPrint> getOpened() {
     return billService.getOpened();
   }
 }

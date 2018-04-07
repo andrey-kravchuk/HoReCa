@@ -20,15 +20,15 @@ public class ReportController {
   private InfoService infoService;
 
   @RequestMapping(value = "/quick_report")
-  public WaiterStatistic quickReport(@RequestParam(name = "employee_id") Long employeeId) {
-    return infoService.getCurrentInfo(employeeId);
+  public WaiterStatistic quickReport() {
+    return infoService.getCurrentInfo();
   }
 
   @RequestMapping(value = "/by_date")
   public WaiterStatistic getReport(
       @RequestParam(name = "start_date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDate
       , @RequestParam(name = "end_date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDate
-      , @RequestParam(name = "employee_id") Long employeeId) {
-    return infoService.getInfoForPeriod(startDate, endDate, employeeId);
+  ) {
+    return infoService.getInfoForPeriod(startDate, endDate);
   }
 }

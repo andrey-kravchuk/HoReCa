@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public interface InfoService {
 
-  WaiterStatistic getCurrentInfo(Long employeeId);
+  WaiterStatistic getCurrentInfo();
 
-  WaiterStatistic getInfoForPeriod(LocalDate startDate, LocalDate endDate, Long employeeId);
+  WaiterStatistic getInfoForPeriod(LocalDate startDate, LocalDate endDate);
 }

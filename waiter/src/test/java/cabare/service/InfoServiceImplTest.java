@@ -31,7 +31,7 @@ public class InfoServiceImplTest {
   @Mock
   private BillService billService;
   @Mock
-  private EmployeeService employeeService;
+  private SecurityService securityService;
 
   @Before
   public void init() {
@@ -44,12 +44,12 @@ public class InfoServiceImplTest {
     );
 
     when(billService.getCurrentShiftBills(any())).thenReturn(bills);
-    when(employeeService.getById(any())).thenReturn(new Employee());
+    when(securityService.getEmployeeFromSession()).thenReturn(new Employee());
   }
 
   @Test
   public void getCurrentInfo() throws Exception {
-    WaiterStatistic waiterStatistic = infoService.getCurrentInfo(1L);
+    WaiterStatistic waiterStatistic = infoService.getCurrentInfo();
     assertThat(waiterStatistic.getOpenedBillCount()).isEqualTo(1);
     assertThat(waiterStatistic.getOpenedBillSum()).isEqualTo("50.00");
 

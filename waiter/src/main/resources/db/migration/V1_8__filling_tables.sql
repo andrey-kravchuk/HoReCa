@@ -68,9 +68,9 @@ INSERT INTO dish (id, name, dish_out, price, dish_category_id)
 VALUES ('22', 'Вода', '500', '3000', '4');
 
 # employee
-INSERT INTO employee (id, name, enabled) VALUES (1, 'Вася Пупкин', b'01');
-INSERT INTO employee (id, name, enabled) VALUES (2, 'Петя Васин', b'01');
-INSERT INTO employee (id, name, enabled) VALUES (3, 'Тетя Сима', b'01');
+INSERT INTO employee (id, name, enabled, email, password) VALUES (1, 'Вася Пупкин', b'01', 'vasya@gmail.com', '111111');
+INSERT INTO employee (id, name, enabled, email, password) VALUES (2, 'Петя Васин', b'01', 'petya@gmail.com', '222222');
+INSERT INTO employee (id, name, enabled, email, password) VALUES (3, 'Тетя Сима', b'01', 'sima@gmail.com', '333333');
 
 # discount
 INSERT INTO discount (id, card_number, `discount_size`) VALUES ('1', 'kv - 123', '40');
