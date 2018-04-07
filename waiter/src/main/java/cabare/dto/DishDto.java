@@ -16,7 +16,7 @@ public class DishDto {
   public String photo;
 
   @JsonProperty("dish_out")
-  public int dishOut;
+  public Integer dishOut;
 
   @JsonProperty("price")
   public String price;
@@ -72,11 +72,11 @@ public class DishDto {
     this.photo = photo;
   }
 
-  public int getDishOut() {
+  public Integer getDishOut() {
     return dishOut;
   }
 
-  public void setDishOut(int dishOut) {
+  public void setDishOut(Integer dishOut) {
     this.dishOut = dishOut;
   }
 
