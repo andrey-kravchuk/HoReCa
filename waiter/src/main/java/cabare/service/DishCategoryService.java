@@ -7,12 +7,7 @@ import java.util.List;
 
 public interface DishCategoryService {
 
+  List<DishCategoryDto> getDishCategories();
 
-    void addDishCategory(DishCategoryDto dishCategoryDto);
-
-    void updateDishCategory(DishCategoryDto dishCategoryDto);
-
-    List<DishCategoryDto> getDishCategories();
-
-    DishCategory findById(Long dishCategoryId);
+  DishCategory findById(Long dishCategoryId);
 }

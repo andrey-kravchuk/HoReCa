@@ -10,10 +10,6 @@ public interface DishService {
 
   Dish findByid(Long dishId);
 
-  void addDish(DishDto dishDto);
-
-  void updateDish(DishDto dishDto);
-
   List<DishDto> getDishesByCategory(Long dishCategoryId, Pageable pageable);
 
   List<DishDto> getStopList();
