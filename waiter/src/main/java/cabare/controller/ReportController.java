@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping(value = "/report")
+@RequestMapping(value = "/waiter/report")
 public class ReportController {
 
   @Autowired
