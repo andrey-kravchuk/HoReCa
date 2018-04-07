@@ -31,7 +31,7 @@ public class DishController {
   }
 
   @RequestMapping(value = "/by_category")
-  public List<DishDto> getDishes(@RequestParam(name = "dish_category_id") Long dishCategoryId, @RequestBody Pageable pageable) {
+  public List<DishDto> getDishes(@RequestParam(name = "dish_category_id") Long dishCategoryId, Pageable pageable) {
     return dishService.getDishesByCategory(dishCategoryId, pageable);
   }
 
