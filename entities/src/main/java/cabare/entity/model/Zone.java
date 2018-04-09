@@ -43,4 +43,12 @@ public class Zone {
 
         return Objects.hash(name);
     }
+
+    @Override
+    public String toString() {
+        return "Zone{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
