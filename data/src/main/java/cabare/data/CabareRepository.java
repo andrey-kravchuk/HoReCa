@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface CabareRepository extends JpaRepository <Cabare, Long>{
-    
-    Optional <CabareRepository> findById (Long cabareId);
+
+    Optional <Cabare> findById (Long cabareId);
 }
