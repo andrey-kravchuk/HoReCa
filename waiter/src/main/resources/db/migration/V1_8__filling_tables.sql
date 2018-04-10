@@ -1,3 +1,7 @@
+# cabare
+INSERT INTO cabare (id, name) values ('1', 'Ресторан');
+INSERT INTO cabare (id, name) values ('2', 'Кафе');
+INSERT INTO cabare (id, name) values ('3', 'Бар');
 # dish categories
 INSERT INTO dish_category (id, name, photo) VALUES ('1', 'Закуски', 'snacks.jpg');
 INSERT INTO dish_category (id, name, photo) VALUES ('2', 'Основные блюда', 'main.jpg');
