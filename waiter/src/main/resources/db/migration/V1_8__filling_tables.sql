@@ -1,9 +1,13 @@
+# zones
+INSERT INTO zone (id, name) VALUES ('1', 'Кухня');
+INSERT INTO zone (id, name) VALUES ('2', 'Бар');
+
 # dish categories
-INSERT INTO dish_category (id, name, photo) VALUES ('1', 'Закуски', 'snacks.jpg');
-INSERT INTO dish_category (id, name, photo) VALUES ('2', 'Основные блюда', 'main.jpg');
-INSERT INTO dish_category (id, name, photo) VALUES ('3', 'Салаты', 'salads.jpg');
-INSERT INTO dish_category (id, name, photo) VALUES ('4', 'Напитки', 'beverages.jpg');
-INSERT INTO dish_category (id, name, photo) VALUES ('5', 'Десерты', 'deserts.jpg');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('1', 'Закуски', 'snacks.jpg','1');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('2', 'Основные блюда', 'main.jpg','1');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('3', 'Салаты', 'salads.jpg','1');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('4', 'Напитки', 'beverages.jpg','1');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('5', 'Десерты', 'deserts.jpg','1');
 # dishes
 INSERT INTO dish (id, name, photo, dish_out, price, dish_category_id)
 VALUES ('1', 'Салат Весна', 'spring-salad.jpg', '5', '5000', '3');
