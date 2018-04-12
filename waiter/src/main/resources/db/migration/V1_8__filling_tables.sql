@@ -1,3 +1,8 @@
+# cabare
+INSERT INTO cabare (id, name) values ('1', 'Ресторан');
+INSERT INTO cabare (id, name) values ('2', 'Кафе');
+INSERT INTO cabare (id, name) values ('3', 'Бар');
+
 # zones
 INSERT INTO zone (id, name) VALUES ('1', 'Кухня');
 INSERT INTO zone (id, name) VALUES ('2', 'Бар');
