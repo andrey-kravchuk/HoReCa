@@ -8,5 +8,5 @@ public interface ZoneService {
 
     Zone findById(Long zoneId);
 
-    List<ZoneDto> getZones();
+//    List<ZoneDto> getZones();
 }

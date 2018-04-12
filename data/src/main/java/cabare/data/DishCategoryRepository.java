@@ -1,6 +1,7 @@
 package cabare.data;
 
 import cabare.entity.model.DishCategory;
+import cabare.entity.model.Zone;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,8 @@ public interface DishCategoryRepository extends JpaRepository<DishCategory, Long
 
     @Query("select d from DishCategory d")
     List<DishCategory> getAll();
+
+    @Query("select d from DishCategory d where d.zone = ?1")
+    List<DishCategory> getAllByZone(Zone zone);
 
 }
