@@ -10,6 +10,8 @@ public class WaiterDto {
   private Long id;
   @JsonProperty("name")
   private String name;
+  @JsonProperty("cabare")
+  private String cabare;
 
   public WaiterDto() {
   }
@@ -17,6 +19,7 @@ public class WaiterDto {
   public WaiterDto(Employee employee) {
     this.id = employee.getId();
     this.name = employee.getName();
+    this.cabare = employee.getCabare().getName();
   }
 
   public Long getId() {
@@ -33,5 +36,13 @@ public class WaiterDto {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getCabare() {
+    return cabare;
+  }
+
+  public void setCabare(String cabare) {
+    this.cabare = cabare;
   }
 }

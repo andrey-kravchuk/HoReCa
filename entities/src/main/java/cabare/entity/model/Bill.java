@@ -86,6 +86,9 @@ public class Bill {
   @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<OrderItem> orderItems = new ArrayList<>();
 
+  @ManyToOne
+  @JoinColumn(name = "cabare_id")
+  private Cabare cabare;
 
   public void addOrderItem(OrderItem orderItem) {
     this.orderItems.add(orderItem);
@@ -227,6 +230,14 @@ public class Bill {
 
   public void setActiveShift(boolean activeShift) {
     this.activeShift = activeShift;
+  }
+
+  public Cabare getCabare() {
+    return cabare;
+  }
+
+  public void setCabare(Cabare cabare) {
+    this.cabare = cabare;
   }
 
   public Money getTotalPrice() {

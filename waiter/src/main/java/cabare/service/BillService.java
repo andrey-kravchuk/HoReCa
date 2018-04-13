@@ -69,6 +69,7 @@ public class BillService {
     bill.setActiveShift(true);
     bill.setMoneyPaid(Money.ZERO);
     bill.setPayStatus(AWAIT);
+    bill.setCabare(employee.getCabare());
     bill = billRepository.save(bill);
 
     Optional<Bill> first = billRepository
