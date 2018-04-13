@@ -9,24 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/waiter/dish")
 public class DishController {
 
-  @Autowired
-  private DishService dishService;
+    @Autowired
+    private DishService dishService;
 
-  @RequestMapping(value = "/by_category")
-  public List<DishDto> getDishes(
-      @RequestParam(name = "dish_category_id") Long dishCategoryId
-      , Pageable pageable) {
-    return dishService.getDishesByCategory(dishCategoryId, pageable);
-  }
+    @RequestMapping(value = "/by_category")
+    public List<DishDto> getDishes(@Valid
+                                   @RequestParam(name = "dish_category_id") Long dishCategoryId
+            , Pageable pageable) {
+        return dishService.getDishesByCategory(dishCategoryId, pageable);
+    }
 
-  @RequestMapping(value = "/stoplist")
-  public List<DishDto> getStopList() {
-    return dishService.getStopList();
-  }
+    @RequestMapping(value = "/stoplist")
+    public List<DishDto> getStopList() {
+        return dishService.getStopList();
+    }
 }
