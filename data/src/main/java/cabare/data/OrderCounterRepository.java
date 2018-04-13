@@ -1,5 +1,6 @@
 package cabare.data;
 
+import cabare.entity.model.Cabare;
 import cabare.entity.model.OrderCounter;
 
 import org.springframework.data.repository.CrudRepository;
@@ -11,4 +12,6 @@ import java.util.Optional;
 public interface OrderCounterRepository extends CrudRepository<OrderCounter, Long> {
 
   Optional<OrderCounter> findById(Long id);
+
+  Optional<OrderCounter> findByCabare(Cabare cabare);
 }
