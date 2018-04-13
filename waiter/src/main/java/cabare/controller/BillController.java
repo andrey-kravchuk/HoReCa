@@ -49,7 +49,6 @@ public class BillController {
       @Min(value = 1, message = "bill_id cannot be less than 1")
       @RequestParam(name = "bill_id") Long billId
       ,
-      @NotNull(message = "discount_id size should be specified")
       @Min(value = 1, message = "discount_id cannot be less than 1")
       @RequestParam(name = "discount_id") Long discountId) {
     return billService.print(billId, discountId);
@@ -60,7 +59,9 @@ public class BillController {
       @NotNull(message = "bill_id size should be specified")
       @Min(value = 1, message = "bill_id cannot be less than 1")
       @RequestParam(name = "bill_id") Long billId
-      , @RequestParam(name = "pay_type") PayType payType) {
+      ,
+      @NotNull(message = "pay type should be specified")
+      @RequestParam(name = "pay_type") PayType payType) {
     billService.close(billId, payType);
   }
 
