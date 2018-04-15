@@ -6,6 +6,8 @@ import cabare.dto.DishCategoryDto;
 import cabare.dto.DishDto;
 import cabare.entity.model.Dish;
 import cabare.entity.model.DishCategory;
+import cabare.exception.DishCategoryNotFoundException;
+import cabare.exception.DishCategoryNotSpecifiedException;
 import cabare.exception.DishNotFoundException;
 import cabare.exception.DishNotSpecifiedException;
 
@@ -20,38 +22,42 @@ import java.util.stream.Collectors;
 @Service
 public class DishServiceImpl implements DishService {
 
-  @Autowired
-  private DishRepository dishRepository;
-  @Autowired
-  private TimeService timeService;
-  @Autowired
-  private DishCategoryService dishCategoryServices;
-  @Autowired
-  private DishCategoryRepository dishCategoryRepository;
+    @Autowired
+    private DishRepository dishRepository;
+    @Autowired
+    private TimeService timeService;
+    @Autowired
+    private DishCategoryService dishCategoryServices;
+    @Autowired
+    private DishCategoryRepository dishCategoryRepository;
 
-  @Override
-  public Dish findByid(Long dishId) {
-    if (dishId == null) {
-      throw new DishNotSpecifiedException();
+    @Override
+    public Dish findByid(Long dishId) {
+        if (dishId == null) {
+            throw new DishNotSpecifiedException();
+        }
+        return dishRepository.findById(dishId).orElseThrow(() -> new DishNotFoundException());
     }
-    return dishRepository.findById(dishId).orElseThrow(() -> new DishNotFoundException());
-  }
 
-  @Override
-  public List<DishDto> getDishesByCategory(Long dishCategoryId, Pageable pageable) {
-    DishCategoryDto dishCategoryDto = dishCategoryServices.findById(dishCategoryId);
-    Optional<DishCategory> optionalDishCategory = dishCategoryRepository.findById(dishCategoryDto.getId());
-    DishCategory dishCategory = optionalDishCategory.get();
-    return dishRepository.findDishesByDishCategory(dishCategory, pageable).getContent().stream()
-        .map(dish -> new DishDto(dish))
-        .collect(Collectors.toList());
-  }
+    @Override
+    public List<DishDto> getDishesByCategory(Long dishCategoryId, Pageable pageable) {
+        if (dishCategoryId == null) {
+            throw new DishCategoryNotSpecifiedException();
+        }
 
-  @Override
-  public List<DishDto> getStopList() {
-    int dayOfYear = timeService.getCurrentDate().getDayOfYear();
-    return dishRepository.getStopList(dayOfYear).stream()
-        .map(dish -> new DishDto(dish))
-        .collect(Collectors.toList());
-  }
+        DishCategoryDto dishCategoryDto = dishCategoryServices.findById(dishCategoryId);
+        DishCategory dishCategory = dishCategoryRepository.findById(dishCategoryDto.getId()).orElseThrow(() -> new DishCategoryNotFoundException());
+        return dishRepository.findDishesByDishCategory(dishCategory, pageable).getContent().stream()
+                .map(dish -> new DishDto(dish))
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<DishDto> getStopList() {
+        int dayOfYear = timeService.getCurrentDate().getDayOfYear();
+        return dishRepository.getStopList(dayOfYear).stream()
+                .map(dish -> new DishDto(dish))
+                .collect(Collectors.toList());
+    }
 }
