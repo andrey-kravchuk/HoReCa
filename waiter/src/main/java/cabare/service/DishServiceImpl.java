@@ -1,6 +1,8 @@
 package cabare.service;
 
+import cabare.data.DishCategoryRepository;
 import cabare.data.DishRepository;
+import cabare.dto.DishCategoryDto;
 import cabare.dto.DishDto;
 import cabare.entity.model.Dish;
 import cabare.entity.model.DishCategory;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +26,8 @@ public class DishServiceImpl implements DishService {
   private TimeService timeService;
   @Autowired
   private DishCategoryService dishCategoryServices;
+  @Autowired
+  private DishCategoryRepository dishCategoryRepository;
 
   @Override
   public Dish findByid(Long dishId) {
@@ -34,7 +39,9 @@ public class DishServiceImpl implements DishService {
 
   @Override
   public List<DishDto> getDishesByCategory(Long dishCategoryId, Pageable pageable) {
-    DishCategory dishCategory = dishCategoryServices.findById(dishCategoryId);
+    DishCategoryDto dishCategoryDto = dishCategoryServices.findById(dishCategoryId);
+    Optional<DishCategory> optionalDishCategory = dishCategoryRepository.findById(dishCategoryDto.getId());
+    DishCategory dishCategory = optionalDishCategory.get();
     return dishRepository.findDishesByDishCategory(dishCategory, pageable).getContent().stream()
         .map(dish -> new DishDto(dish))
         .collect(Collectors.toList());

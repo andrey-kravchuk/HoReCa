@@ -2,7 +2,6 @@ package cabare.controller;
 
 import cabare.dto.DishCategoryDto;
 import cabare.service.DishCategoryService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
