@@ -21,10 +21,5 @@ public class ZoneController {
     public List<ZoneDto> getZones(){
         return zoneService.getZones();
     }
-
-    @RequestMapping(value = "/by_id")
-    public ZoneDto getZoneById(@RequestParam(name = "zone_id") Long zoneId){
-        return zoneService.getZoneById(zoneId);
-    }
-
+    
 }
