@@ -16,8 +16,6 @@ public interface DishCategoryRepository extends JpaRepository<DishCategory, Long
 
   Optional<DishCategory> findByIdAndCabare(Long dishCategoryId, Cabare cabare);
 
-  Optional<DishCategory> findByName(String dishCategoryName);
-
   @Query("select d from DishCategory d where d.cabare = ?1")
   List<DishCategory> getAll(Cabare cabare);
 

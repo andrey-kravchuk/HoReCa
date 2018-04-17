@@ -90,7 +90,7 @@ INSERT INTO employee (id, name, enabled, email, password, cabare_id)
 VALUES (3, 'Тетя Сима', b'01', 'sima@gmail.com', '333333', 2);
 
 # discount
-INSERT INTO discount (id, card_number, `discount_size`) VALUES ('1', 'kv - 123', '40');
-INSERT INTO discount (id, card_number, `discount_size`) VALUES ('2', 'kv-1234', '30');
-INSERT INTO discount (id, card_number, `discount_size`) VALUES ('3', 'kv-12345', '20');
-INSERT INTO discount (id, card_number, `discount_size`) VALUES ('4', 'kv-123456', '10');
+INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('1', 'kv - 123', '40', 1);
+INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('2', 'kv-1234', '30', 1);
+INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('3', 'kv-12345', '20', 1);
+INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('4', 'kv-123456', '10', 1);
