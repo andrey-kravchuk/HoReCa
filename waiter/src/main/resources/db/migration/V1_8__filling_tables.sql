@@ -4,8 +4,8 @@ INSERT INTO cabare (id, name) VALUES ('2', 'Ресторан-2');
 INSERT INTO cabare (id, name) VALUES ('3', 'Ресторан-3');
 
 # zones
-INSERT INTO zone (id, name) VALUES ('1', 'Кухня');
-INSERT INTO zone (id, name) VALUES ('2', 'Бар');
+INSERT INTO zone (id, name, cabare_id) VALUES ('1', 'Кухня', 1);
+INSERT INTO zone (id, name, cabare_id) VALUES ('2', 'Бар', 1);
 
 # dish categories
 INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('1', 'Закуски', 'snacks.jpg', '1');
