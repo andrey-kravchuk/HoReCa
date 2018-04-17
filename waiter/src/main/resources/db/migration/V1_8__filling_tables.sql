@@ -4,16 +4,20 @@ INSERT INTO cabare (id, name) VALUES ('2', 'Ресторан-2');
 INSERT INTO cabare (id, name) VALUES ('3', 'Ресторан-3');
 
 # zones
-INSERT INTO zone (id, name) VALUES ('1', 'Кухня');
-INSERT INTO zone (id, name) VALUES ('2', 'Бар');
+INSERT INTO zone (id, name, cabare_id) VALUES ('1', 'Кухня', 1);
+INSERT INTO zone (id, name, cabare_id) VALUES ('2', 'Бар', 1);
 
 # dish categories
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('1', 'Закуски', 'snacks.jpg', '1');
-INSERT INTO dish_category (id, name, photo, zone_id)
-VALUES ('2', 'Основные блюда', 'main.jpg', '1');
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('3', 'Салаты', 'salads.jpg', '1');
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('4', 'Напитки', 'beverages.jpg', '2');
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('5', 'Десерты', 'deserts.jpg', '1');
+INSERT INTO dish_category (id, name, photo, zone_id, cabare_id)
+VALUES ('1', 'Закуски', 'snacks.jpg', '1', 1);
+INSERT INTO dish_category (id, name, photo, zone_id, cabare_id)
+VALUES ('2', 'Основные блюда', 'main.jpg', '1', 1);
+INSERT INTO dish_category (id, name, photo, zone_id, cabare_id)
+VALUES ('3', 'Салаты', 'salads.jpg', '1', 1);
+INSERT INTO dish_category (id, name, photo, zone_id, cabare_id)
+VALUES ('4', 'Напитки', 'beverages.jpg', '2', 1);
+INSERT INTO dish_category (id, name, photo, zone_id, cabare_id)
+VALUES ('5', 'Десерты', 'deserts.jpg', '1', 1);
 # dishes
 INSERT INTO dish (id, name, photo, dish_out, price, dish_category_id)
 VALUES ('1', 'Салат Весна', 'spring-salad.jpg', '5', '5000', '3');
