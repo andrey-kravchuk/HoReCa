@@ -23,12 +23,14 @@ public class ZoneServiceImpl implements ZoneService {
   private SecurityService securityService;
 
   @Override
-  public ZoneDto getZoneById(Long zoneId) {
+  public Zone getZoneById(Long zoneId) {
     if (zoneId == null) {
       throw new ZoneNotSpecifiedException();
     }
-    Zone zone = zoneRepository.findById(zoneId).orElseThrow(() -> new ZoneNotFoundException());
-    return new ZoneDto(zone);
+    Employee employee = securityService.getEmployeeFromSession();
+    Cabare cabare = employee.getCabare();
+    return zoneRepository.findByIdAndCabare(zoneId, cabare)
+        .orElseThrow(() -> new ZoneNotFoundException());
   }
 
   @Override

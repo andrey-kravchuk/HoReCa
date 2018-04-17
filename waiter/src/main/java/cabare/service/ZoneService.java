@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ZoneService {
 
-    ZoneDto getZoneById(Long zoneId);
+  Zone getZoneById(Long zoneId);
 
-    List<ZoneDto> getZones();
+  List<ZoneDto> getZones();
 }

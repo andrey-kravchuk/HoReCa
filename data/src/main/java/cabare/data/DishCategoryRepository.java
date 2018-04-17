@@ -14,14 +14,14 @@ import java.util.Optional;
 @Repository
 public interface DishCategoryRepository extends JpaRepository<DishCategory, Long> {
 
-  Optional<DishCategory> findById(Long dishCategoryId);
+  Optional<DishCategory> findByIdAndCabare(Long dishCategoryId, Cabare cabare);
 
   Optional<DishCategory> findByName(String dishCategoryName);
 
   @Query("select d from DishCategory d where d.cabare = ?1")
   List<DishCategory> getAll(Cabare cabare);
 
-  @Query("select d from DishCategory d where d.zone = ?1")
-  List<DishCategory> getAllByZone(Zone zone);
+  @Query("select d from DishCategory d where d.zone = ?1 and d.cabare = ?2")
+  List<DishCategory> getAllByZone(Zone zone, Cabare cabare);
 
 }
