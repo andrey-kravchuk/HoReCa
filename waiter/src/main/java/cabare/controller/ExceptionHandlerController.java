@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.validation.ConstraintViolationException;
+
 @ControllerAdvice
 @Controller
 public class ExceptionHandlerController {
@@ -44,6 +46,16 @@ public class ExceptionHandlerController {
     ex.printStackTrace();
     return err(ex.getBindingResult().getAllErrors().stream()
         .map(er -> er.getDefaultMessage())
+        .collect(Collectors.toList()));
+  }
+
+  @ExceptionHandler
+  @ResponseBody
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  public Map handle(ConstraintViolationException ex) {
+    ex.printStackTrace();
+    return err(ex.getConstraintViolations().stream()
+        .map(er -> er.getMessage())
         .collect(Collectors.toList()));
   }
 }

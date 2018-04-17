@@ -1,18 +1,19 @@
 # cabare
-INSERT INTO cabare (id, name) values ('1', 'Ресторан');
-INSERT INTO cabare (id, name) values ('2', 'Кафе');
-INSERT INTO cabare (id, name) values ('3', 'Бар');
+INSERT INTO cabare (id, name) VALUES ('1', 'Ресторан-1');
+INSERT INTO cabare (id, name) VALUES ('2', 'Ресторан-2');
+INSERT INTO cabare (id, name) VALUES ('3', 'Ресторан-3');
 
 # zones
 INSERT INTO zone (id, name) VALUES ('1', 'Кухня');
 INSERT INTO zone (id, name) VALUES ('2', 'Бар');
 
 # dish categories
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('1', 'Закуски', 'snacks.jpg','1');
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('2', 'Основные блюда', 'main.jpg','1');
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('3', 'Салаты', 'salads.jpg','1');
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('4', 'Напитки', 'beverages.jpg','2');
-INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('5', 'Десерты', 'deserts.jpg','1');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('1', 'Закуски', 'snacks.jpg', '1');
+INSERT INTO dish_category (id, name, photo, zone_id)
+VALUES ('2', 'Основные блюда', 'main.jpg', '1');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('3', 'Салаты', 'salads.jpg', '1');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('4', 'Напитки', 'beverages.jpg', '2');
+INSERT INTO dish_category (id, name, photo, zone_id) VALUES ('5', 'Десерты', 'deserts.jpg', '1');
 # dishes
 INSERT INTO dish (id, name, photo, dish_out, price, dish_category_id)
 VALUES ('1', 'Салат Весна', 'spring-salad.jpg', '5', '5000', '3');
@@ -77,9 +78,12 @@ INSERT INTO dish (id, name, dish_out, price, dish_category_id)
 VALUES ('22', 'Вода', '500', '3000', '4');
 
 # employee
-INSERT INTO employee (id, name, enabled, email, password) VALUES (1, 'Вася Пупкин', b'01', 'vasya@gmail.com', '111111');
-INSERT INTO employee (id, name, enabled, email, password) VALUES (2, 'Петя Васин', b'01', 'petya@gmail.com', '222222');
-INSERT INTO employee (id, name, enabled, email, password) VALUES (3, 'Тетя Сима', b'01', 'sima@gmail.com', '333333');
+INSERT INTO employee (id, name, enabled, email, password, cabare_id)
+VALUES (1, 'Вася Пупкин', b'01', 'vasya@gmail.com', '111111', 1);
+INSERT INTO employee (id, name, enabled, email, password, cabare_id)
+VALUES (2, 'Петя Васин', b'01', 'petya@gmail.com', '222222', 1);
+INSERT INTO employee (id, name, enabled, email, password, cabare_id)
+VALUES (3, 'Тетя Сима', b'01', 'sima@gmail.com', '333333', 2);
 
 # discount
 INSERT INTO discount (id, card_number, `discount_size`) VALUES ('1', 'kv - 123', '40');

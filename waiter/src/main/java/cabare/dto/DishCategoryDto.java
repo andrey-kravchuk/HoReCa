@@ -14,13 +14,18 @@ public class DishCategoryDto {
     @JsonProperty("photo")
     public String photo;
 
-    public DishCategoryDto(){
+    @JsonProperty("zone_id")
+    public Long zoneId;
+
+    public DishCategoryDto() {
     }
 
     public DishCategoryDto(DishCategory dishCategory) {
         this.id = dishCategory.getId();
         this.name = dishCategory.getName();
         this.photo = dishCategory.getPhoto();
+        this.zoneId = dishCategory.getZone().getId();
+
     }
 
     public Long getId() {
@@ -45,5 +50,13 @@ public class DishCategoryDto {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
     }
 }

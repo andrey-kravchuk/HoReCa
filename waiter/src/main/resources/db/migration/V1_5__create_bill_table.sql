@@ -14,8 +14,11 @@ CREATE TABLE bill (
   money_paid        BIGINT           NULL,
   is_opened         BIT DEFAULT b'1' NOT NULL,
   is_active_shift   BIT DEFAULT b'1' NOT NULL,
+  cabare_id         BIGINT           NOT NULL,
   CONSTRAINT fk_bill_discount
   FOREIGN KEY (discount_id) REFERENCES discount (id),
   CONSTRAINT fk_bill_employee
-  FOREIGN KEY (employee_id) REFERENCES employee (id)
+  FOREIGN KEY (employee_id) REFERENCES employee (id),
+  CONSTRAINT fk_bill_cabare
+  FOREIGN KEY (cabare_id) REFERENCES cabare (id)
 )

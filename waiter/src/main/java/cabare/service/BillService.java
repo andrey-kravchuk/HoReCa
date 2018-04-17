@@ -11,6 +11,7 @@ import cabare.dto.OrderPrint;
 import cabare.entity.domain.Money;
 import cabare.entity.domain.PayType;
 import cabare.entity.model.Bill;
+import cabare.entity.model.Cabare;
 import cabare.entity.model.Discount;
 import cabare.entity.model.Dish;
 import cabare.entity.model.Employee;
@@ -54,7 +55,7 @@ public class BillService {
   @Transactional
   public List<OrderPrint> openBill(BillDto billDto) {
     Employee employee = securityService.getEmployeeFromSession();
-    List<OrderItem> orderItems = orderInsToOrderItems(billDto.getOrderIns());
+    List<OrderItem> orderItems = orderInsToOrderItems(billDto.getOrderIns(), employee.getCabare());
     LocalDateTime currentTime = timeService.getCurrentTime();
 
     Bill bill = new Bill();
@@ -69,6 +70,7 @@ public class BillService {
     bill.setActiveShift(true);
     bill.setMoneyPaid(Money.ZERO);
     bill.setPayStatus(AWAIT);
+    bill.setCabare(employee.getCabare());
     bill = billRepository.save(bill);
 
     Optional<Bill> first = billRepository
@@ -90,11 +92,11 @@ public class BillService {
         .collect(Collectors.toList());
   }
 
-  private List<OrderItem> orderInsToOrderItems(List<OrderIn> orderIns) {
+  private List<OrderItem> orderInsToOrderItems(List<OrderIn> orderIns, Cabare cabare) {
     if (orderIns == null) {
       return Collections.EMPTY_LIST;
     }
-    Long orderNumber = counterService.nextOrderNumber();
+    Long orderNumber = counterService.nextOrderNumber(cabare);
     return orderIns.stream()
         .filter(orderIn -> orderIn.getQuantity() != null && orderIn.getQuantity() > 0)
         .map(orderIn -> {
@@ -113,10 +115,11 @@ public class BillService {
     if (!bill.isOpened()) {
       throw new BillAllreadyClosedException();
     }
-    if (!securityService.getEmployeeFromSession().getId().equals(bill.getEmployee().getId())) {
+    Employee employee = securityService.getEmployeeFromSession();
+    if (!employee.getId().equals(bill.getEmployee().getId())) {
       throw new DeniedException();
     }
-    List<OrderItem> orderItems = orderInsToOrderItems(orderIns);
+    List<OrderItem> orderItems = orderInsToOrderItems(orderIns, employee.getCabare());
     bill.addOrderItems(orderItems);
     bill = billRepository.save(bill);
 

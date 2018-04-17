@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +29,9 @@ public class Employee {
   @Column(name = "password")
   private String password;
 
+  @ManyToOne
+  @JoinColumn(name = "cabare_id")
+  private Cabare cabare;
 
   public Long getId() {
     return id;
@@ -66,6 +71,14 @@ public class Employee {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public Cabare getCabare() {
+    return cabare;
+  }
+
+  public void setCabare(Cabare cabare) {
+    this.cabare = cabare;
   }
 }
 
