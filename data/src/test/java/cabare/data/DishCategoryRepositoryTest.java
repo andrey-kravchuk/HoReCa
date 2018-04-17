@@ -40,12 +40,12 @@ public class DishCategoryRepositoryTest {
 //        assertThat(result.get().getName()).isEqualTo(testNameDishCategory);
 //    }
 
-    @Test
-    public void testDishCategoryFindByName() {
-        Optional<DishCategory> result = dishCategoryRepository.findByName(testNameDishCategory);
-        assertThat(result.isPresent()).isTrue();
-        assertThat(result.get().getName()).isEqualTo(testNameDishCategory);
-    }
+//    @Test
+//    public void testDishCategoryFindByName() {
+//        Optional<DishCategory> result = dishCategoryRepository.findByName(testNameDishCategory);
+//        assertThat(result.isPresent()).isTrue();
+//        assertThat(result.get().getName()).isEqualTo(testNameDishCategory);
+//    }
 
     @Test
     public void testDishCategoryGetAll() {

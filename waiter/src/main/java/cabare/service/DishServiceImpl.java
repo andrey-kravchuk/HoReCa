@@ -2,8 +2,10 @@ package cabare.service;
 
 import cabare.data.DishRepository;
 import cabare.dto.DishDto;
+import cabare.entity.model.Cabare;
 import cabare.entity.model.Dish;
 import cabare.entity.model.DishCategory;
+import cabare.entity.model.Employee;
 import cabare.exception.DishCategoryNotSpecifiedException;
 import cabare.exception.DishNotFoundException;
 import cabare.exception.DishNotSpecifiedException;
@@ -32,7 +34,10 @@ public class DishServiceImpl implements DishService {
     if (dishId == null) {
       throw new DishNotSpecifiedException();
     }
-    return dishRepository.findById(dishId).orElseThrow(() -> new DishNotFoundException());
+    Employee employee = securityService.getEmployeeFromSession();
+    Cabare cabare = employee.getCabare();
+    return dishRepository.findByIdAndCabare(dishId, cabare)
+        .orElseThrow(() -> new DishNotFoundException());
   }
 
   @Override
@@ -50,7 +55,9 @@ public class DishServiceImpl implements DishService {
   @Override
   public List<DishDto> getStopList() {
     int dayOfYear = timeService.getCurrentDate().getDayOfYear();
-    return dishRepository.getStopList(dayOfYear).stream()
+    Employee employee = securityService.getEmployeeFromSession();
+    Cabare cabare = employee.getCabare();
+    return dishRepository.getStopList(dayOfYear, cabare).stream()
         .map(dish -> new DishDto(dish))
         .collect(Collectors.toList());
   }

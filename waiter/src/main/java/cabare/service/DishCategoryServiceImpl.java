@@ -6,6 +6,7 @@ import cabare.entity.model.Cabare;
 import cabare.entity.model.DishCategory;
 import cabare.entity.model.Employee;
 import cabare.entity.model.Zone;
+import cabare.exception.DishCategoryNotFoundException;
 import cabare.exception.DishCategoryNotSpecifiedException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class DishCategoryServiceImpl implements DishCategoryService {
     }
     Cabare cabare = getCabare();
     return dishCategoryRepository.findByIdAndCabare(dishCategoryId, cabare)
-        .orElseThrow(() -> new DishCategoryNotSpecifiedException());
+        .orElseThrow(() -> new DishCategoryNotFoundException());
   }
 
   private Cabare getCabare() {
