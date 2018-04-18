@@ -2,8 +2,10 @@ package cabare.controller;
 
 import cabare.dto.DishCategoryDto;
 import cabare.service.DishCategoryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,5 +20,10 @@ public class DishCategoryController {
   @RequestMapping(value = "/all")
   public List<DishCategoryDto> getDishCategories() {
     return dishCategoryService.getDishCategories();
+  }
+
+  @RequestMapping(value = "/by_zone")
+  public List<DishCategoryDto> getCategotiesByZone(@RequestParam(name = "zone_id") Long zoneId) {
+    return dishCategoryService.getCategotiesByZone(zoneId);
   }
 }

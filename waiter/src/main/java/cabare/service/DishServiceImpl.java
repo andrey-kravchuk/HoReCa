@@ -1,12 +1,11 @@
 package cabare.service;
 
-import cabare.data.DishCategoryRepository;
 import cabare.data.DishRepository;
-import cabare.dto.DishCategoryDto;
 import cabare.dto.DishDto;
+import cabare.entity.model.Cabare;
 import cabare.entity.model.Dish;
 import cabare.entity.model.DishCategory;
-import cabare.exception.DishCategoryNotFoundException;
+import cabare.entity.model.Employee;
 import cabare.exception.DishCategoryNotSpecifiedException;
 import cabare.exception.DishNotFoundException;
 import cabare.exception.DishNotSpecifiedException;
@@ -16,48 +15,50 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class DishServiceImpl implements DishService {
 
-    @Autowired
-    private DishRepository dishRepository;
-    @Autowired
-    private TimeService timeService;
-    @Autowired
-    private DishCategoryService dishCategoryServices;
-    @Autowired
-    private DishCategoryRepository dishCategoryRepository;
+  @Autowired
+  private DishRepository dishRepository;
+  @Autowired
+  private TimeService timeService;
+  @Autowired
+  private DishCategoryService dishCategoryServices;
+  @Autowired
+  private SecurityService securityService;
 
-    @Override
-    public Dish findByid(Long dishId) {
-        if (dishId == null) {
-            throw new DishNotSpecifiedException();
-        }
-        return dishRepository.findById(dishId).orElseThrow(() -> new DishNotFoundException());
+  @Override
+  public Dish findByid(Long dishId) {
+    if (dishId == null) {
+      throw new DishNotSpecifiedException();
     }
+    Employee employee = securityService.getEmployeeFromSession();
+    Cabare cabare = employee.getCabare();
+    return dishRepository.findByIdAndCabare(dishId, cabare)
+        .orElseThrow(() -> new DishNotFoundException());
+  }
 
-    @Override
-    public List<DishDto> getDishesByCategory(Long dishCategoryId, Pageable pageable) {
-        if (dishCategoryId == null) {
-            throw new DishCategoryNotSpecifiedException();
-        }
-
-        DishCategoryDto dishCategoryDto = dishCategoryServices.findById(dishCategoryId);
-        DishCategory dishCategory = dishCategoryRepository.findById(dishCategoryDto.getId()).orElseThrow(() -> new DishCategoryNotFoundException());
-        return dishRepository.findDishesByDishCategory(dishCategory, pageable).getContent().stream()
-                .map(dish -> new DishDto(dish))
-                .collect(Collectors.toList());
-
+  @Override
+  public List<DishDto> getDishesByCategory(Long dishCategoryId, Pageable pageable) {
+    if (dishCategoryId == null) {
+      throw new DishCategoryNotSpecifiedException();
     }
+    DishCategory dishCategory = dishCategoryServices.findById(dishCategoryId);
+    return dishRepository.findDishesByDishCategory(dishCategory, pageable).getContent().stream()
+        .map(dish -> new DishDto(dish))
+        .collect(Collectors.toList());
 
-    @Override
-    public List<DishDto> getStopList() {
-        int dayOfYear = timeService.getCurrentDate().getDayOfYear();
-        return dishRepository.getStopList(dayOfYear).stream()
-                .map(dish -> new DishDto(dish))
-                .collect(Collectors.toList());
-    }
+  }
+
+  @Override
+  public List<DishDto> getStopList() {
+    int dayOfYear = timeService.getCurrentDate().getDayOfYear();
+    Employee employee = securityService.getEmployeeFromSession();
+    Cabare cabare = employee.getCabare();
+    return dishRepository.getStopList(dayOfYear, cabare).stream()
+        .map(dish -> new DishDto(dish))
+        .collect(Collectors.toList());
+  }
 }

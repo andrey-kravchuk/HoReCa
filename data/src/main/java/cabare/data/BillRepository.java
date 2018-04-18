@@ -1,6 +1,7 @@
 package cabare.data;
 
 import cabare.entity.model.Bill;
+import cabare.entity.model.Cabare;
 import cabare.entity.model.Employee;
 
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @Repository
 public interface BillRepository extends CrudRepository<Bill, Long> {
 
-  Optional<Bill> findById(Long billId);
+  Optional<Bill> findByIdAndCabare(Long billId, Cabare cabare);
 
   @Query("select b from Bill b where b.opened = true and b.employee = ?1")
   List<Bill> findOpenedByEmployee(Employee employee);

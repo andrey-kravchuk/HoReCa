@@ -54,13 +54,13 @@ public class DishRepositoryTest {
         testList = new LinkedList<>();
     }
 
-    @Test
-    public void testDishFindById() {
-        Long dishId = dish.getId();
-        Optional<Dish> result = dishRepository.findById(dishId);
-        assertThat(result.isPresent()).isTrue();
-        assertThat(result.get().getName()).isEqualTo(testNameDish);
-    }
+//    @Test
+//    public void testDishFindById() {
+//        Long dishId = dish.getId();
+//        Optional<Dish> result = dishRepository.findById(dishId);
+//        assertThat(result.isPresent()).isTrue();
+//        assertThat(result.get().getName()).isEqualTo(testNameDish);
+//    }
 
     @Test
     //one dish
