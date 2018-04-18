@@ -32,20 +32,20 @@ public class DishCategoryRepositoryTest {
         dishCategoryRepository.save(dishCategory);
     }
 
-    @Test
-    public void testDishCategoryFindById() {
-        Long dishCategoryId = dishCategory.getId();
-        Optional<DishCategory> result = dishCategoryRepository.findById(dishCategoryId);
-        assertThat(result.isPresent()).isTrue();
-        assertThat(result.get().getName()).isEqualTo(testNameDishCategory);
-    }
+//    @Test
+//    public void testDishCategoryFindById() {
+//        Long dishCategoryId = dishCategory.getId();
+//        Optional<DishCategory> result = dishCategoryRepository.findById(dishCategoryId);
+//        assertThat(result.isPresent()).isTrue();
+//        assertThat(result.get().getName()).isEqualTo(testNameDishCategory);
+//    }
 
-    @Test
-    public void testDishCategoryFindByName() {
-        Optional<DishCategory> result = dishCategoryRepository.findByName(testNameDishCategory);
-        assertThat(result.isPresent()).isTrue();
-        assertThat(result.get().getName()).isEqualTo(testNameDishCategory);
-    }
+//    @Test
+//    public void testDishCategoryFindByName() {
+//        Optional<DishCategory> result = dishCategoryRepository.findByName(testNameDishCategory);
+//        assertThat(result.isPresent()).isTrue();
+//        assertThat(result.get().getName()).isEqualTo(testNameDishCategory);
+//    }
 
     @Test
     public void testDishCategoryGetAll() {

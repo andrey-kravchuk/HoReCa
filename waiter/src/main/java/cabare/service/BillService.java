@@ -129,7 +129,10 @@ public class BillService {
   }
 
   private Bill getBill(long billId) {
-    return billRepository.findById(billId).orElseThrow(() -> new BillNotFoundException());
+    Employee employee = securityService.getEmployeeFromSession();
+    Cabare cabare = employee.getCabare();
+    return billRepository.findByIdAndCabare(billId, cabare)
+        .orElseThrow(() -> new BillNotFoundException());
   }
 
   @Transactional

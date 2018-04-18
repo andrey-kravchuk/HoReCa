@@ -52,6 +52,9 @@ public class Dish {
   @JoinColumn(name = "dish_category_id", nullable = false)
   private DishCategory dishCategory;
 
+  @ManyToOne
+  @JoinColumn(name = "cabare_id")
+  private Cabare cabare;
 
   public Long getId() {
     return id;
@@ -135,6 +138,14 @@ public class Dish {
 
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
+  }
+
+  public Cabare getCabare() {
+    return cabare;
+  }
+
+  public void setCabare(Cabare cabare) {
+    this.cabare = cabare;
   }
 
   @Override
