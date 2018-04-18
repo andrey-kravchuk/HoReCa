@@ -19,19 +19,19 @@ import java.util.List;
 @RequestMapping("/waiter/dish")
 public class DishController {
 
-    @Autowired
-    private DishService dishService;
+  @Autowired
+  private DishService dishService;
 
-    @RequestMapping(value = "/by_category")
-    public List<DishDto> getDishes(@NotNull(message = "category_id should be specified")
-                                   @Min(value = 1, message = "category_id cannot be less than 1")
-                                   @RequestParam(name = "category_id") Long dishCategoryId
-            , Pageable pageable) {
-        return dishService.getDishesByCategory(dishCategoryId, pageable);
-    }
+  @RequestMapping(value = "/by_category")
+  public List<DishDto> getDishes(@NotNull(message = "category_id should be specified")
+  @Min(value = 1, message = "category_id cannot be less than 1")
+  @RequestParam(name = "category_id") Long dishCategoryId
+      , Pageable pageable) {
+    return dishService.getDishesByCategory(dishCategoryId, pageable);
+  }
 
-    @RequestMapping(value = "/stoplist")
-    public List<DishDto> getStopList() {
-        return dishService.getStopList();
-    }
+  @RequestMapping(value = "/stoplist")
+  public List<DishDto> getStopList() {
+    return dishService.getStopList();
+  }
 }
