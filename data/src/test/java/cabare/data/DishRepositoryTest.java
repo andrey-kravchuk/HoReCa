@@ -25,34 +25,35 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @Transactional
 public class DishRepositoryTest {
-    private final String testNameDish = "Салат Зима";
-    private final String testNameDish1 = "Салат Лето";
-    private Dish dish, dish1;
-    private DishCategory dishCategory;
-    private Pageable pageable;
-    private Page<Dish> result;
-    List<Dish> testList;
 
-    @Autowired
-    private DishRepository dishRepository;
+  private final String testNameDish = "Салат Зима";
+  private final String testNameDish1 = "Салат Лето";
+  private Dish dish, dish1;
+  private DishCategory dishCategory;
+  private Pageable pageable;
+  private Page<Dish> result;
+  List<Dish> testList;
 
-    @Autowired
-    private DishCategoryRepository dishCategoryRepository;
+  @Autowired
+  private DishRepository dishRepository;
 
-    @Before
-    public void init() {
-        dish = new Dish();
-        dish1 = new Dish();
-        dishCategory = new DishCategory();
-        dishCategoryRepository.save(dishCategory);
-        dish.setName(testNameDish);
-        dish1.setName(testNameDish1);
-        dish.setDishCategory(dishCategory);
-        dish1.setDishCategory(dishCategory);
-        dishRepository.save(dish);
-        pageable = new PageRequest(0, 10);
-        testList = new LinkedList<>();
-    }
+  @Autowired
+  private DishCategoryRepository dishCategoryRepository;
+
+  @Before
+  public void init() {
+    dish = new Dish();
+    dish1 = new Dish();
+    dishCategory = new DishCategory();
+    dishCategoryRepository.save(dishCategory);
+    dish.setName(testNameDish);
+    dish1.setName(testNameDish1);
+    dish.setDishCategory(dishCategory);
+    dish1.setDishCategory(dishCategory);
+    dishRepository.save(dish);
+    pageable = new PageRequest(0, 10);
+    testList = new LinkedList<>();
+  }
 
 //    @Test
 //    public void testDishFindById() {
@@ -62,36 +63,36 @@ public class DishRepositoryTest {
 //        assertThat(result.get().getName()).isEqualTo(testNameDish);
 //    }
 
-    @Test
-    //one dish
-    public void testFindDishByDishCategory() {
-        testList.add(dish);
-        result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
-        assertEquals(result.getContent(), testList);
-    }
+  @Test
+  //one dish
+  public void testFindDishByDishCategory() {
+    testList.add(dish);
+    result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+    assertEquals(result.getContent(), testList);
+  }
 
-    @Test
-    //several dishes
-    public void testFindDishesByDishCategory() {
-        testList.add(dish);
-        testList.add(dish1);
-        dishRepository.save(dish1);
-        result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
-        assertEquals(result.getContent(), testList);
-    }
+  @Test
+  //several dishes
+  public void testFindDishesByDishCategory() {
+    testList.add(dish);
+    testList.add(dish1);
+    dishRepository.save(dish1);
+    result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+    assertEquals(result.getContent(), testList);
+  }
 
-    @Test
-    //several dishes, several pages
-    public void testFindDishesByDishCategoryByPages() {
-        testList.add(dish);
-        testList.add(dish1);
-        pageable = new PageRequest(0, 1);
-        dishRepository.save(dish1);
-        result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
-        assertEquals(result.getContent().get(0), testList.get(0));
-        pageable = new PageRequest(1, 1);
-        result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
-        assertEquals(result.getContent().get(0), testList.get(1));
-    }
+  @Test
+  //several dishes, several pages
+  public void testFindDishesByDishCategoryByPages() {
+    testList.add(dish);
+    testList.add(dish1);
+    pageable = new PageRequest(0, 1);
+    dishRepository.save(dish1);
+    result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+    assertEquals(result.getContent().get(0), testList.get(0));
+    pageable = new PageRequest(1, 1);
+    result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+    assertEquals(result.getContent().get(0), testList.get(1));
+  }
 }
 
