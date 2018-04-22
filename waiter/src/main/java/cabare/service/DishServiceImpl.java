@@ -36,7 +36,8 @@ public class DishServiceImpl implements DishService {
     }
     Employee employee = securityService.getEmployeeFromSession();
     Cabare cabare = employee.getCabare();
-    return dishRepository.findByIdAndCabare(dishId, cabare)
+    int day = 1;
+    return dishRepository.findByIdAndCabare(dishId, day, cabare)
         .orElseThrow(() -> new DishNotFoundException());
   }
 

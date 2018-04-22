@@ -17,7 +17,8 @@ import java.util.Optional;
 @Repository
 public interface DishRepository extends JpaRepository<Dish, Long> {
 
-  Optional<Dish> findByIdAndCabare(Long dishId, Cabare cabare);
+  @Query("select d from Dish d where d.id = ?1 and d.startDay <= ?2 and d.endDay >= ?2 and d.cabare = ?3")
+  Optional<Dish> findByIdAndCabare(Long dishId, int dayOfYear, Cabare cabare);
 
   @Query("select d from Dish d where d.quantity = 0 and d.startDay <= ?1 and d.endDay >= ?1 and d.cabare = ?2")
   List<Dish> getStopList(int dayOfYear, Cabare cabare);
