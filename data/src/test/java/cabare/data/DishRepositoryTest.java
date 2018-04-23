@@ -34,6 +34,7 @@ public class DishRepositoryTest {
   private Page<Dish> result;
   private List<Dish> testList;
   private LocalDate date, date1;
+  private int dayOfDate;
 
   @Autowired
   private DishRepository dishRepository;
@@ -66,11 +67,15 @@ public class DishRepositoryTest {
     dishRepository.save(dish);
 
     dish1 = new Dish();
+    dish1.setCabare(cabare);
     String testNameDish1 = "Салат Лето";
     dish1.setName(testNameDish1);
     dish1.setDishCategory(dishCategory);
+    dish1.setStartDay(0);
+    dish1.setEndDay(59);
 
     date = LocalDate.parse("2017-01-20");
+    dayOfDate = date.getDayOfYear();
     date1 = LocalDate.parse("2017-03-20");
     pageable = new PageRequest(0, 10);
     testList = new LinkedList<>();
@@ -80,7 +85,6 @@ public class DishRepositoryTest {
   //happy
   public void findDishByIdAndCabareInPeriod() {
     Long dishId = dish.getId();
-    int dayOfDate = date.getDayOfYear();
     Optional<Dish> result = dishRepository.findByIdAndCabare(dishId, dayOfDate, cabare);
     assertThat(result.isPresent()).isTrue();
     assertEquals(result.get(), dish);
@@ -90,7 +94,7 @@ public class DishRepositoryTest {
   //not happy
   public void findDishByIdAndCabareNotInPeriod() {
     Long dishId = dish.getId();
-    int dayOfDate = date1.getDayOfYear();
+    dayOfDate = date1.getDayOfYear();
     Optional<Dish> result = dishRepository.findByIdAndCabare(dishId, dayOfDate, cabare);
     assertThat(result.isPresent()).isFalse();
   }
@@ -99,7 +103,7 @@ public class DishRepositoryTest {
   //one dish
   public void testFindDishByDishCategory() {
     testList.add(dish);
-    result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+    result = dishRepository.findDishesByDishCategory(dishCategory, dayOfDate, pageable);
     assertEquals(result.getContent(), testList);
   }
 
@@ -109,7 +113,7 @@ public class DishRepositoryTest {
     testList.add(dish);
     testList.add(dish1);
     dishRepository.save(dish1);
-    result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+    result = dishRepository.findDishesByDishCategory(dishCategory, dayOfDate, pageable);
     assertEquals(result.getContent(), testList);
   }
 
@@ -120,10 +124,10 @@ public class DishRepositoryTest {
     testList.add(dish1);
     pageable = new PageRequest(0, 1);
     dishRepository.save(dish1);
-    result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+    result = dishRepository.findDishesByDishCategory(dishCategory, dayOfDate, pageable);
     assertEquals(result.getContent().get(0), testList.get(0));
     pageable = new PageRequest(1, 1);
-    result = dishRepository.findDishesByDishCategory(dishCategory, pageable);
+    result = dishRepository.findDishesByDishCategory(dishCategory, dayOfDate, pageable);
     assertEquals(result.getContent().get(0), testList.get(1));
   }
 }

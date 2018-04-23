@@ -23,6 +23,6 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
   @Query("select d from Dish d where d.quantity = 0 and d.startDay <= ?1 and d.endDay >= ?1 and d.cabare = ?2")
   List<Dish> getStopList(int dayOfYear, Cabare cabare);
 
-  @Query("select d from Dish as d where d.dishCategory = ?1")
-  Page<Dish> findDishesByDishCategory(DishCategory dishCategory, Pageable pageable);
+  @Query("select d from Dish as d where d.dishCategory = ?1 and d.startDay <= ?2 and d.endDay >= ?2")
+  Page<Dish> findDishesByDishCategory(DishCategory dishCategory, int dayOfYear, Pageable pageable);
 }

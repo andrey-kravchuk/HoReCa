@@ -10,6 +10,7 @@ import cabare.exception.DishCategoryNotSpecifiedException;
 import cabare.exception.DishNotFoundException;
 import cabare.exception.DishNotSpecifiedException;
 
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class DishServiceImpl implements DishService {
   @Autowired
   private SecurityService securityService;
 
+  private LocalDate date;
+  private int day;
+
   @Override
   public Dish findByid(Long dishId) {
     if (dishId == null) {
@@ -36,7 +40,8 @@ public class DishServiceImpl implements DishService {
     }
     Employee employee = securityService.getEmployeeFromSession();
     Cabare cabare = employee.getCabare();
-    int day = 1;
+    date = LocalDate.now();
+    day = date.getDayOfYear();
     return dishRepository.findByIdAndCabare(dishId, day, cabare)
         .orElseThrow(() -> new DishNotFoundException());
   }
@@ -47,7 +52,9 @@ public class DishServiceImpl implements DishService {
       throw new DishCategoryNotSpecifiedException();
     }
     DishCategory dishCategory = dishCategoryServices.findById(dishCategoryId);
-    return dishRepository.findDishesByDishCategory(dishCategory, pageable).getContent().stream()
+    date = LocalDate.now();
+    day = date.getDayOfYear();
+    return dishRepository.findDishesByDishCategory(dishCategory, day, pageable).getContent().stream()
         .map(dish -> new DishDto(dish))
         .collect(Collectors.toList());
 
