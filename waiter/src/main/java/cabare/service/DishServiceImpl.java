@@ -30,9 +30,6 @@ public class DishServiceImpl implements DishService {
   @Autowired
   private SecurityService securityService;
 
-  private LocalDate date;
-  private int day;
-
   @Override
   public Dish findByid(Long dishId) {
     if (dishId == null) {
@@ -40,8 +37,8 @@ public class DishServiceImpl implements DishService {
     }
     Employee employee = securityService.getEmployeeFromSession();
     Cabare cabare = employee.getCabare();
-    date = LocalDate.now();
-    day = date.getDayOfYear();
+    LocalDate date = LocalDate.now();
+    int day = date.getDayOfYear();
     return dishRepository.findByIdAndCabare(dishId, day, cabare)
         .orElseThrow(() -> new DishNotFoundException());
   }
@@ -52,9 +49,10 @@ public class DishServiceImpl implements DishService {
       throw new DishCategoryNotSpecifiedException();
     }
     DishCategory dishCategory = dishCategoryServices.findById(dishCategoryId);
-    date = LocalDate.now();
-    day = date.getDayOfYear();
-    return dishRepository.findDishesByDishCategory(dishCategory, day, pageable).getContent().stream()
+    LocalDate date = LocalDate.now();
+    int day = date.getDayOfYear();
+    return dishRepository.findDishesByDishCategory(dishCategory, day, pageable).getContent()
+        .stream()
         .map(dish -> new DishDto(dish))
         .collect(Collectors.toList());
 
