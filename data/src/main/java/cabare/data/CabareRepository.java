@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CabareRepository extends JpaRepository <Cabare, Long>{
+public interface CabareRepository extends JpaRepository<Cabare, Long> {
 
-    Optional <Cabare> findById (Long cabareId);
+  Optional<Cabare> findById(Long cabareId);
 }
