@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "unit_size")
-public class UnitSize {
+@Table(name = "measure")
+public class Measure {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,12 +65,12 @@ public class UnitSize {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof UnitSize)) {
+    if (!(o instanceof Measure)) {
       return false;
     }
-    UnitSize unitSize = (UnitSize) o;
-    return Objects.equals(name, unitSize.name) &&
-        Objects.equals(cabare, unitSize.cabare);
+    Measure measure = (Measure) o;
+    return Objects.equals(name, measure.name) &&
+        Objects.equals(cabare, measure.cabare);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class UnitSize {
 
   @Override
   public String toString() {
-    return "UnitSize{" +
+    return "Measure{" +
         "id=" + id +
         ", name='" + name + '\'' +
         ", abbreviation='" + abbreviation + '\'' +
