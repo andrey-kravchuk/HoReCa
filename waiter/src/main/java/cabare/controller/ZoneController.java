@@ -21,5 +21,5 @@ public class ZoneController {
     public List<ZoneDto> getZones(){
         return zoneService.getZones();
     }
-    
+
 }
