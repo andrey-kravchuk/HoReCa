@@ -8,8 +8,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class DishCategoryDto {
 
-  @NotNull(message = "dish_cabare_id should be specified")
-  @Min(value = 1, message = "dish_cabare_id cannot be less than 1")
   @JsonProperty("id")
   private Long id;
 
@@ -25,8 +23,6 @@ public class DishCategoryDto {
   @JsonProperty("zone_id")
   private Long zoneId;
 
-  @NotNull(message = "category_id should be specified")
-  @Min(value = 1, message = "category_id cannot be less than 1")
   @JsonProperty("cabare_id")
   private Long cabareId;
 
@@ -73,7 +69,11 @@ public class DishCategoryDto {
     this.zoneId = zoneId;
   }
 
-  public Long getCabareId() { return cabareId; }
+  public Long getCabareId() {
+    return cabareId;
+  }
 
-  public void setCabareId(Long cabareId) { this.cabareId = cabareId; }
+  public void setCabareId(Long cabareId) {
+    this.cabareId = cabareId;
+  }
 }

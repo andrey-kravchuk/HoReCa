@@ -17,9 +17,14 @@ public class DishCategoryController {
   @Autowired
   private DishCategoryService dishCategoryService;
 
-  @RequestMapping (value = "/add", method = RequestMethod.POST)
-  public void addDishCategory(@Valid @RequestBody  DishCategoryDto dishCategoryDto){
-    dishCategoryService.addDishCategory (dishCategoryDto);
+  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  public void addDishCategory(@Valid @RequestBody DishCategoryDto dishCategoryDto) {
+    dishCategoryService.addDishCategory(dishCategoryDto);
+  }
+
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public void updateDishCategory(@Valid @RequestBody DishCategoryDto dishCategoryDto) {
+    dishCategoryService.updateDishCategory(dishCategoryDto);
   }
 }
 
