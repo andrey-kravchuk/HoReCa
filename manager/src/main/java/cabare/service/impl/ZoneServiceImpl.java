@@ -1,11 +1,12 @@
 package cabare.service.impl;
 
 import cabare.entity.model.Cabare;
+import cabare.entity.model.Employee;
 import cabare.entity.model.Zone;
 import cabare.exceptions.ZoneNotFoundException;
 import cabare.exceptions.ZoneNotSpecifiedException;
-import cabare.repository.CabareRepository;
 import cabare.repository.ZoneRepository;
+import cabare.service.SecurityService;
 import cabare.service.ZoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ZoneServiceImpl implements ZoneService {
   private ZoneRepository zoneRepository;
 
   @Autowired
-  private CabareRepository cabareRepository;
+  private SecurityService securityService;
 
   @Override
   public void addNewZone(String zoneName) {
@@ -25,7 +26,8 @@ public class ZoneServiceImpl implements ZoneService {
       throw new ZoneNotSpecifiedException();
     } else {
       Zone newZone = new Zone();
-      Cabare cabare = cabareRepository.findById(1L).get();
+      Employee employee = securityService.getEmployeeFromSession();
+      Cabare cabare = employee.getCabare();
       newZone.setCabare(cabare);
       newZone.setName(zoneName);
       zoneRepository.save(newZone);
@@ -37,7 +39,8 @@ public class ZoneServiceImpl implements ZoneService {
     if (zoneId == null){
       throw new ZoneNotSpecifiedException();
     } else {
-      Cabare cabare = cabareRepository.findById(1L).get();
+      Employee employee = securityService.getEmployeeFromSession();
+      Cabare cabare = employee.getCabare();
       Zone updateZone = zoneRepository.findByIdAndCabare(zoneId,cabare)
           .orElseThrow(() -> new ZoneNotFoundException());
       updateZone.setName(zoneUpdateName);
