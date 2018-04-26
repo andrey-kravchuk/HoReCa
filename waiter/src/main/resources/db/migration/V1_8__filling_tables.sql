@@ -94,3 +94,7 @@ INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('1', 'k
 INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('2', 'kv-1234', '30', 1);
 INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('3', 'kv-12345', '20', 1);
 INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('4', 'kv-123456', '10', 1);
+
+#unit_size
+INSERT INTO unit_size (id, name, abbreviation, cabare_id) VALUES ('1', 'Килограммы', 'кг', 1);
+INSERT INTO unit_size (id, name, abbreviation, cabare_id) VALUES ('2', 'Граммы'    , 'гр', 1);
