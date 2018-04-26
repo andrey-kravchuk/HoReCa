@@ -25,3 +25,12 @@ CREATE TABLE dish_category (
   CONSTRAINT fk_dishcategory_zone
   FOREIGN KEY (zone_id) REFERENCES zone (id)
 );
+
+CREATE TABLE unit_size (
+  id            BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name          VARCHAR (255) NOT NULL,
+  cabare_id     BIGINT NOT NULL,
+  CONSTRAINT    fk_unitsize_cabare
+  FOREIGN KEY (cabare_id) REFERENCES cabare (id)
+  UNIQUE (name)
+);

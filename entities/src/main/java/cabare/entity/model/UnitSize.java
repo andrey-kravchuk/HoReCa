@@ -1,6 +1,5 @@
 package cabare.entity.model;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +20,6 @@ public class UnitSize {
 
   @Column(name = "name", unique = true)
   private String name;
-
-  @Column(name = "value")
-  private BigDecimal value;
 
   @Column(name = "abbreviation")
   private String abbreviation;
@@ -46,14 +42,6 @@ public class UnitSize {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public BigDecimal getValue() {
-    return value;
-  }
-
-  public void setValue(BigDecimal value) {
-    this.value = value;
   }
 
   public String getAbbreviation() {
@@ -96,7 +84,6 @@ public class UnitSize {
     return "UnitSize{" +
         "id=" + id +
         ", name='" + name + '\'' +
-        ", value=" + value +
         ", abbreviation='" + abbreviation + '\'' +
         ", cabare=" + cabare +
         '}';
