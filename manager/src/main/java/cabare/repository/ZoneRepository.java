@@ -10,5 +10,4 @@ import org.springframework.stereotype.Repository;
 public interface ZoneRepository extends JpaRepository<Zone, Long> {
 
   Optional<Zone> findByIdAndCabare(Long zoneId, Cabare cabare);
-
 }
