@@ -33,20 +33,20 @@ public class MeasureServiceImpl implements MeasureService {
             Collectors.toList());
   }
 
-  @Override
-  public void addNewMeasure(String name, String abbreviation) {
-    Measure newMeasure = new Measure();
-    newMeasure.setName(name);
-    newMeasure.setAbbreviation(abbreviation);
-    measureRepository.save(newMeasure);
-  }
-
-  @Override
-  public void updateMeasure(Long measureId, String newMeasureName, String newMeasureAbbreviation) {
-    Measure measure = new Measure();
-    measure.setId(measureId);
-    measure.setName(newMeasureName);
-    measure.setAbbreviation(newMeasureAbbreviation);
-    measureRepository.save(measure);
-  }
+//  @Override
+//  public void addNewMeasure(String name, String abbreviation) {
+//    Measure newMeasure = new Measure();
+//    newMeasure.setName(name);
+//    newMeasure.setAbbreviation(abbreviation);
+//    measureRepository.save(newMeasure);
+//  }
+//
+//  @Override
+//  public void updateMeasure(Long measureId, String newMeasureName, String newMeasureAbbreviation) {
+//    Measure measure = new Measure();
+//    measure.setId(measureId);
+//    measure.setName(newMeasureName);
+//    measure.setAbbreviation(newMeasureAbbreviation);
+//    measureRepository.save(measure);
+//  }
 }
