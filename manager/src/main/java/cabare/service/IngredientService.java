@@ -10,7 +10,7 @@ public interface IngredientService {
 
   List<IngredientDto> getPageOfIngredient(Pageable pageable);
 
-  void addNewIngredient(String newIngredientName);
+  void addNewIngredient(String newIngredientName, Long measureId);
 
-  void updateIngredient(Long ingredientId, String ingredientName);
+  void updateIngredient(Long ingredientId, String ingredientName, Long measureId);
 }

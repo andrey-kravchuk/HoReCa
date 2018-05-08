@@ -28,14 +28,16 @@ public class IngredientController {
   }
 
   @RequestMapping(value = "/add", method = RequestMethod.PUT)
-  public void addIngredient(@RequestParam(name = "name") String name) {
-    ingredientServiceImpl.addNewIngredient(name);
+  public void addIngredient(@RequestParam(name = "name") String name,
+      @RequestParam(name = "measure_id") Long measureId) {
+    ingredientServiceImpl.addNewIngredient(name, measureId);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public void updateIngredient(@RequestParam(name = "id") Long ingredientId
-      ,@RequestParam(name = "name") String ingredientNewName){
-    ingredientServiceImpl.updateIngredient(ingredientId, ingredientNewName);
+  public void updateIngredient(@RequestParam(name = "id") Long ingredientId,
+      @RequestParam(name = "name") String ingredientNewName,
+      @RequestParam(name = "measure_id") Long measureId){
+    ingredientServiceImpl.updateIngredient(ingredientId, ingredientNewName, measureId);
   }
 
 }

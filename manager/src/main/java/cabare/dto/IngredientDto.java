@@ -10,12 +10,16 @@ public class IngredientDto {
   @JsonProperty("name")
   private String name;
 
+  @JsonProperty("measure")
+  private String measureAbbreviation;
+
   public IngredientDto() {
   }
 
   public IngredientDto(Ingredient ingredient) {
     this.id = ingredient.getId();
     this.name = ingredient.getName();
+    this.measureAbbreviation = ingredient.getMeasure().getAbbreviation();
   }
 
   public Long getId() {
@@ -34,4 +38,11 @@ public class IngredientDto {
     this.name = name;
   }
 
+  public String getMeasureAbbreviation() {
+    return measureAbbreviation;
+  }
+
+  public void setMeasureAbbreviation(String measureAbbreviation) {
+    this.measureAbbreviation = measureAbbreviation;
+  }
 }

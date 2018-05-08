@@ -45,6 +45,14 @@ public class Ingredient {
     this.name = name;
   }
 
+  public Measure getMeasure() {
+    return measure;
+  }
+
+  public void setMeasure(Measure measure) {
+    this.measure = measure;
+  }
+
   public Cabare getCabare() {
     return cabare;
   }
