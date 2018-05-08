@@ -34,10 +34,13 @@ CREATE TABLE measure (
 );
 
 CREATE TABLE ingredient (
-  id        BIGINT PRIMARY KEY AUTO_INCREMENT,
-  name      VARCHAR(255) NOT NULL,
-  cabare_id BIGINT       NOT NULL,
-  CONSTRAINT fk_ingredient_cabare
+  id          BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name        VARCHAR(255) NOT NULL,
+  measure_id  BIGINT       NOT NULL,
+  cabare_id   BIGINT       NOT NULL,
+  CONSTRAINT  fk_ingredient_measure
+  FOREIGN KEY (measure_id) REFERENCES measure (id),
+  CONSTRAINT  fk_ingredient_cabare
   FOREIGN KEY (cabare_id) REFERENCES cabare (id),
   UNIQUE (name)
 );

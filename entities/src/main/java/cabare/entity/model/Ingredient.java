@@ -22,6 +22,10 @@ public class Ingredient {
   private String name;
 
   @ManyToOne
+  @JoinColumn(name = "measure_id")
+  private Measure measure;
+
+  @ManyToOne
   @JoinColumn(name = "cabare_id")
   private Cabare cabare;
 
@@ -73,6 +77,7 @@ public class Ingredient {
     return "Ingredient{" +
         "id=" + id +
         ", name='" + name + '\'' +
+        ", measure=" + measure +
         ", cabare=" + cabare +
         '}';
   }
