@@ -1,7 +1,7 @@
 package cabare.controller;
 
 
-import cabare.service.ZoneService;
+import cabare.service.impl.ZoneServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class ZoneController {
 
   @Autowired
-  ZoneService zoneService;
+  ZoneServiceImpl zoneServiceImpl;
 
   @RequestMapping(value = "/add", method = RequestMethod.PUT)
-  public void addNewZone(@RequestParam("name") String name){
-    zoneService.addNewZone(name);
+  public void addNewZone(@RequestParam("name") String name) {
+    zoneServiceImpl.addNewZone(name);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public void updateZone(@RequestParam("id") Long zoneId,
-      @RequestParam("name") String name){
-      zoneService.updateZone(zoneId,name);
+      @RequestParam("name") String name) {
+    zoneServiceImpl.updateZone(zoneId, name);
   }
 }

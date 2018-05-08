@@ -1,14 +1,16 @@
 package cabare.service;
 
-import cabare.entity.model.Measure;
+import cabare.dto.MeasureDto;
 import java.util.List;
 
 public interface MeasureService {
 
-  Measure findById(Long measureId);
+  MeasureDto findById(Long measureId);
 
-  List<Measure> getAll();
+  List<MeasureDto> getAll();
 
-  void addNewMeasure(String name, String abriviation);
+  void addNewMeasure(String name, String abbreviation);
+
+  void updateMeasure(Long measureId, String newMeasureName, String newMeasureAbbreviation);
 
 }
