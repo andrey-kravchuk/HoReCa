@@ -25,3 +25,10 @@ CREATE TABLE dish_category (
   CONSTRAINT fk_dishcategory_zone
   FOREIGN KEY (zone_id) REFERENCES zone (id)
 );
+
+CREATE TABLE measure (
+  id            BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name          VARCHAR (255) NOT NULL,
+  abbreviation  VARCHAR (255) NOT NULL,
+  UNIQUE (name)
+);

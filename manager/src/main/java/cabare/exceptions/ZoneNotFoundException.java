@@ -1,13 +1,14 @@
 package cabare.exceptions;
 
 public class ZoneNotFoundException extends ApplicationException {
-    private static String msg = "zone is not found";
 
-    public ZoneNotFoundException(){
-        super(msg);
-    }
+  private static String msg = "zone was not found";
 
-    public ZoneNotFoundException(String message){
-        super(msg + "; " + message);
-    }
+  public ZoneNotFoundException() {
+    super(msg);
+  }
+
+  public ZoneNotFoundException(String message) {
+    super(msg + "; " + message);
+  }
 }
