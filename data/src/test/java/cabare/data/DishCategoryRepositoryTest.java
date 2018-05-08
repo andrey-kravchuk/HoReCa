@@ -14,23 +14,23 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Transactional
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@Transactional
 public class DishCategoryRepositoryTest {
-    private final String testNameDishCategory = "Fishes";
-    private DishCategory dishCategory;
-
-
-    @Autowired
-    private DishCategoryRepository dishCategoryRepository;
-
-    @Before
-    public void init() {
-        dishCategory = new DishCategory();
-        dishCategory.setName(testNameDishCategory);
-        dishCategoryRepository.save(dishCategory);
-    }
+//    private final String testNameDishCategory = "Fishes";
+//    private DishCategory dishCategory;
+//
+//
+//    @Autowired
+//    private DishCategoryRepository dishCategoryRepository;
+//
+//    @Before
+//    public void init() {
+//        dishCategory = new DishCategory();
+//        dishCategory.setName(testNameDishCategory);
+//        dishCategoryRepository.save(dishCategory);
+//    }
 
 //    @Test
 //    public void testDishCategoryFindById() {
@@ -47,12 +47,12 @@ public class DishCategoryRepositoryTest {
 //        assertThat(result.get().getName()).isEqualTo(testNameDishCategory);
 //    }
 
-    @Test
-    public void testDishCategoryGetAll() {
-        List<DishCategory> dishCategoryList = dishCategoryRepository.findAll();
-        assertThat(dishCategoryList.isEmpty()).isFalse();
-        assertThat(dishCategoryList.get(0).getName()).isEqualTo(testNameDishCategory);
-    }
+//    @Test
+//    public void testDishCategoryGetAll() {
+//        List<DishCategory> dishCategoryList = dishCategoryRepository.findAll();
+//        assertThat(dishCategoryList.isEmpty()).isFalse();
+//        assertThat(dishCategoryList.get(0).getName()).isEqualTo(testNameDishCategory);
+//    }
 
 
 }

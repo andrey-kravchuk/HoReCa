@@ -26,16 +26,16 @@ public class MeasureController {
     return measureServiceImpl.getAll();
   }
 
-  @RequestMapping(value = "/add", method = RequestMethod.PUT)
-  public void addMeasure(@RequestParam("name") String name,
-      @RequestParam("abbreviation") String abbreviation) {
-    measureServiceImpl.addNewMeasure(name, abbreviation);
-  }
-
-  @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public void updateMeasure(@RequestParam("id") Long id,
-      @RequestParam("name") String name,
-      @RequestParam("abbreviation") String abbreviation) {
-    measureServiceImpl.updateMeasure(id, name, abbreviation);
-  }
+//  @RequestMapping(value = "/add", method = RequestMethod.PUT)
+//  public void addMeasure(@RequestParam("name") String name,
+//      @RequestParam("abbreviation") String abbreviation) {
+//    measureServiceImpl.addNewMeasure(name, abbreviation);
+//  }
+//
+//  @RequestMapping(value = "/update", method = RequestMethod.POST)
+//  public void updateMeasure(@RequestParam("id") Long id,
+//      @RequestParam("name") String name,
+//      @RequestParam("abbreviation") String abbreviation) {
+//    measureServiceImpl.updateMeasure(id, name, abbreviation);
+//  }
 }

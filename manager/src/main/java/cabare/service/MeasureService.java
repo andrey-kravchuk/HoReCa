@@ -9,8 +9,8 @@ public interface MeasureService {
 
   List<MeasureDto> getAll();
 
-  void addNewMeasure(String name, String abbreviation);
-
-  void updateMeasure(Long measureId, String newMeasureName, String newMeasureAbbreviation);
+//  void addNewMeasure(String name, String abbreviation);
+//
+//  void updateMeasure(Long measureId, String newMeasureName, String newMeasureAbbreviation);
 
 }
