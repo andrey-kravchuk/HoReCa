@@ -95,6 +95,10 @@ INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('2', 'k
 INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('3', 'kv-12345', '20', 1);
 INSERT INTO discount (id, card_number, discount_size, cabare_id) VALUES ('4', 'kv-123456', '10', 1);
 
-#unit_size
+#measure
 INSERT INTO measure (id, name, abbreviation) VALUES ('1', 'Килограммы', 'кг');
 INSERT INTO measure (id, name, abbreviation) VALUES ('2', 'Граммы'    , 'гр');
+
+# ingredient
+INSERT INTO ingredient (id, name, cabare_id) VALUES ('1', 'Молоко', 1);
+INSERT INTO ingredient (id, name, cabare_id) VALUES ('2', 'Мука'  , 1);

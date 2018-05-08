@@ -32,3 +32,12 @@ CREATE TABLE measure (
   abbreviation  VARCHAR (255) NOT NULL,
   UNIQUE (name)
 );
+
+CREATE TABLE ingredient (
+  id        BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name      VARCHAR(255) NOT NULL,
+  cabare_id BIGINT       NOT NULL,
+  CONSTRAINT fk_ingredient_cabare
+  FOREIGN KEY (cabare_id) REFERENCES cabare (id),
+  UNIQUE (name)
+);
