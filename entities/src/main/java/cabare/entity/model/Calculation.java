@@ -34,7 +34,7 @@ public class Calculation {
   private Dish dish;
 
   @ManyToOne
-  @JoinColumn(name = "ingradient_id")
+  @JoinColumn(name = "ingredient_id")
   private Ingredient ingredient;
 
   @Column(name = "quantity")
