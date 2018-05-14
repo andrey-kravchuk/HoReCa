@@ -4,6 +4,7 @@ import cabare.dto.CalculationDto;
 import cabare.entity.model.Calculation;
 import cabare.entity.model.Employee;
 import cabare.exceptions.CalculationNotFoundException;
+import cabare.exceptions.DishNotFoundException;
 import cabare.exceptions.DishNotSpecifiedException;
 import cabare.exceptions.IngredintNotFoundException;
 import cabare.repository.CalculationRepository;
@@ -35,9 +36,10 @@ public class CalculationServiceImpl implements CalculationService {
       throw new DishNotSpecifiedException();
     } else {
       Employee employee = securityService.getEmployeeFromSession();
-      Boolean isNotArchived = false;
-      return new CalculationDto(calculationRepository.getActualCalculationByDishId(dishId,
-          employee.getCabare(), isNotArchived)
+      return new CalculationDto(calculationRepository.findActualByDish(
+          dishRepository.findByIdAndCabare(dishId, employee.getCabare())
+              .orElseThrow(() -> new DishNotFoundException()),
+          employee.getCabare())
           .orElseThrow(() -> new CalculationNotFoundException()));
     }
   }
@@ -50,10 +52,14 @@ public class CalculationServiceImpl implements CalculationService {
     calculation.setNumber(calculationDto.getNumber());
     calculation.setDate(calculationDto.getDate());
     calculation.setCabare(employee.getCabare());
-    calculation.setDishId(calculationDto.getDishId());
-    calculation
-        .setIngredient(ingredientRepository.findByIdAndCabare(calculationDto.getIngredientId(),
-            employee.getCabare()).orElseThrow(() -> new IngredintNotFoundException()));
+
+    calculation.setDish(dishRepository.findByIdAndCabare(calculationDto.getDishId(),
+        employee.getCabare()).orElseThrow(() -> new DishNotFoundException()));
+
+    calculation.setIngredient(ingredientRepository.findByIdAndCabare(calculationDto
+        .getIngredientId(), employee.getCabare())
+        .orElseThrow(() -> new IngredintNotFoundException()));
+
     calculation.setQuantity(calculationDto.getQuantity());
     calculation.setArchived(isNotArchived);
     calculationRepository.save(calculation);
@@ -66,8 +72,9 @@ public class CalculationServiceImpl implements CalculationService {
     Boolean isArchived = true;
 
     Calculation calculation = calculationRepository
-        .getActualCalculationByDishId(calculationDto.getDishId(),
-            employee.getCabare(), isNotArchived)
+        .findActualByDish(dishRepository.findByIdAndCabare(calculationDto.getDishId(),
+            employee.getCabare()).orElseThrow(() -> new DishNotFoundException()),
+            employee.getCabare())
         .orElseThrow(() -> new CalculationNotFoundException());
 
     calculation.setArchived(isArchived);
@@ -76,10 +83,15 @@ public class CalculationServiceImpl implements CalculationService {
     newCalculation.setNumber(calculationDto.getNumber());
     newCalculation.setDate(calculationDto.getDate());
     newCalculation.setCabare(employee.getCabare());
-    newCalculation.setDishId(calculationDto.getDishId());
+
+    newCalculation.setDish(dishRepository.findByIdAndCabare(
+        calculationDto.getDishId(), employee.getCabare())
+        .orElseThrow(() -> new DishNotFoundException()));
+
     newCalculation.setIngredient(ingredientRepository.findByIdAndCabare(
         calculationDto.getIngredientId(), employee.getCabare())
         .orElseThrow(() -> new IngredintNotFoundException()));
+
     newCalculation.setQuantity(calculationDto.getQuantity());
     newCalculation.setArchived(isNotArchived);
     calculationRepository.save(newCalculation);

@@ -31,7 +31,7 @@ public class CalculationDto {
     this.id = calculation.getId();
     this.number = calculation.getNumber();
     this.date = calculation.getDate();
-    this.dishId = calculation.getDishId();
+    this.dishId = calculation.getDish().getId();
     this.ingredientId = calculation.getIngredient().getId();
     this.quantity = calculation.getQuantity();
   }

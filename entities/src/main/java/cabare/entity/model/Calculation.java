@@ -31,7 +31,7 @@ public class Calculation {
 
   @ManyToOne
   @JoinColumn(name = "dish_id")
-  private Long dishId;
+  private Dish dish;
 
   @ManyToOne
   @JoinColumn(name = "ingredient_id")
@@ -41,7 +41,7 @@ public class Calculation {
   private Double quantity;
 
   @Column(name = "is_archived")
-  private boolean isArchived;
+  private boolean archived;
 
   public Long getId() {
     return id;
@@ -75,12 +75,12 @@ public class Calculation {
     this.cabare = cabare;
   }
 
-  public Long getDishId() {
-    return dishId;
+  public Dish getDish() {
+    return dish;
   }
 
-  public void setDishId(Long dishId) {
-    this.dishId = dishId;
+  public void setDish(Dish dish) {
+    this.dish = dish;
   }
 
   public Ingredient getIngredient() {
@@ -100,11 +100,11 @@ public class Calculation {
   }
 
   public boolean isArchived() {
-    return isArchived;
+    return archived;
   }
 
   public void setArchived(boolean archived) {
-    isArchived = archived;
+    archived = archived;
   }
 
   @Override
@@ -134,10 +134,10 @@ public class Calculation {
         ", number=" + number +
         ", date=" + date +
         ", cabare=" + cabare +
-        ", dishId=" + dishId +
+        ", dish=" + dish +
         ", ingredient=" + ingredient +
         ", quantity=" + quantity +
-        ", isArchived=" + isArchived +
+        ", isArchived=" + archived +
         '}';
   }
 }
