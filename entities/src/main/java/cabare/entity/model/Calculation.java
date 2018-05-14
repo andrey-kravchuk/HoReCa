@@ -31,7 +31,7 @@ public class Calculation {
 
   @ManyToOne
   @JoinColumn(name = "dish_id")
-  private Dish dish;
+  private Long dishId;
 
   @ManyToOne
   @JoinColumn(name = "ingredient_id")
@@ -75,12 +75,12 @@ public class Calculation {
     this.cabare = cabare;
   }
 
-  public Dish getDish() {
-    return dish;
+  public Long getDishId() {
+    return dishId;
   }
 
-  public void setDish(Dish dish) {
-    this.dish = dish;
+  public void setDishId(Long dishId) {
+    this.dishId = dishId;
   }
 
   public Ingredient getIngredient() {
@@ -134,7 +134,7 @@ public class Calculation {
         ", number=" + number +
         ", date=" + date +
         ", cabare=" + cabare +
-        ", dish=" + dish +
+        ", dishId=" + dishId +
         ", ingredient=" + ingredient +
         ", quantity=" + quantity +
         ", isArchived=" + isArchived +
