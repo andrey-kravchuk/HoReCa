@@ -1,6 +1,7 @@
 package cabare.controller;
 
 import cabare.dto.EmployeeDto;
+
 import cabare.service.EmployeeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,13 @@ public class EmployeeController {
     return employeeService.getAllEnabledWaiters();
   }
 
-  @RequestMapping(value = "/enabledOn", method = RequestMethod.PUT)
-  public void enabledOn(@RequestParam(name = "id") Long id) {
-    employeeService.enabledOn(id);
+  @RequestMapping(value = "/enable", method = RequestMethod.PUT)
+  public void enable(@RequestParam(name = "id") Long id) {
+    employeeService.enable(id);
   }
 
-  @RequestMapping(value = "/enabledOff", method = RequestMethod.PUT)
-  public void enabledOff(@RequestParam(name = "id") Long id) {
-    employeeService.enabledOff(id);
+  @RequestMapping(value = "/disable", method = RequestMethod.PUT)
+  public void disable(@RequestParam(name = "id") Long id) {
+    employeeService.disable(id);
   }
 }
