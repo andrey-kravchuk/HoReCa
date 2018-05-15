@@ -60,7 +60,7 @@ class InfoServiceImpl implements InfoService {
           minCheck = moneyPaid;
         }
         minCheck = getMin(minCheck, moneyPaid);
-        maxCheck = getMax(minCheck, moneyPaid);
+        maxCheck = getMax(maxCheck, moneyPaid);
         closedBillCount++;
         visitorsServed += bill.getNumberOfPersons();
         set.add(bill.getServedTable());
