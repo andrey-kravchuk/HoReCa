@@ -24,9 +24,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Override
   public EmployeeDto getById(Long employeeId) {
-    if (employeeId == null) {
-      throw new EmployeeNotSpecifiedException();
-    }
     return new EmployeeDto(employeeRepository.findById(employeeId)
         .orElseThrow(() -> new EmployeeNotFoundException()));
   }
@@ -54,9 +51,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Override
   public void enable(Long employeeId) {
-    if (employeeId == null) {
-      throw new EmployeeNotSpecifiedException();
-    }
     Employee employee = employeeRepository.findById(employeeId).get();
     employee.setEnabled(true);
     employeeRepository.save(employee);
@@ -64,9 +58,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Override
   public void disable(Long employeeId) {
-    if (employeeId == null) {
-      throw new EmployeeNotSpecifiedException();
-    }
     Employee employee = employeeRepository.findById(employeeId).get();
     employee.setEnabled(false);
     employeeRepository.save(employee);

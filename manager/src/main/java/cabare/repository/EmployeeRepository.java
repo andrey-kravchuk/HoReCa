@@ -16,7 +16,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
   Optional<Employee> findByEmail(String email);
 
   @Query("select e from Employee e where e.cabare=?1 and e.enabled = true")
-  List <Employee> getAllByEnable (Cabare cabare);
+  List<Employee> getAllByEnable(Cabare cabare);
 
   List<Employee> getAllByCabare(Cabare cabare);
 

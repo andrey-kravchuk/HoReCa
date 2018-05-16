@@ -32,12 +32,12 @@ public class EmployeeController {
     return employeeService.getAllEnabledWaiters();
   }
 
-  @RequestMapping(value = "/enable", method = RequestMethod.PUT)
+  @RequestMapping(value = "/enable", method = RequestMethod.POST)
   public void enable(@RequestParam(name = "id") Long id) {
     employeeService.enable(id);
   }
 
-  @RequestMapping(value = "/disable", method = RequestMethod.PUT)
+  @RequestMapping(value = "/disable", method = RequestMethod.POST)
   public void disable(@RequestParam(name = "id") Long id) {
     employeeService.disable(id);
   }
