@@ -22,12 +22,8 @@ public class Calculation {
   @Column(name = "number")
   private Long number;
 
-  @Column(name = "data")
+  @Column(name = "date")
   private Date date;
-
-  @ManyToOne
-  @JoinColumn(name = "cabare_id", nullable = false)
-  private Cabare cabare;
 
   @ManyToOne
   @JoinColumn(name = "dish_id")
@@ -65,14 +61,6 @@ public class Calculation {
 
   public void setDate(Date date) {
     this.date = date;
-  }
-
-  public Cabare getCabare() {
-    return cabare;
-  }
-
-  public void setCabare(Cabare cabare) {
-    this.cabare = cabare;
   }
 
   public Dish getDish() {
@@ -117,14 +105,13 @@ public class Calculation {
     }
     Calculation that = (Calculation) o;
     return Objects.equals(id, that.id) &&
-        Objects.equals(number, that.number) &&
-        Objects.equals(cabare, that.cabare);
+        Objects.equals(number, that.number);
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(id, number, cabare);
+    return Objects.hash(id, number);
   }
 
   @Override
@@ -133,7 +120,6 @@ public class Calculation {
         "id=" + id +
         ", number=" + number +
         ", date=" + date +
-        ", cabare=" + cabare +
         ", dish=" + dish +
         ", ingredient=" + ingredient +
         ", quantity=" + quantity +

@@ -44,3 +44,4 @@ CREATE TABLE ingredient (
   FOREIGN KEY (cabare_id) REFERENCES cabare (id),
   UNIQUE (name)
 );
+

@@ -30,13 +30,23 @@ public class IngredientServiceImpl implements IngredientService{
   MeasureRepository measureRepository;
 
   @Override
-  public IngredientDto findIngredientById(Long ingredientId) {
+  public IngredientDto findIngredientDtoById(Long ingredientId) {
     if (ingredientId == null){
       throw new IngredientNotSpecifiedException();
     }
     Employee employee = securityService.getEmployeeFromSession();
     return new IngredientDto(ingredientRepository.findByIdAndCabare(ingredientId,employee.getCabare())
         .orElseThrow(() -> new IngredintNotFoundException()));
+  }
+
+  @Override
+  public Ingredient findIngredientById(Long ingredientId){
+    if (ingredientId == null){
+      throw new IngredientNotSpecifiedException();
+    }
+    Employee employee = securityService.getEmployeeFromSession();
+    return ingredientRepository.findByIdAndCabare(ingredientId,employee.getCabare())
+        .orElseThrow(() -> new IngredintNotFoundException());
   }
 
   @Override

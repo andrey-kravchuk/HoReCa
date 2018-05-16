@@ -1,6 +1,5 @@
 package cabare.repository;
 
-import cabare.entity.model.Cabare;
 import cabare.entity.model.Calculation;
 import cabare.entity.model.Dish;
 import java.util.Optional;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CalculationRepository extends JpaRepository<Calculation, Long> {
 
-    @Query("select c from Calculation c where c.archived = false and c.dish = ?1 and c.cabare = ?2")
-    Optional<Calculation> findActualByDish(Dish dish, Cabare cabare);
+    @Query("select c from Calculation c where c.archived = false and c.dish = ?1")
+    Optional<Calculation> findActualByDish(Dish dish);
 
 }

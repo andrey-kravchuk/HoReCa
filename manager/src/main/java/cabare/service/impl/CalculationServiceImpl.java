@@ -2,14 +2,10 @@ package cabare.service.impl;
 
 import cabare.dto.CalculationDto;
 import cabare.entity.model.Calculation;
-import cabare.entity.model.Employee;
+import cabare.entity.model.Dish;
 import cabare.exceptions.CalculationNotFoundException;
-import cabare.exceptions.DishNotFoundException;
 import cabare.exceptions.DishNotSpecifiedException;
-import cabare.exceptions.IngredintNotFoundException;
 import cabare.repository.CalculationRepository;
-import cabare.repository.DishRepository;
-import cabare.repository.IngredientRepository;
 import cabare.service.CalculationService;
 import cabare.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,78 +18,55 @@ public class CalculationServiceImpl implements CalculationService {
   CalculationRepository calculationRepository;
 
   @Autowired
+  DishServiceImpl dishServiceImpl;
+
+  @Autowired
+  IngredientServiceImpl ingredientServiceImpl;
+
+  @Autowired
   SecurityService securityService;
-
-  @Autowired
-  DishRepository dishRepository;
-
-  @Autowired
-  IngredientRepository ingredientRepository;
 
   @Override
   public CalculationDto findByDishId(Long dishId) {
     if (dishId == null) {
       throw new DishNotSpecifiedException();
-    } else {
-      Employee employee = securityService.getEmployeeFromSession();
-      return new CalculationDto(calculationRepository.findActualByDish(
-          dishRepository.findByIdAndCabare(dishId, employee.getCabare())
-              .orElseThrow(() -> new DishNotFoundException()),
-          employee.getCabare())
-          .orElseThrow(() -> new CalculationNotFoundException()));
     }
+    Dish dish = dishServiceImpl.findDishById(dishId);
+    Calculation calculation = calculationRepository.findActualByDish(dish)
+        .orElseThrow(() -> new CalculationNotFoundException());
+    CalculationDto calculationDto = new CalculationDto(calculation);
+    return calculationDto;
   }
+
 
   @Override
   public void addCalculation(CalculationDto calculationDto) {
-    Employee employee = securityService.getEmployeeFromSession();
     Calculation calculation = new Calculation();
-    Boolean isNotArchived = false;
     calculation.setNumber(calculationDto.getNumber());
     calculation.setDate(calculationDto.getDate());
-    calculation.setCabare(employee.getCabare());
-
-    calculation.setDish(dishRepository.findByIdAndCabare(calculationDto.getDishId(),
-        employee.getCabare()).orElseThrow(() -> new DishNotFoundException()));
-
-    calculation.setIngredient(ingredientRepository.findByIdAndCabare(calculationDto
-        .getIngredientId(), employee.getCabare())
-        .orElseThrow(() -> new IngredintNotFoundException()));
-
+    calculation.setDish(dishServiceImpl.findDishById(calculationDto.getDishId()));
+    calculation.setIngredient(ingredientServiceImpl
+        .findIngredientById(calculationDto.getIngredientId()));
     calculation.setQuantity(calculationDto.getQuantity());
-    calculation.setArchived(isNotArchived);
     calculationRepository.save(calculation);
   }
 
   @Override
   public void updateCalculation(CalculationDto calculationDto) {
-    Employee employee = securityService.getEmployeeFromSession();
-    Boolean isNotArchived = false;
     Boolean isArchived = true;
-
-    Calculation calculation = calculationRepository
-        .findActualByDish(dishRepository.findByIdAndCabare(calculationDto.getDishId(),
-            employee.getCabare()).orElseThrow(() -> new DishNotFoundException()),
-            employee.getCabare())
-        .orElseThrow(() -> new CalculationNotFoundException());
-
+    Calculation calculation = calculationRepository.findActualByDish(dishServiceImpl
+        .findDishById(calculationDto.getDishId()))
+        .orElseThrow((() -> new CalculationNotFoundException()));
     calculation.setArchived(isArchived);
+    calculationRepository.save(calculation);
 
     Calculation newCalculation = new Calculation();
     newCalculation.setNumber(calculationDto.getNumber());
     newCalculation.setDate(calculationDto.getDate());
-    newCalculation.setCabare(employee.getCabare());
-
-    newCalculation.setDish(dishRepository.findByIdAndCabare(
-        calculationDto.getDishId(), employee.getCabare())
-        .orElseThrow(() -> new DishNotFoundException()));
-
-    newCalculation.setIngredient(ingredientRepository.findByIdAndCabare(
-        calculationDto.getIngredientId(), employee.getCabare())
-        .orElseThrow(() -> new IngredintNotFoundException()));
-
+    newCalculation.setDish(dishServiceImpl.findDishById(calculationDto.getDishId()));
+    newCalculation.setIngredient(ingredientServiceImpl
+        .findIngredientById(calculationDto.getIngredientId()));
     newCalculation.setQuantity(calculationDto.getQuantity());
-    newCalculation.setArchived(isNotArchived);
-    calculationRepository.save(newCalculation);
+    this.addCalculation(new CalculationDto(newCalculation));
   }
 }

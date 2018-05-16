@@ -19,7 +19,7 @@ public class IngredientController {
 
   @RequestMapping(value = "by_id", method = RequestMethod.GET)
   public IngredientDto findById(@RequestParam(value = "id") Long ingredientId) {
-    return ingredientServiceImpl.findIngredientById(ingredientId);
+    return ingredientServiceImpl.findIngredientDtoById(ingredientId);
   }
 
   @RequestMapping(value = "/all", method = RequestMethod.GET)
