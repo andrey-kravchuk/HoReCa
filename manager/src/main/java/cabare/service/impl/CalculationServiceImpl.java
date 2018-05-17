@@ -4,6 +4,7 @@ import cabare.dto.CalculationDto;
 import cabare.entity.model.Calculation;
 import cabare.entity.model.Dish;
 import cabare.exceptions.CalculationNotFoundException;
+import cabare.exceptions.DishNotFoundException;
 import cabare.exceptions.DishNotSpecifiedException;
 import cabare.repository.CalculationRepository;
 import cabare.service.CalculationService;
@@ -55,8 +56,8 @@ public class CalculationServiceImpl implements CalculationService {
 
   @Override
   public void updateCalculation(CalculationDto calculationDto) {
-    Calculation calculation = calculationRepository.findActualByDish(
-        dishService.findDishById(calculationDto.getDishId()))
+    Dish dish = dishService.findDishById(calculationDto.getDishId());
+    Calculation calculation = calculationRepository.findActualByDish(dish)
         .orElseThrow(() -> new CalculationNotFoundException());
     calculation.setArchived(true);
     calculationRepository.save(calculation);

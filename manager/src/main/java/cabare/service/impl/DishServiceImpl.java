@@ -22,17 +22,6 @@ public class DishServiceImpl implements DishService {
   private SecurityService securityService;
 
   @Override
-  public DishDto findDishDtoById(Long dishId) {
-    if (dishId == null) {
-      throw new DishNotSpecifiedException();
-    }
-    Employee employee = securityService.getEmployeeFromSession();
-    Cabare cabare = employee.getCabare();
-    return new DishDto(dishRepository.findByIdAndCabare(dishId, cabare)
-        .orElseThrow(() -> new DishNotFoundException()));
-  }
-
-  @Override
   public Dish findDishById(Long dishId) {
     if (dishId == null){
       throw new DishNotSpecifiedException();
@@ -44,5 +33,9 @@ public class DishServiceImpl implements DishService {
     return dish;
   }
 
+  @Override
+  public DishDto findDishDtoById(Long dishId) {
+    return new DishDto(this.findDishById(dishId));
+  }
 }
 

@@ -31,12 +31,7 @@ public class IngredientServiceImpl implements IngredientService{
 
   @Override
   public IngredientDto findIngredientDtoById(Long ingredientId) {
-    if (ingredientId == null){
-      throw new IngredientNotSpecifiedException();
-    }
-    Employee employee = securityService.getEmployeeFromSession();
-    return new IngredientDto(ingredientRepository.findByIdAndCabare(ingredientId,employee.getCabare())
-        .orElseThrow(() -> new IngredintNotFoundException()));
+    return new IngredientDto(this.findIngredientById(ingredientId));
   }
 
   @Override
