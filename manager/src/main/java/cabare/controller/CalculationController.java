@@ -1,6 +1,9 @@
 package cabare.controller;
 
 import cabare.dto.CalculationDto;
+import cabare.dto.DishDto;
+import cabare.entity.model.Calculation;
+import cabare.entity.model.Dish;
 import cabare.service.impl.CalculationServiceImpl;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +23,9 @@ public class CalculationController {
   CalculationServiceImpl calculationServiceImpl;
 
   @RequestMapping(value = "/by_dish_id", method = RequestMethod.GET)
-  public CalculationDto findByDishId(@RequestParam("dish_id") Long dishId){
-    return calculationServiceImpl.findByDishId(dishId);
+  public CalculationDto findDishDtoByDishId(@RequestParam("dish_id") Long dishId){
+    Calculation calculation = calculationServiceImpl.findByDishId(dishId);
+    return new CalculationDto(calculation);
   }
 
   @RequestMapping(value = "/add", method = RequestMethod.PUT)

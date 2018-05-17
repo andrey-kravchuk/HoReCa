@@ -7,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface IngredientService {
 
-  IngredientDto findIngredientDtoById(Long ingredientId);
-
   Ingredient findIngredientById(Long ingredientId);
 
   List<IngredientDto> getPageOfIngredient(Pageable pageable);

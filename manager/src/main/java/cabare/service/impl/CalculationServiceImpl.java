@@ -3,6 +3,7 @@ package cabare.service.impl;
 import cabare.dto.CalculationDto;
 import cabare.entity.model.Calculation;
 import cabare.entity.model.Dish;
+import cabare.entity.model.Ingredient;
 import cabare.exceptions.CalculationNotFoundException;
 import cabare.exceptions.DishNotFoundException;
 import cabare.exceptions.DishNotSpecifiedException;
@@ -30,15 +31,14 @@ public class CalculationServiceImpl implements CalculationService {
   SecurityService securityService;
 
   @Override
-  public CalculationDto findByDishId(Long dishId) {
+  public Calculation findByDishId(Long dishId) {
     if (dishId == null) {
       throw new DishNotSpecifiedException();
     }
     Dish dish = dishService.findDishById(dishId);
     Calculation calculation = calculationRepository.findActualByDish(dish)
         .orElseThrow(() -> new CalculationNotFoundException());
-    CalculationDto calculationDto = new CalculationDto(calculation);
-    return calculationDto;
+    return calculation;
   }
 
 
@@ -47,18 +47,17 @@ public class CalculationServiceImpl implements CalculationService {
     Calculation calculation = new Calculation();
     calculation.setNumber(calculationDto.getNumber());
     calculation.setDate(calculationDto.getDate());
-    calculation.setDish(dishService.findDishById(calculationDto.getDishId()));
-    calculation.setIngredient(ingredientService
-        .findIngredientById(calculationDto.getIngredientId()));
+    Dish dish = dishService.findDishById(calculationDto.getDishId());
+    calculation.setDish(dish);
+    Ingredient ingredient = ingredientService.findIngredientById(calculationDto.getIngredientId());
+    calculation.setIngredient(ingredient);
     calculation.setQuantity(calculationDto.getQuantity());
     calculationRepository.save(calculation);
   }
 
   @Override
   public void updateCalculation(CalculationDto calculationDto) {
-    Dish dish = dishService.findDishById(calculationDto.getDishId());
-    Calculation calculation = calculationRepository.findActualByDish(dish)
-        .orElseThrow(() -> new CalculationNotFoundException());
+    Calculation calculation = this.findByDishId(calculationDto.getDishId());
     calculation.setArchived(true);
     calculationRepository.save(calculation);
 

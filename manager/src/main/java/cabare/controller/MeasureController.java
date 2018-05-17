@@ -1,7 +1,8 @@
 package cabare.controller;
 
 import cabare.dto.MeasureDto;
-import cabare.service.impl.MeasureServiceImpl;
+import cabare.entity.model.Measure;
+import cabare.service.MeasureService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,16 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MeasureController {
 
   @Autowired
-  MeasureServiceImpl measureServiceImpl;
+  MeasureService measureService;
 
   @RequestMapping(value = "/by_id", method = RequestMethod.GET)
   public MeasureDto findById(@RequestParam("id") Long measureDtoId) {
-    return measureServiceImpl.findById(measureDtoId);
+    Measure measure = measureService.findById(measureDtoId);
+    return new MeasureDto(measure);
   }
 
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   public List<MeasureDto> getAll() {
-    return measureServiceImpl.getAll();
+    return measureService.getAll();
   }
 
 //  @RequestMapping(value = "/add", method = RequestMethod.PUT)

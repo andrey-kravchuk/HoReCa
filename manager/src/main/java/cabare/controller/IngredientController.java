@@ -1,7 +1,8 @@
 package cabare.controller;
 
 import cabare.dto.IngredientDto;
-import cabare.service.impl.IngredientServiceImpl;
+import cabare.entity.model.Ingredient;
+import cabare.service.IngredientService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -15,29 +16,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class IngredientController {
 
   @Autowired
-  IngredientServiceImpl ingredientServiceImpl;
+  IngredientService ingredientService;
 
   @RequestMapping(value = "by_id", method = RequestMethod.GET)
   public IngredientDto findById(@RequestParam(value = "id") Long ingredientId) {
-    return ingredientServiceImpl.findIngredientDtoById(ingredientId);
+    Ingredient ingredient = ingredientService.findIngredientById(ingredientId);
+    return new IngredientDto(ingredient);
   }
 
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   public List<IngredientDto> getAll(Pageable pageable) {
-    return ingredientServiceImpl.getPageOfIngredient(pageable);
+    return ingredientService.getPageOfIngredient(pageable);
   }
 
   @RequestMapping(value = "/add", method = RequestMethod.PUT)
   public void addIngredient(@RequestParam(name = "name") String name,
       @RequestParam(name = "measure_id") Long measureId) {
-    ingredientServiceImpl.addNewIngredient(name, measureId);
+    ingredientService.addNewIngredient(name, measureId);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public void updateIngredient(@RequestParam(name = "id") Long ingredientId,
       @RequestParam(name = "name") String ingredientNewName,
       @RequestParam(name = "measure_id") Long measureId){
-    ingredientServiceImpl.updateIngredient(ingredientId, ingredientNewName, measureId);
+    ingredientService.updateIngredient(ingredientId, ingredientNewName, measureId);
   }
 
 }

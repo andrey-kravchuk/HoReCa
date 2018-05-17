@@ -33,9 +33,5 @@ public class DishServiceImpl implements DishService {
     return dish;
   }
 
-  @Override
-  public DishDto findDishDtoById(Long dishId) {
-    return new DishDto(this.findDishById(dishId));
-  }
 }
 

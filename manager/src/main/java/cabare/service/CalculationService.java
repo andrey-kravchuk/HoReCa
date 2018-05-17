@@ -1,11 +1,11 @@
 package cabare.service;
 
 import cabare.dto.CalculationDto;
-import java.util.Date;
+import cabare.entity.model.Calculation;
 
 public interface CalculationService {
 
-  CalculationDto findByDishId(Long dishId);
+  Calculation findByDishId(Long dishId);
 
   void addCalculation(CalculationDto calculationDto);
 

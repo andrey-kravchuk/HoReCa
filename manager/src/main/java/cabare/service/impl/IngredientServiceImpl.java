@@ -3,6 +3,7 @@ package cabare.service.impl;
 import cabare.dto.IngredientDto;
 import cabare.entity.model.Employee;
 import cabare.entity.model.Ingredient;
+import cabare.entity.model.Measure;
 import cabare.exceptions.IngredientNotSpecifiedException;
 import cabare.exceptions.IngredintNotFoundException;
 import cabare.exceptions.MeasureNotFoundException;
@@ -10,6 +11,7 @@ import cabare.exceptions.MeasureNotSpecifiedException;
 import cabare.repository.IngredientRepository;
 import cabare.repository.MeasureRepository;
 import cabare.service.IngredientService;
+import cabare.service.MeasureService;
 import cabare.service.SecurityService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,12 +29,7 @@ public class IngredientServiceImpl implements IngredientService{
   SecurityService securityService;
 
   @Autowired
-  MeasureRepository measureRepository;
-
-  @Override
-  public IngredientDto findIngredientDtoById(Long ingredientId) {
-    return new IngredientDto(this.findIngredientById(ingredientId));
-  }
+  MeasureService measureService;
 
   @Override
   public Ingredient findIngredientById(Long ingredientId){
@@ -62,8 +59,8 @@ public class IngredientServiceImpl implements IngredientService{
     Employee employee = securityService.getEmployeeFromSession();
     Ingredient newIngredient = new Ingredient();
     newIngredient.setName(newIngredientName);
-    newIngredient.setMeasure(measureRepository.findById(measureId)
-        .orElseThrow(() -> new MeasureNotFoundException()));
+    Measure measure = measureService.findById(measureId);
+    newIngredient.setMeasure(measure);
     newIngredient.setCabare(employee.getCabare());
     ingredientRepository.save(newIngredient);
 
@@ -77,15 +74,10 @@ public class IngredientServiceImpl implements IngredientService{
     if (ingredientId == null){
       throw new IngredientNotSpecifiedException();
     }
-    Employee employee = securityService.getEmployeeFromSession();
-    Ingredient ingredient = ingredientRepository
-        .findByIdAndCabare(ingredientId, employee.getCabare())
-        .orElseThrow(() -> new IngredintNotFoundException());
-    ingredient.setId(ingredientId);
+    Ingredient ingredient = this.findIngredientById(ingredientId);
     ingredient.setName(ingredientName);
-    ingredient.setMeasure(measureRepository.findById(measureId)
-        .orElseThrow(() -> new MeasureNotFoundException()));
-    ingredient.setCabare(employee.getCabare());
+    Measure measure = measureService.findById(measureId);
+    ingredient.setMeasure(measure);
     ingredientRepository.save(ingredient);
   }
 }
