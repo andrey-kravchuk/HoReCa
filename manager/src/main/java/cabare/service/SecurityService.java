@@ -1,6 +1,5 @@
 package cabare.service;
 
-
 import cabare.entity.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

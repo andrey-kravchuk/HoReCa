@@ -1,27 +1,21 @@
 package cabare.service;
 
+import cabare.dto.EmployeeDto;
 import cabare.entity.model.Employee;
-import cabare.exceptions.EmployeeNotFoundException;
-import cabare.exceptions.EmployeeNotSpecifiedException;
-import cabare.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class EmployeeService {
+public interface EmployeeService {
 
-  @Autowired
-  private EmployeeRepository employeeRepository;
+  EmployeeDto getById(Long employeeId);
 
-  public Employee getById(Long employeeId) {
-    if (employeeId == null) {
-      throw new EmployeeNotSpecifiedException();
-    }
-    return employeeRepository.findById(employeeId)
-        .orElseThrow(() -> new EmployeeNotFoundException());
-  }
+  Employee findByEmail(String email);
 
-  public Employee findByEmail(String email) {
-    return employeeRepository.findByEmail(email).orElseThrow(() -> new EmployeeNotFoundException());
-  }
+  List<EmployeeDto> getAllWaiters();
+
+  List<EmployeeDto> getAllEnabledWaiters();
+
+  void enable(Long employeeId);
+
+  void disable(Long employeeId);
+
 }
