@@ -1,10 +1,8 @@
 package cabare.controller;
 
 import cabare.dto.CalculationDto;
-import cabare.dto.DishDto;
 import cabare.entity.model.Calculation;
-import cabare.entity.model.Dish;
-import cabare.service.impl.CalculationServiceImpl;
+import cabare.service.CalculationService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -20,21 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalculationController {
 
   @Autowired
-  CalculationServiceImpl calculationServiceImpl;
+  CalculationService calculationService;
 
   @RequestMapping(value = "/by_dish_id", method = RequestMethod.GET)
-  public CalculationDto findDishDtoByDishId(@RequestParam("dish_id") Long dishId){
-    Calculation calculation = calculationServiceImpl.findByDishId(dishId);
+  public CalculationDto findDishDtoByDishId(@RequestParam("dish_id") Long dishId) {
+    Calculation calculation = calculationService.findByDishId(dishId);
     return new CalculationDto(calculation);
   }
 
   @RequestMapping(value = "/add", method = RequestMethod.PUT)
-  public void addCalculation(@RequestBody @Valid CalculationDto calculationDto){
-    calculationServiceImpl.addCalculation(calculationDto);
+  public void addCalculation(@RequestBody @Valid CalculationDto calculationDto) {
+    calculationService.addCalculation(calculationDto);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public void updateCalculation(@RequestBody @Valid CalculationDto calculationDto){
-    calculationServiceImpl.updateCalculation(calculationDto);
+  public void updateCalculation(@RequestBody @Valid CalculationDto calculationDto) {
+    calculationService.updateCalculation(calculationDto);
   }
 }
