@@ -24,7 +24,7 @@ CREATE TABLE calculation (
   dish_id           BIGINT        NOT NULL,
   ingredient_id     BIGINT        NOT NULL,
   quantity          DOUBLE,
-  is_archived       BIT           DEFAULT b'0'         NOT NULL,
+  archived          BIT           DEFAULT b'0'         NOT NULL,
   CONSTRAINT fk_calculation_dish
   FOREIGN KEY (dish_id) REFERENCES dish (id),
   CONSTRAINT fk_calculation_ingredient

@@ -2,7 +2,7 @@ package cabare.dto;
 
 import cabare.entity.model.Calculation;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CalculationDto {
 
@@ -13,7 +13,7 @@ public class CalculationDto {
   private Long number;
 
   @JsonProperty(value = "date")
-  private Date date;
+  private LocalDate date;
 
   @JsonProperty(value = "dish_id")
   private Long dishId;
@@ -52,11 +52,11 @@ public class CalculationDto {
     this.number = number;
   }
 
-  public Date getDate() {
+  public LocalDate getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(LocalDate date) {
     this.date = date;
   }
 

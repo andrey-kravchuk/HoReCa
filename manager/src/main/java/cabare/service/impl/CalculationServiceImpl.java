@@ -7,6 +7,8 @@ import cabare.exceptions.CalculationNotFoundException;
 import cabare.exceptions.DishNotSpecifiedException;
 import cabare.repository.CalculationRepository;
 import cabare.service.CalculationService;
+import cabare.service.DishService;
+import cabare.service.IngredientService;
 import cabare.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,10 @@ public class CalculationServiceImpl implements CalculationService {
   CalculationRepository calculationRepository;
 
   @Autowired
-  DishServiceImpl dishServiceImpl;
+  DishService dishService;
 
   @Autowired
-  IngredientServiceImpl ingredientServiceImpl;
+  IngredientService ingredientService;
 
   @Autowired
   SecurityService securityService;
@@ -31,7 +33,7 @@ public class CalculationServiceImpl implements CalculationService {
     if (dishId == null) {
       throw new DishNotSpecifiedException();
     }
-    Dish dish = dishServiceImpl.findDishById(dishId);
+    Dish dish = dishService.findDishById(dishId);
     Calculation calculation = calculationRepository.findActualByDish(dish)
         .orElseThrow(() -> new CalculationNotFoundException());
     CalculationDto calculationDto = new CalculationDto(calculation);
@@ -44,8 +46,8 @@ public class CalculationServiceImpl implements CalculationService {
     Calculation calculation = new Calculation();
     calculation.setNumber(calculationDto.getNumber());
     calculation.setDate(calculationDto.getDate());
-    calculation.setDish(dishServiceImpl.findDishById(calculationDto.getDishId()));
-    calculation.setIngredient(ingredientServiceImpl
+    calculation.setDish(dishService.findDishById(calculationDto.getDishId()));
+    calculation.setIngredient(ingredientService
         .findIngredientById(calculationDto.getIngredientId()));
     calculation.setQuantity(calculationDto.getQuantity());
     calculationRepository.save(calculation);
@@ -53,20 +55,12 @@ public class CalculationServiceImpl implements CalculationService {
 
   @Override
   public void updateCalculation(CalculationDto calculationDto) {
-    Boolean isArchived = true;
-    Calculation calculation = calculationRepository.findActualByDish(dishServiceImpl
-        .findDishById(calculationDto.getDishId()))
-        .orElseThrow((() -> new CalculationNotFoundException()));
-    calculation.setArchived(isArchived);
+    Calculation calculation = calculationRepository.findActualByDish(
+        dishService.findDishById(calculationDto.getDishId()))
+        .orElseThrow(() -> new CalculationNotFoundException());
+    calculation.setArchived(true);
     calculationRepository.save(calculation);
 
-    Calculation newCalculation = new Calculation();
-    newCalculation.setNumber(calculationDto.getNumber());
-    newCalculation.setDate(calculationDto.getDate());
-    newCalculation.setDish(dishServiceImpl.findDishById(calculationDto.getDishId()));
-    newCalculation.setIngredient(ingredientServiceImpl
-        .findIngredientById(calculationDto.getIngredientId()));
-    newCalculation.setQuantity(calculationDto.getQuantity());
-    this.addCalculation(new CalculationDto(newCalculation));
+    this.addCalculation(calculationDto);
   }
 }

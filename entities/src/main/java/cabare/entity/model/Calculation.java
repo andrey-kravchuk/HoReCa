@@ -1,6 +1,6 @@
 package cabare.entity.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class Calculation {
   private Long number;
 
   @Column(name = "date")
-  private Date date;
+  private LocalDate date;
 
   @ManyToOne
   @JoinColumn(name = "dish_id")
@@ -36,7 +36,7 @@ public class Calculation {
   @Column(name = "quantity")
   private Double quantity;
 
-  @Column(name = "is_archived")
+  @Column(name = "archived")
   private boolean archived;
 
   public Long getId() {
@@ -55,11 +55,11 @@ public class Calculation {
     this.number = number;
   }
 
-  public Date getDate() {
+  public LocalDate getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(LocalDate date) {
     this.date = date;
   }
 
@@ -92,7 +92,7 @@ public class Calculation {
   }
 
   public void setArchived(boolean archived) {
-    archived = archived;
+    this.archived = archived;
   }
 
   @Override
@@ -104,14 +104,15 @@ public class Calculation {
       return false;
     }
     Calculation that = (Calculation) o;
-    return Objects.equals(id, that.id) &&
-        Objects.equals(number, that.number);
+    return Objects.equals(number, that.number) &&
+        Objects.equals(dish, that.dish) &&
+        Objects.equals(quantity, that.quantity);
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(id, number);
+    return Objects.hash(number, dish, quantity);
   }
 
   @Override
@@ -123,7 +124,7 @@ public class Calculation {
         ", dish=" + dish +
         ", ingredient=" + ingredient +
         ", quantity=" + quantity +
-        ", isArchived=" + archived +
+        ", archived=" + archived +
         '}';
   }
 }
