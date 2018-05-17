@@ -1,6 +1,6 @@
 package cabare.entity.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,12 +22,8 @@ public class Calculation {
   @Column(name = "number")
   private Long number;
 
-  @Column(name = "data")
-  private Date date;
-
-  @ManyToOne
-  @JoinColumn(name = "cabare_id", nullable = false)
-  private Cabare cabare;
+  @Column(name = "date")
+  private LocalDate date;
 
   @ManyToOne
   @JoinColumn(name = "dish_id")
@@ -40,8 +36,8 @@ public class Calculation {
   @Column(name = "quantity")
   private Double quantity;
 
-  @Column(name = "is_archived")
-  private boolean isArchived;
+  @Column(name = "archived")
+  private boolean archived;
 
   public Long getId() {
     return id;
@@ -59,20 +55,12 @@ public class Calculation {
     this.number = number;
   }
 
-  public Date getDate() {
+  public LocalDate getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(LocalDate date) {
     this.date = date;
-  }
-
-  public Cabare getCabare() {
-    return cabare;
-  }
-
-  public void setCabare(Cabare cabare) {
-    this.cabare = cabare;
   }
 
   public Dish getDish() {
@@ -100,11 +88,11 @@ public class Calculation {
   }
 
   public boolean isArchived() {
-    return isArchived;
+    return archived;
   }
 
   public void setArchived(boolean archived) {
-    isArchived = archived;
+    this.archived = archived;
   }
 
   @Override
@@ -116,15 +104,15 @@ public class Calculation {
       return false;
     }
     Calculation that = (Calculation) o;
-    return Objects.equals(id, that.id) &&
-        Objects.equals(number, that.number) &&
-        Objects.equals(cabare, that.cabare);
+    return Objects.equals(number, that.number) &&
+        Objects.equals(dish, that.dish) &&
+        Objects.equals(quantity, that.quantity);
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(id, number, cabare);
+    return Objects.hash(number, dish, quantity);
   }
 
   @Override
@@ -133,11 +121,10 @@ public class Calculation {
         "id=" + id +
         ", number=" + number +
         ", date=" + date +
-        ", cabare=" + cabare +
         ", dish=" + dish +
         ", ingredient=" + ingredient +
         ", quantity=" + quantity +
-        ", isArchived=" + isArchived +
+        ", archived=" + archived +
         '}';
   }
 }

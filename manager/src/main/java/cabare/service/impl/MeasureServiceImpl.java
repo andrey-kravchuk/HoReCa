@@ -18,12 +18,13 @@ public class MeasureServiceImpl implements MeasureService {
   MeasureRepository measureRepository;
 
   @Override
-  public MeasureDto findById(Long measureId) {
+  public Measure findById(Long measureId) {
     if (measureId == null) {
       throw new MeasureNotSpecifiedException();
     }
-    return new MeasureDto(measureRepository.findById(measureId)
-        .orElseThrow(() -> new MeasureNotFoundException()));
+    Measure measure = measureRepository.findById(measureId)
+        .orElseThrow(() -> new MeasureNotFoundException());
+    return measure;
   }
 
   @Override

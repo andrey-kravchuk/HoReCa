@@ -103,3 +103,7 @@ INSERT INTO measure (id, name, abbreviation) VALUES ('3', 'Литры'     , 'л
 # ingredient
 INSERT INTO ingredient (id, name, measure_id, cabare_id) VALUES ('1', 'Молоко', 3, 1);
 INSERT INTO ingredient (id, name, measure_id, cabare_id) VALUES ('2', 'Мука'  , 2, 1);
+
+# calculation
+INSERT INTO calculation (id, number, date, dish_id, ingredient_id, quantity)
+VALUES                  ('1', '1', '2018-05-13', '1', '1', '20.55');
