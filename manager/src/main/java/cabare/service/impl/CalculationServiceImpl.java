@@ -8,9 +8,11 @@ import cabare.repository.CalculationRepository;
 import cabare.service.CalculationService;
 import cabare.service.DishService;
 import cabare.service.IngredientService;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CalculationServiceImpl implements CalculationService {
@@ -31,10 +33,11 @@ public class CalculationServiceImpl implements CalculationService {
     return recipe;
   }
 
-
+  @Transactional
   @Override
   public void addRecipe(Long dishId, List<CalculationDto> recipe) {
     Dish dish = dishService.findDishById(dishId);
+    List<Calculation> newRecipe = new ArrayList<>();
     for (CalculationDto c : recipe) {
       Calculation calculation = new Calculation();
       calculation.setDish(dish);
@@ -43,18 +46,21 @@ public class CalculationServiceImpl implements CalculationService {
       calculation.setIngredient(ingredient);
       Double quantity = c.getQuantity();
       calculation.setQuantity(quantity);
-      calculationRepository.save(calculation);
+      newRecipe.add(calculation);
     }
+    calculationRepository.save(newRecipe);
   }
 
+  @Transactional
   @Override
   public void updateRecipe(Long dishId, List<CalculationDto> recipe) {
     List<Calculation> actualRecipe = this.getRecipe(dishId);
 
     for (Calculation ac : actualRecipe) {
       ac.setArchived(true);
-      calculationRepository.save(ac);
     }
+
+    calculationRepository.save(actualRecipe);
 
     this.addRecipe(dishId, recipe);
   }
