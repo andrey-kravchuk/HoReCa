@@ -32,7 +32,7 @@ public class CalculationDto {
     this.ingredientId = calculation.getIngredient().getId();
     this.ingredientName = calculation.getIngredient().getName();
     this.quantity = calculation.getQuantity();
-    this.measureAbbreviation = calculation.getIngredient().getMeasure().getName();
+    this.measureAbbreviation = calculation.getIngredient().getMeasure().getAbbreviation();
   }
 
   public Long getIngredientId() {
