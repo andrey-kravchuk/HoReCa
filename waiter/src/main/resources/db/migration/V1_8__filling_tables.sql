@@ -105,5 +105,5 @@ INSERT INTO ingredient (id, name, measure_id, cabare_id) VALUES ('1', 'Моло�
 INSERT INTO ingredient (id, name, measure_id, cabare_id) VALUES ('2', 'Мука'  , 2, 1);
 
 # calculation
-INSERT INTO calculation (id, number, date, dish_id, ingredient_id, quantity)
-VALUES                  ('1', '1', '2018-05-13', '1', '1', '20.55');
+INSERT INTO calculation (id, dish_id, ingredient_id, quantity) VALUES ('1', '1', '1', '20.5');
+INSERT INTO calculation (id, dish_id, ingredient_id, quantity) VALUES ('2', '1', '2', '30.5');
