@@ -19,12 +19,6 @@ public class Calculation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "number")
-  private Long number;
-
-  @Column(name = "date")
-  private LocalDate date;
-
   @ManyToOne
   @JoinColumn(name = "dish_id")
   private Dish dish;
@@ -45,22 +39,6 @@ public class Calculation {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public Long getNumber() {
-    return number;
-  }
-
-  public void setNumber(Long number) {
-    this.number = number;
-  }
-
-  public LocalDate getDate() {
-    return date;
-  }
-
-  public void setDate(LocalDate date) {
-    this.date = date;
   }
 
   public Dish getDish() {
@@ -104,23 +82,20 @@ public class Calculation {
       return false;
     }
     Calculation that = (Calculation) o;
-    return Objects.equals(number, that.number) &&
-        Objects.equals(dish, that.dish) &&
-        Objects.equals(quantity, that.quantity);
+    return Objects.equals(dish, that.dish) &&
+           Objects.equals(quantity, that.quantity);
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(number, dish, quantity);
+    return Objects.hash(dish, quantity);
   }
 
   @Override
   public String toString() {
     return "Calculation{" +
         "id=" + id +
-        ", number=" + number +
-        ", date=" + date +
         ", dish=" + dish +
         ", ingredient=" + ingredient +
         ", quantity=" + quantity +

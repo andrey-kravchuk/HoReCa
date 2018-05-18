@@ -19,8 +19,6 @@ CREATE TABLE dish
 
 CREATE TABLE calculation (
   id                BIGINT        PRIMARY KEY          AUTO_INCREMENT,
-  number            BIGINT        NOT NULL,
-  date              DATE,
   dish_id           BIGINT        NOT NULL,
   ingredient_id     BIGINT        NOT NULL,
   quantity          DOUBLE,

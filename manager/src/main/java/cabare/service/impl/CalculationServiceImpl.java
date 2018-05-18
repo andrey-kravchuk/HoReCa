@@ -4,14 +4,11 @@ import cabare.dto.CalculationDto;
 import cabare.entity.model.Calculation;
 import cabare.entity.model.Dish;
 import cabare.entity.model.Ingredient;
-import cabare.exceptions.CalculationNotFoundException;
-import cabare.exceptions.DishNotFoundException;
-import cabare.exceptions.DishNotSpecifiedException;
 import cabare.repository.CalculationRepository;
 import cabare.service.CalculationService;
 import cabare.service.DishService;
 import cabare.service.IngredientService;
-import cabare.service.SecurityService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,40 +24,40 @@ public class CalculationServiceImpl implements CalculationService {
   @Autowired
   IngredientService ingredientService;
 
-  @Autowired
-  SecurityService securityService;
-
   @Override
-  public Calculation findByDishId(Long dishId) {
-    if (dishId == null) {
-      throw new DishNotSpecifiedException();
-    }
+  public List<Calculation> getRecipe(Long dishId) {
     Dish dish = dishService.findDishById(dishId);
-    Calculation calculation = calculationRepository.findActualByDish(dish)
-        .orElseThrow(() -> new CalculationNotFoundException());
-    return calculation;
+    List<Calculation> recipe = calculationRepository.findActualByDish(dish);
+    return recipe;
   }
 
 
   @Override
-  public void addCalculation(CalculationDto calculationDto) {
-    Calculation calculation = new Calculation();
-    calculation.setNumber(calculationDto.getNumber());
-    calculation.setDate(calculationDto.getDate());
-    Dish dish = dishService.findDishById(calculationDto.getDishId());
-    calculation.setDish(dish);
-    Ingredient ingredient = ingredientService.findIngredientById(calculationDto.getIngredientId());
-    calculation.setIngredient(ingredient);
-    calculation.setQuantity(calculationDto.getQuantity());
-    calculationRepository.save(calculation);
+  public void addRecipe(Long dishId, List<CalculationDto> recipe) {
+    Dish dish = dishService.findDishById(dishId);
+    for (CalculationDto c : recipe) {
+      Calculation calculation = new Calculation();
+      calculation.setDish(dish);
+      Long ingredientId = c.getIngredientId();
+      Ingredient ingredient = ingredientService.findIngredientById(ingredientId);
+      calculation.setIngredient(ingredient);
+      Double quantity = c.getQuantity();
+      calculation.setQuantity(quantity);
+      calculationRepository.save(calculation);
+    }
   }
 
   @Override
-  public void updateCalculation(CalculationDto calculationDto) {
-    Calculation calculation = this.findByDishId(calculationDto.getDishId());
-    calculation.setArchived(true);
-    calculationRepository.save(calculation);
+  public void updateRecipe(Long dishId, List<CalculationDto> recipe) {
+    List<Calculation> actualRecipe = this.getRecipe(dishId);
 
-    this.addCalculation(calculationDto);
+    for (Calculation ac : actualRecipe) {
+      ac.setArchived(true);
+      calculationRepository.save(ac);
+    }
+
+    this.addRecipe(dishId, recipe);
   }
+
+
 }
