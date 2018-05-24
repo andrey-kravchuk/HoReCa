@@ -47,6 +47,9 @@ public class DishDto {
   @JsonProperty("quantity")
   public Integer quantity;
 
+  @JsonProperty ("isArchived")
+  private Boolean isArchived = false;
+
   public DishDto() {
   }
 
@@ -60,6 +63,7 @@ public class DishDto {
     this.startDay = dish.getStartDay();
     this.endDay = dish.getEndDay();
     this.quantity = dish.getQuantity();
+    this.isArchived = dish.getArchived();
   }
 
   public Long getId() {
@@ -133,6 +137,10 @@ public class DishDto {
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
+
+  public Boolean getArchived() { return isArchived; }
+
+  public void setArchived(Boolean archived) { isArchived = archived; }
 }
 
 

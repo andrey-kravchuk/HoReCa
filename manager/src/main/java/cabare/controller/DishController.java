@@ -1,14 +1,57 @@
 package cabare.controller;
 
+import cabare.dto.DishDto;
+import cabare.entity.model.Dish;
+import cabare.service.DishService;
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/manager")
+@RequestMapping(value = "/manager/dish")
 public class DishController {
 
-  @RequestMapping(value = "/test")
-  public String test(){
-    return "test";
+  @Autowired
+  private DishService dishService;
+
+  @RequestMapping(value = "/by_id", method = RequestMethod.GET)
+  public Dish findDishById(Long id) {
+    return dishService.findDishById(id);
+  }
+
+  @RequestMapping(value = "/add", method = RequestMethod.PUT)
+  public void addDish(@Valid @RequestBody DishDto dishDto) {
+    dishService.addDish(dishDto);
+  }
+
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public void updateDish(@Valid @RequestBody DishDto dishDto) throws Exception {
+    dishService.updateDish(dishDto);
+  }
+
+  @RequestMapping(value = "/archive", method = RequestMethod.POST)
+  public void archive(Long id) {
+    dishService.archive(id);
+  }
+
+  @RequestMapping(value = "/unarchive", method = RequestMethod.POST)
+  public void unarchive(Long id) {
+    dishService.unarchive(id);
+  }
+
+  @RequestMapping(value = "seasonality", method = RequestMethod.POST)
+  public void seasonalityOfDish(Long id,
+      @RequestParam (name = "start_day") Integer startDay,
+      @RequestParam (name = "end_day") Integer endDay) {
+    dishService.seasonalityOfDish(id, startDay, endDay);
+  }
+
+  @RequestMapping(value = "/price", method = RequestMethod.POST)
+  public void changePrice(Long id, String price) {
+    dishService.changePrice(id, price);
   }
 }
