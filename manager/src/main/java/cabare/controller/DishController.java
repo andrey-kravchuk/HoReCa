@@ -5,12 +5,14 @@ import cabare.entity.model.Dish;
 import cabare.service.DishService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @RestController
 @RequestMapping(value = "/manager/dish")
 public class DishController {
@@ -19,8 +21,8 @@ public class DishController {
   private DishService dishService;
 
   @RequestMapping(value = "/by_id", method = RequestMethod.GET)
-  public Dish findDishById(Long id) {
-    return dishService.findDishById(id);
+  public Dish findDishById(@RequestParam(name = "dish_id") Long DishId) {
+    return dishService.findDishById(DishId);
   }
 
   @RequestMapping(value = "/add", method = RequestMethod.PUT)
@@ -34,24 +36,25 @@ public class DishController {
   }
 
   @RequestMapping(value = "/archive", method = RequestMethod.POST)
-  public void archive(Long id) {
-    dishService.archive(id);
+  public void archive(@RequestParam(name = "dish_id") Long DishId) {
+    dishService.archive(DishId);
   }
 
   @RequestMapping(value = "/unarchive", method = RequestMethod.POST)
-  public void unarchive(Long id) {
-    dishService.unarchive(id);
+  public void unarchive(@RequestParam(name = "dish_id") Long DishId) {
+    dishService.unarchive(DishId);
   }
 
   @RequestMapping(value = "seasonality", method = RequestMethod.POST)
-  public void seasonalityOfDish(Long id,
-      @RequestParam (name = "start_day") Integer startDay,
-      @RequestParam (name = "end_day") Integer endDay) {
-    dishService.seasonalityOfDish(id, startDay, endDay);
+  public void seasonalityOfDish(
+      @RequestParam(name = "dish_id") Long DishId,
+      @RequestParam(name = "start_day") Integer startDay,
+      @RequestParam(name = "end_day") Integer endDay) {
+    dishService.seasonalityOfDish(DishId, startDay, endDay);
   }
 
   @RequestMapping(value = "/price", method = RequestMethod.POST)
-  public void changePrice(Long id, String price) {
-    dishService.changePrice(id, price);
+  public void changePrice(@RequestParam(name = "dish_id") Long DishId, String price) {
+    dishService.changePrice(DishId, price);
   }
 }

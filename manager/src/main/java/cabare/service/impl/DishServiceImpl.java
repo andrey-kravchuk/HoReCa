@@ -9,6 +9,7 @@ import cabare.entity.model.Employee;
 import cabare.entity.model.OrderItem;
 import cabare.exceptions.DishNotFoundException;
 import cabare.exceptions.DishNotSpecifiedException;
+import cabare.exceptions.DishRuntimeException;
 import cabare.repository.DishCategoryRepository;
 import cabare.repository.DishRepository;
 import cabare.repository.OrderItemRepository;
@@ -70,13 +71,13 @@ public class DishServiceImpl implements DishService {
   }
 
   @Override
-  public void updateDish(DishDto dishDto) throws Exception {
+  public void updateDish(DishDto dishDto) {
     Employee employee = securityService.getEmployeeFromSession();
     Cabare cabare = employee.getCabare();
     Dish dish = dishRepository.findByIdAndCabare(dishDto.getId(), cabare).get();
     OrderItem orderItem = orderItemRepository.findByDish_Id(dish.getId());
     if (orderItem != null) {
-      throw new Exception("changing the dish is not possible");
+      throw new DishRuntimeException("changing the dish is not possible");
     }
     dish.setName(dishDto.getName());
     dish.setPhoto(dishDto.getPhoto());
