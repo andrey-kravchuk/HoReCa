@@ -2,6 +2,7 @@ package cabare.controller;
 
 import cabare.dto.DishDto;
 import cabare.entity.model.Dish;
+import cabare.exceptions.ApplicationException;
 import cabare.service.DishService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,6 +7,7 @@ import cabare.entity.model.Dish;
 import cabare.entity.model.DishCategory;
 import cabare.entity.model.Employee;
 import cabare.entity.model.OrderItem;
+import cabare.exceptions.CabareNotFoundException;
 import cabare.exceptions.DishNotFoundException;
 import cabare.exceptions.DishNotSpecifiedException;
 import cabare.exceptions.DishRuntimeException;
@@ -33,16 +34,29 @@ public class DishServiceImpl implements DishService {
   @Autowired
   private OrderItemRepository orderItemRepository;
 
+  private Cabare getCabare() {
+    Employee employee = securityService.getEmployeeFromSession();
+    return employee.getCabare();
+  }
+
+  private Dish getDish(Long dishId) {
+    Cabare cabare = getCabare();
+    return dishRepository.findByIdAndCabare(dishId, cabare)
+        .orElseThrow(() -> new DishNotFoundException());
+  }
+
+  private DishCategory getDishCategory(Long categoryId) {
+    return dishCategoryRepository
+        .findByIdAndCabare(categoryId, getCabare())
+        .orElseThrow(() -> new CabareNotFoundException());
+  }
+
   @Override
   public Dish findDishById(Long dishId) {
     if (dishId == null) {
       throw new DishNotSpecifiedException();
     }
-    Employee employee = securityService.getEmployeeFromSession();
-    Cabare cabare = employee.getCabare();
-    Dish dish = dishRepository.findByIdAndCabare(dishId, cabare)
-        .orElseThrow(() -> new DishNotFoundException());
-    return dish;
+    return getDish(dishId);
   }
 
   @Override
@@ -60,31 +74,25 @@ public class DishServiceImpl implements DishService {
 
     dish.setArchived(dishDto.getArchived());
     dish.setQuantity(dishDto.getQuantity());
-
-    Employee employee = securityService.getEmployeeFromSession();
-    Cabare cabare = employee.getCabare();
-    dish.setCabare(cabare);
-    DishCategory dishCategory = dishCategoryRepository
-        .findByIdAndCabare(dishDto.getCategoryId(), cabare).get();
+    dish.setCabare(getCabare());
+    DishCategory dishCategory = getDishCategory(dishDto.getCategoryId());
     dish.setDishCategory(dishCategory);
     dishRepository.save(dish);
   }
 
   @Override
   public void updateDish(DishDto dishDto) {
-    Employee employee = securityService.getEmployeeFromSession();
-    Cabare cabare = employee.getCabare();
-    Dish dish = dishRepository.findByIdAndCabare(dishDto.getId(), cabare).get();
+    Dish dish = getDish(dishDto.getId());
     OrderItem orderItem = orderItemRepository.findByDish_Id(dish.getId());
     if (orderItem != null) {
-      throw new DishRuntimeException("changing the dish is not possible");
+      throw new DishRuntimeException("there is a sale for this dish");
     }
     dish.setName(dishDto.getName());
     dish.setPhoto(dishDto.getPhoto());
     dish.setDishOut(dishDto.getDishOut());
     dish.setStartDay(dishDto.getStartDay());
     dish.setEndDay(dishDto.getEndDay());
-    dish.setCabare(cabare);
+    dish.setCabare(getCabare());
 
     String value = dishDto.getPrice();
     Money money = new Money(value);
@@ -93,35 +101,28 @@ public class DishServiceImpl implements DishService {
     dish.setArchived(dishDto.getArchived());
     dish.setQuantity(dishDto.getQuantity());
 
-    DishCategory dishCategory = dishCategoryRepository
-        .findByIdAndCabare(dishDto.getCategoryId(), cabare).get();
+    DishCategory dishCategory = getDishCategory(dishDto.getCategoryId());
     dish.setDishCategory(dishCategory);
     dishRepository.save(dish);
   }
 
   @Override
   public void archive(Long dishId) {
-    Employee employee = securityService.getEmployeeFromSession();
-    Cabare cabare = employee.getCabare();
-    Dish dish = dishRepository.findByIdAndCabare(dishId, cabare).get();
+    Dish dish = getDish(dishId);
     dish.setArchived(true);
     dishRepository.save(dish);
   }
 
   @Override
   public void unarchive(Long dishId) {
-    Employee employee = securityService.getEmployeeFromSession();
-    Cabare cabare = employee.getCabare();
-    Dish dish = dishRepository.findByIdAndCabare(dishId, cabare).get();
+    Dish dish = getDish(dishId);
     dish.setArchived(false);
     dishRepository.save(dish);
   }
 
   @Override
   public void seasonalityOfDish(Long dishId, Integer startDay, Integer endDay) {
-    Employee employee = securityService.getEmployeeFromSession();
-    Cabare cabare = employee.getCabare();
-    Dish dish = dishRepository.findByIdAndCabare(dishId, cabare).get();
+    Dish dish = getDish(dishId);
     dish.setStartDay(startDay);
     dish.setEndDay(endDay);
     dishRepository.save(dish);
@@ -129,9 +130,7 @@ public class DishServiceImpl implements DishService {
 
   @Override
   public void changePrice(Long dishId, String price) {
-    Employee employee = securityService.getEmployeeFromSession();
-    Cabare cabare = employee.getCabare();
-    Dish dish = dishRepository.findByIdAndCabare(dishId, cabare).get();
+    Dish dish = getDish(dishId);
     Money money = new Money(price);
     dish.setPrice(money);
     dishRepository.save(dish);
