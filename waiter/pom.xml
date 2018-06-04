@@ -22,16 +22,16 @@
       <version>3.0</version>
     </dependency>
 
-    <dependency>
-      <groupId>cabare.com.ua</groupId>
-      <artifactId>entities</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>cabare.com.ua</groupId>
-      <artifactId>data</artifactId>
-      <version>1.0</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>cabare.com.ua</groupId>-->
+      <!--<artifactId>entities</artifactId>-->
+      <!--<version>1.0</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+      <!--<groupId>cabare.com.ua</groupId>-->
+      <!--<artifactId>data</artifactId>-->
+      <!--<version>1.0</version>-->
+    <!--</dependency>-->
     <!-- Add security support -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
