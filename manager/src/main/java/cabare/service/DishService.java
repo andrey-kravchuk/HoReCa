@@ -9,7 +9,7 @@ public interface DishService {
 
   void addDish(DishDto dishDto);
 
-  void updateDish(DishDto dishDto) throws Exception;
+  void updateDish(DishDto dishDto, Long dishId);
 
   void archive(Long dishId);
 

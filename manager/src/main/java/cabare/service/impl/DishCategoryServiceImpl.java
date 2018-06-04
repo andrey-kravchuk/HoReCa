@@ -5,6 +5,8 @@ import cabare.entity.model.Cabare;
 import cabare.entity.model.DishCategory;
 import cabare.entity.model.Employee;
 import cabare.entity.model.Zone;
+import cabare.exceptions.DishCategoryNotFoundException;
+import cabare.exceptions.DishCategoryNotSpecifiedException;
 import cabare.repository.DishCategoryRepository;
 import cabare.repository.ZoneRepository;
 import cabare.service.DishCategoryService;
@@ -50,6 +52,16 @@ public class DishCategoryServiceImpl implements DishCategoryService {
     dishCategory.setCabare(cabare);
     dishCategoryRepository.save(dishCategory);
   }
+
+  @Override
+  public DishCategory findByIdAndCabare(Long dishCategoryId, Cabare cabare) {
+    if (dishCategoryId == null) {
+      throw new DishCategoryNotSpecifiedException();
+    }
+    return dishCategoryRepository.findByIdAndCabare(dishCategoryId, cabare)
+        .orElseThrow(() -> new DishCategoryNotFoundException());
+  }
 }
+
 
 

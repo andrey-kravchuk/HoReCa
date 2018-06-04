@@ -7,13 +7,12 @@ import cabare.entity.model.Dish;
 import cabare.entity.model.DishCategory;
 import cabare.entity.model.Employee;
 import cabare.entity.model.OrderItem;
-import cabare.exceptions.CabareNotFoundException;
 import cabare.exceptions.DishNotFoundException;
 import cabare.exceptions.DishNotSpecifiedException;
 import cabare.exceptions.DishRuntimeException;
-import cabare.repository.DishCategoryRepository;
 import cabare.repository.DishRepository;
 import cabare.repository.OrderItemRepository;
+import cabare.service.DishCategoryService;
 import cabare.service.DishService;
 import cabare.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class DishServiceImpl implements DishService {
   private SecurityService securityService;
 
   @Autowired
-  private DishCategoryRepository dishCategoryRepository;
+  private DishCategoryService dishCategoryService;
 
   @Autowired
   private OrderItemRepository orderItemRepository;
@@ -46,9 +45,8 @@ public class DishServiceImpl implements DishService {
   }
 
   private DishCategory getDishCategory(Long categoryId) {
-    return dishCategoryRepository
-        .findByIdAndCabare(categoryId, getCabare())
-        .orElseThrow(() -> new CabareNotFoundException());
+    return dishCategoryService
+        .findByIdAndCabare(categoryId, getCabare());
   }
 
   @Override
@@ -81,9 +79,9 @@ public class DishServiceImpl implements DishService {
   }
 
   @Override
-  public void updateDish(DishDto dishDto) {
-    Dish dish = getDish(dishDto.getId());
-    OrderItem orderItem = orderItemRepository.findByDish_Id(dish.getId());
+  public void updateDish(DishDto dishDto, Long dishId) {
+    Dish dish = getDish(dishId);
+    OrderItem orderItem = orderItemRepository.findByDish_Id(dishId);
     if (orderItem != null) {
       throw new DishRuntimeException("there is a sale for this dish");
     }

@@ -2,9 +2,10 @@ package cabare.controller;
 
 import cabare.dto.DishDto;
 import cabare.entity.model.Dish;
-import cabare.exceptions.ApplicationException;
 import cabare.service.DishService;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +33,11 @@ public class DishController {
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public void updateDish(@Valid @RequestBody DishDto dishDto) throws Exception {
-    dishService.updateDish(dishDto);
+  public void updateDish(@Valid @RequestBody DishDto dishDto,
+      @NotNull(message = "dish_id should be specified")
+      @Min(value = 1, message = "dish_id cannot be less than 1")
+      @RequestParam(name = "dish_id") Long dishId) {
+    dishService.updateDish(dishDto, dishId);
   }
 
   @RequestMapping(value = "/archive", method = RequestMethod.POST)
