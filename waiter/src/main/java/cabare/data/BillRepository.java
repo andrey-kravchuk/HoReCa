@@ -1,6 +1,6 @@
 package cabare.data;
 
-import cabare.entity.model.Bill;
+import cabare.entity.model.BillWaiter;
 import cabare.entity.model.Cabare;
 import cabare.entity.model.Employee;
 import java.time.LocalDateTime;
@@ -13,20 +13,20 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BillRepository extends CrudRepository<Bill, Long> {
+public interface BillRepository extends CrudRepository<BillWaiter, Long> {
 
-  Optional<Bill> findByIdAndCabare(Long billId, Cabare cabare);
+  Optional<BillWaiter> findByIdAndCabare(Long billId, Cabare cabare);
 
-  @Query("select b from Bill b where b.opened = true and b.employee = ?1")
-  List<Bill> findOpenedByEmployee(Employee employee);
+  @Query("select b from BillWaiter b where b.opened = true and b.employee = ?1")
+  List<BillWaiter> findOpenedByEmployee(Employee employee);
 
-  @Query("select b from Bill b where b.activeShift = true and b.employee = ?1")
-  List<Bill> findCurrentShiftBillsByEmployee(Employee employee);
+  @Query("select b from BillWaiter b where b.activeShift = true and b.employee = ?1")
+  List<BillWaiter> findCurrentShiftBillsByEmployee(Employee employee);
 
-  @Query("select b from Bill b where b.employee = ?1 and b.opened = true and b.tableNumber = ?2")
-  Slice<Bill> getBillByOpenedTable(Employee employee, Integer tableNumber, Pageable pageable);
+  @Query("select b from BillWaiter b where b.employee = ?1 and b.opened = true and b.tableNumber = ?2")
+  Slice<BillWaiter> getBillByOpenedTable(Employee employee, Integer tableNumber, Pageable pageable);
 
-  @Query("select b from Bill b where b.openBillTime >= ?1 and b.openBillTime <= ?2 and b.employee = ?3")
-  List<Bill> findBillsByPeriodAndEmployee(LocalDateTime startDateTime, LocalDateTime endDateTime,
+  @Query("select b from BillWaiter b where b.openBillTime >= ?1 and b.openBillTime <= ?2 and b.employee = ?3")
+  List<BillWaiter> findBillsByPeriodAndEmployee(LocalDateTime startDateTime, LocalDateTime endDateTime,
       Employee employee);
 }

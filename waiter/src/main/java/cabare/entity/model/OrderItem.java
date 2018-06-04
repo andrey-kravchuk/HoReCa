@@ -41,7 +41,7 @@ public class OrderItem {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "bill_id")
-  private Bill bill;
+  private BillWaiter billWaiter;
 
   public OrderItem() {
   }
@@ -102,12 +102,12 @@ public class OrderItem {
     this.dish = dish;
   }
 
-  public Bill getBill() {
-    return bill;
+  public BillWaiter getBillWaiter() {
+    return billWaiter;
   }
 
-  public void setBill(Bill bill) {
-    this.bill = bill;
+  public void setBillWaiter(BillWaiter billWaiter) {
+    this.billWaiter = billWaiter;
   }
 
   @Override

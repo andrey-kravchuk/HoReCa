@@ -26,7 +26,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "bill")
-public class Bill {
+public class BillWaiter {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,7 +90,7 @@ public class Bill {
 
   public void addOrderItem(OrderItem orderItem) {
     this.orderItems.add(orderItem);
-    orderItem.setBill(this);
+    orderItem.setBillWaiter(this);
   }
 
   public void addOrderItems(Collection<OrderItem> orderItems) {
@@ -99,7 +99,7 @@ public class Bill {
 
   public void removeOrderItem(OrderItem orderItem) {
     this.orderItems.remove(orderItem);
-    orderItem.setBill(null);
+    orderItem.setBillWaiter(null);
   }
 
   public Long getId() {
