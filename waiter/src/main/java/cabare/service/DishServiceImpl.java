@@ -3,7 +3,7 @@ package cabare.service;
 import cabare.data.DishRepository;
 import cabare.dto.DishDto;
 import cabare.entity.model.Cabare;
-import cabare.entity.model.Dish;
+import cabare.entity.model.DishWaiter;
 import cabare.entity.model.DishCategory;
 import cabare.entity.model.Employee;
 import cabare.exception.DishCategoryNotSpecifiedException;
@@ -31,7 +31,7 @@ public class DishServiceImpl implements DishService {
   private SecurityService securityService;
 
   @Override
-  public Dish findByid(Long dishId) {
+  public DishWaiter findByid(Long dishId) {
     if (dishId == null) {
       throw new DishNotSpecifiedException();
     }

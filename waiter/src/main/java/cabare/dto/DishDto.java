@@ -1,6 +1,6 @@
 package cabare.dto;
 
-import cabare.entity.model.Dish;
+import cabare.entity.model.DishWaiter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
@@ -50,16 +50,16 @@ public class DishDto {
   public DishDto() {
   }
 
-  public DishDto(Dish dish) {
-    this.id = dish.getId();
-    this.name = dish.getName();
-    this.photo = dish.getPhoto();
-    this.dishOut = dish.getDishOut();
-    this.price = dish.getPrice().toString();
-    this.categoryId = dish.getDishCategory().getId();
-    this.startDay = dish.getStartDay();
-    this.endDay = dish.getEndDay();
-    this.quantity = dish.getQuantity();
+  public DishDto(DishWaiter dishWaiter) {
+    this.id = dishWaiter.getId();
+    this.name = dishWaiter.getName();
+    this.photo = dishWaiter.getPhoto();
+    this.dishOut = dishWaiter.getDishOut();
+    this.price = dishWaiter.getPrice().toString();
+    this.categoryId = dishWaiter.getDishCategory().getId();
+    this.startDay = dishWaiter.getStartDay();
+    this.endDay = dishWaiter.getEndDay();
+    this.quantity = dishWaiter.getQuantity();
   }
 
   public Long getId() {

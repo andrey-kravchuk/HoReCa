@@ -25,12 +25,12 @@ public class OrderPrint {
   private String comments;
 
   public OrderPrint(OrderItem orderItem) {
-    this.dishName = orderItem.getDish().getName();
+    this.dishName = orderItem.getDishWaiter().getName();
     this.quantity = orderItem.getQuantity();
     this.totalPrice = orderItem.getTotalPrice().getValue();
     this.orderNumber = orderItem.getOrderNumber();
     this.comments = orderItem.getComments();
-    this.categoryName = orderItem.getDish().getDishCategory().getName();
+    this.categoryName = orderItem.getDishWaiter().getDishCategory().getName();
   }
 
   public String getCategoryName() {

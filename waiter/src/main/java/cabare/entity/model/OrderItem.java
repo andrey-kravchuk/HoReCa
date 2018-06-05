@@ -27,7 +27,7 @@ public class OrderItem {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "dish_id")
-  private Dish dish;
+  private DishWaiter dishWaiter;
 
   @Column(name = "quantity")
   private Integer quantity;
@@ -46,10 +46,10 @@ public class OrderItem {
   public OrderItem() {
   }
 
-  public OrderItem(Dish dish, Integer quantity, String comments, Long orderNumber) {
-    this.dish = dish;
+  public OrderItem(DishWaiter dishWaiter, Integer quantity, String comments, Long orderNumber) {
+    this.dishWaiter = dishWaiter;
     this.quantity = quantity;
-    this.totalPrice = dish.getPrice().multiply(quantity);
+    this.totalPrice = dishWaiter.getPrice().multiply(quantity);
     this.comments = comments;
     this.orderNumber = orderNumber;
   }
@@ -94,12 +94,12 @@ public class OrderItem {
     this.comments = comments;
   }
 
-  public Dish getDish() {
-    return dish;
+  public DishWaiter getDishWaiter() {
+    return dishWaiter;
   }
 
-  public void setDish(Dish dish) {
-    this.dish = dish;
+  public void setDishWaiter(DishWaiter dishWaiter) {
+    this.dishWaiter = dishWaiter;
   }
 
   public BillWaiter getBillWaiter() {
@@ -132,7 +132,7 @@ public class OrderItem {
     return "OrderItem{" +
         "id=" + id +
         ", orderNumber=" + orderNumber +
-        ", dish=" + dish +
+        ", dishWaiter=" + dishWaiter +
         ", quantity=" + quantity +
         '}';
   }

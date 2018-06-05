@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "dish")
-public class Dish {
+public class DishWaiter {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -154,9 +154,9 @@ public class Dish {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Dish dish = (Dish) o;
-    return Objects.equals(name, dish.name) &&
-        Objects.equals(dishOut, dish.dishOut);
+    DishWaiter dishWaiter = (DishWaiter) o;
+    return Objects.equals(name, dishWaiter.name) &&
+        Objects.equals(dishOut, dishWaiter.dishOut);
   }
 
   @Override
@@ -166,7 +166,7 @@ public class Dish {
 
   @Override
   public String toString() {
-    return "Dish{" +
+    return "DishWaiter{" +
         "id=" + id +
         ", name='" + name + '\'' +
         ", dishOut=" + dishOut +

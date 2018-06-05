@@ -13,7 +13,7 @@ import cabare.entity.domain.PayType;
 import cabare.entity.model.BillWaiter;
 import cabare.entity.model.Cabare;
 import cabare.entity.model.Discount;
-import cabare.entity.model.Dish;
+import cabare.entity.model.DishWaiter;
 import cabare.entity.model.Employee;
 import cabare.entity.model.OrderItem;
 import cabare.exception.BillAllreadyClosedException;
@@ -100,8 +100,8 @@ public class BillService {
     return orderIns.stream()
         .filter(orderIn -> orderIn.getQuantity() != null && orderIn.getQuantity() > 0)
         .map(orderIn -> {
-              Dish dish = dishService.findByid(orderIn.getDishId());
-              return new OrderItem(dish, orderIn.getQuantity(), orderIn.getComments(), orderNumber);
+              DishWaiter dishWaiter = dishService.findByid(orderIn.getDishId());
+              return new OrderItem(dishWaiter, orderIn.getQuantity(), orderIn.getComments(), orderNumber);
             }
         ).collect(Collectors.toList());
   }
