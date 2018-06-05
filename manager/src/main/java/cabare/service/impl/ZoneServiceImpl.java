@@ -47,4 +47,13 @@ public class ZoneServiceImpl implements ZoneService {
       zoneRepository.save(updateZone);
     }
   }
+
+  @Override
+  public Zone findByIdAndCabare(Long zoneId, Cabare cabare) {
+    if (zoneId == null) {
+      throw new ZoneNotSpecifiedException();
+    }
+    return zoneRepository.findByIdAndCabare(zoneId, cabare).
+        orElseThrow(() -> new ZoneNotFoundException());
+  }
 }

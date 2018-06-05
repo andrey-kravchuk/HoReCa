@@ -8,9 +8,9 @@ import cabare.entity.model.Zone;
 import cabare.exceptions.DishCategoryNotFoundException;
 import cabare.exceptions.DishCategoryNotSpecifiedException;
 import cabare.repository.DishCategoryRepository;
-import cabare.repository.ZoneRepository;
 import cabare.service.DishCategoryService;
 import cabare.service.SecurityService;
+import cabare.service.ZoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class DishCategoryServiceImpl implements DishCategoryService {
   private DishCategoryRepository dishCategoryRepository;
 
   @Autowired
-  private ZoneRepository zoneRepository;
+  private ZoneService zoneService;
 
   @Autowired
   private SecurityService securityService;
@@ -33,7 +33,7 @@ public class DishCategoryServiceImpl implements DishCategoryService {
     dishCategory.setPhoto(dishCategoryDto.getPhoto());
     Employee employee = securityService.getEmployeeFromSession();
     Cabare cabare = employee.getCabare();
-    Zone zone = zoneRepository.findByIdAndCabare(dishCategoryDto.getZoneId(), cabare).get();
+    Zone zone = zoneService.findByIdAndCabare(dishCategoryDto.getZoneId(), cabare);
     dishCategory.setZone(zone);
     dishCategory.setCabare(cabare);
     dishCategoryRepository.save(dishCategory);
@@ -47,7 +47,7 @@ public class DishCategoryServiceImpl implements DishCategoryService {
         .findByIdAndCabare(dishCategoryDto.getId(), cabare).get();
     dishCategory.setName(dishCategoryDto.getName());
     dishCategory.setPhoto(dishCategoryDto.getPhoto());
-    Zone zone = zoneRepository.findByIdAndCabare(dishCategoryDto.getZoneId(), cabare).get();
+    Zone zone = zoneService.findByIdAndCabare(dishCategoryDto.getZoneId(), cabare);
     dishCategory.setZone(zone);
     dishCategory.setCabare(cabare);
     dishCategoryRepository.save(dishCategory);
