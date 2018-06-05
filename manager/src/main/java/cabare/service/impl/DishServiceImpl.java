@@ -14,6 +14,7 @@ import cabare.repository.DishRepository;
 import cabare.repository.OrderItemRepository;
 import cabare.service.DishCategoryService;
 import cabare.service.DishService;
+import cabare.service.OrderItemService;
 import cabare.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class DishServiceImpl implements DishService {
   private DishCategoryService dishCategoryService;
 
   @Autowired
-  private OrderItemRepository orderItemRepository;
+  private OrderItemService orderItemService;
 
   private Cabare getCabare() {
     Employee employee = securityService.getEmployeeFromSession();
@@ -81,7 +82,7 @@ public class DishServiceImpl implements DishService {
   @Override
   public void updateDish(DishDto dishDto, Long dishId) {
     Dish dish = getDish(dishId);
-    OrderItem orderItem = orderItemRepository.findByDish_Id(dishId);
+    OrderItem orderItem = orderItemService.findByDishId(dishId);
     if (orderItem != null) {
       throw new DishRuntimeException("there is a sale for this dish");
     }
