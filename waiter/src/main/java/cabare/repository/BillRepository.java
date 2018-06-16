@@ -1,4 +1,4 @@
-package cabare.data;
+package cabare.repository;
 
 import cabare.entity.model.BillWaiter;
 import cabare.entity.model.Cabare;

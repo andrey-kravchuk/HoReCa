@@ -1,7 +1,7 @@
 package cabare.service;
 
 
-import cabare.data.OrderCounterRepository;
+import cabare.repository.OrderCounterRepository;
 import cabare.entity.model.Cabare;
 import cabare.entity.model.OrderCounter;
 

@@ -1,6 +1,6 @@
 package cabare.service;
 
-import cabare.data.DishCategoryRepository;
+import cabare.repository.DishCategoryRepository;
 import cabare.dto.DishCategoryDto;
 import cabare.entity.model.Cabare;
 import cabare.entity.model.DishCategory;

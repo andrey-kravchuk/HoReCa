@@ -3,7 +3,7 @@ package cabare.service;
 import static cabare.entity.domain.PayStatus.AWAIT;
 import static cabare.entity.domain.PayStatus.PAID;
 
-import cabare.data.BillRepository;
+import cabare.repository.BillRepository;
 import cabare.dto.BillDto;
 import cabare.dto.BillPrint;
 import cabare.dto.OrderIn;

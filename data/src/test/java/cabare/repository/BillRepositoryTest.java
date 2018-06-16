@@ -1,4 +1,4 @@
-package cabare.data;
+package cabare.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

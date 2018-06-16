@@ -1,4 +1,4 @@
-package cabare.data;
+package cabare.repository;
 
 import cabare.entity.model.Employee;
 import java.util.Optional;

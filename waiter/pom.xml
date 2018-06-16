@@ -35,7 +35,7 @@
     <!--</dependency>-->
     <!--<dependency>-->
       <!--<groupId>cabare.com.ua</groupId>-->
-      <!--<artifactId>data</artifactId>-->
+      <!--<artifactId>repository</artifactId>-->
       <!--<version>1.0</version>-->
     <!--</dependency>-->
     <!-- Add security support -->
