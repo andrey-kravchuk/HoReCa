@@ -1,6 +1,6 @@
 package cabare.dto;
 
-import cabare.entity.model.DishCategory;
+import cabare.entity.model.DishCategoryWaiter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DishCategoryDto {
@@ -20,11 +20,11 @@ public class DishCategoryDto {
     public DishCategoryDto() {
     }
 
-    public DishCategoryDto(DishCategory dishCategory) {
-        this.id = dishCategory.getId();
-        this.name = dishCategory.getName();
-        this.photo = dishCategory.getPhoto();
-        this.zoneId = dishCategory.getZone().getId();
+    public DishCategoryDto(DishCategoryWaiter dishCategoryWaiter) {
+        this.id = dishCategoryWaiter.getId();
+        this.name = dishCategoryWaiter.getName();
+        this.photo = dishCategoryWaiter.getPhoto();
+        this.zoneId = dishCategoryWaiter.getZone().getId();
 
     }
 

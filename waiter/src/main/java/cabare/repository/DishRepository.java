@@ -2,7 +2,7 @@ package cabare.repository;
 
 import cabare.entity.model.Cabare;
 import cabare.entity.model.DishWaiter;
-import cabare.entity.model.DishCategory;
+import cabare.entity.model.DishCategoryWaiter;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -20,6 +20,6 @@ public interface DishRepository extends JpaRepository<DishWaiter, Long> {
   @Query("select d from DishWaiter d where d.quantity = 0 and d.startDay <= ?1 and d.endDay >= ?1 and d.cabare = ?2")
   List<DishWaiter> getStopList(int dayOfYear, Cabare cabare);
 
-  @Query("select d from DishWaiter as d where d.dishCategory = ?1 and d.startDay <= ?2 and d.endDay >= ?2")
-  Page<DishWaiter> findDishesByDishCategory(DishCategory dishCategory, int dayOfYear, Pageable pageable);
+  @Query("select d from DishWaiter as d where d.dishCategoryWaiter = ?1 and d.startDay <= ?2 and d.endDay >= ?2")
+  Page<DishWaiter> findDishesByDishCategory(DishCategoryWaiter dishCategoryWaiter, int dayOfYear, Pageable pageable);
 }

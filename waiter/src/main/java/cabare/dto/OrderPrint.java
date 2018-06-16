@@ -30,7 +30,7 @@ public class OrderPrint {
     this.totalPrice = orderItem.getTotalPrice().getValue();
     this.orderNumber = orderItem.getOrderNumber();
     this.comments = orderItem.getComments();
-    this.categoryName = orderItem.getDishWaiter().getDishCategory().getName();
+    this.categoryName = orderItem.getDishWaiter().getDishCategoryWaiter().getName();
   }
 
   public String getCategoryName() {

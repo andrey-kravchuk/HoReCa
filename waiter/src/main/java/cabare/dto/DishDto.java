@@ -56,7 +56,7 @@ public class DishDto {
     this.photo = dishWaiter.getPhoto();
     this.dishOut = dishWaiter.getDishOut();
     this.price = dishWaiter.getPrice().toString();
-    this.categoryId = dishWaiter.getDishCategory().getId();
+    this.categoryId = dishWaiter.getDishCategoryWaiter().getId();
     this.startDay = dishWaiter.getStartDay();
     this.endDay = dishWaiter.getEndDay();
     this.quantity = dishWaiter.getQuantity();

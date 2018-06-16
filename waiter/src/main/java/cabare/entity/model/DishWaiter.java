@@ -48,7 +48,7 @@ public class DishWaiter {
 
   @ManyToOne
   @JoinColumn(name = "dish_category_id", nullable = false)
-  private DishCategory dishCategory;
+  private DishCategoryWaiter dishCategoryWaiter;
 
   @ManyToOne
   @JoinColumn(name = "cabare_id")
@@ -78,12 +78,12 @@ public class DishWaiter {
     this.photo = photo;
   }
 
-  public DishCategory getDishCategory() {
-    return dishCategory;
+  public DishCategoryWaiter getDishCategoryWaiter() {
+    return dishCategoryWaiter;
   }
 
-  public void setDishCategory(DishCategory dishCategory) {
-    this.dishCategory = dishCategory;
+  public void setDishCategoryWaiter(DishCategoryWaiter dishCategoryWaiter) {
+    this.dishCategoryWaiter = dishCategoryWaiter;
   }
 
   public Money getPrice() {
