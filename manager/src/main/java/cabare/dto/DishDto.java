@@ -10,8 +10,6 @@ import javax.validation.constraints.NotNull;
 
 public class DishDto {
 
-  @NotNull(message = "dish_id should be specified")
-  @Min(value = 1, message = "dish_id cannot be less than 1")
   @JsonProperty("id")
   public Long id;
 
@@ -43,9 +41,11 @@ public class DishDto {
   @JsonProperty("end_day")
   public Integer endDay;
 
-  @Min(value = 0, message = "quantity cannot be less than 0")
   @JsonProperty("quantity")
-  public Integer quantity;
+  public Integer quantity = -1;
+
+  @JsonProperty("isArchived")
+  private Boolean isArchived = false;
 
   public DishDto() {
   }
@@ -60,6 +60,7 @@ public class DishDto {
     this.startDay = dish.getStartDay();
     this.endDay = dish.getEndDay();
     this.quantity = dish.getQuantity();
+    this.isArchived = dish.getArchived();
   }
 
   public Long getId() {
@@ -132,6 +133,14 @@ public class DishDto {
 
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
+  }
+
+  public Boolean getArchived() {
+    return isArchived;
+  }
+
+  public void setArchived(Boolean archived) {
+    isArchived = archived;
   }
 }
 
