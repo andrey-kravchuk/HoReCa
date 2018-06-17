@@ -1,6 +1,6 @@
 package cabare.service;
 
-import cabare.data.EmployeeRepository;
+import cabare.repository.EmployeeRepository;
 import cabare.entity.model.Employee;
 import cabare.exception.EmployeeNotFoundException;
 import cabare.exception.EmployeeNotSpecifiedException;

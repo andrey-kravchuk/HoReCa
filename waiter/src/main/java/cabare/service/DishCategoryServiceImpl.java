@@ -1,9 +1,9 @@
 package cabare.service;
 
-import cabare.data.DishCategoryRepository;
+import cabare.repository.DishCategoryRepository;
 import cabare.dto.DishCategoryDto;
 import cabare.entity.model.Cabare;
-import cabare.entity.model.DishCategory;
+import cabare.entity.model.DishCategoryWaiter;
 import cabare.entity.model.Employee;
 import cabare.entity.model.Zone;
 import cabare.exception.DishCategoryNotFoundException;
@@ -39,7 +39,7 @@ public class DishCategoryServiceImpl implements DishCategoryService {
 
   @Transactional
   @Override
-  public DishCategory findById(Long dishCategoryId) {
+  public DishCategoryWaiter findById(Long dishCategoryId) {
     if (dishCategoryId == null) {
       throw new DishCategoryNotSpecifiedException();
     }

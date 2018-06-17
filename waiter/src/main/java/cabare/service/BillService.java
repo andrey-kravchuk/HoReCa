@@ -3,17 +3,17 @@ package cabare.service;
 import static cabare.entity.domain.PayStatus.AWAIT;
 import static cabare.entity.domain.PayStatus.PAID;
 
-import cabare.data.BillRepository;
+import cabare.repository.BillRepository;
 import cabare.dto.BillDto;
 import cabare.dto.BillPrint;
 import cabare.dto.OrderIn;
 import cabare.dto.OrderPrint;
 import cabare.entity.domain.Money;
 import cabare.entity.domain.PayType;
-import cabare.entity.model.Bill;
+import cabare.entity.model.BillWaiter;
 import cabare.entity.model.Cabare;
 import cabare.entity.model.Discount;
-import cabare.entity.model.Dish;
+import cabare.entity.model.DishWaiter;
 import cabare.entity.model.Employee;
 import cabare.entity.model.OrderItem;
 import cabare.exception.BillAllreadyClosedException;
@@ -58,36 +58,36 @@ public class BillService {
     List<OrderItem> orderItems = orderInsToOrderItems(billDto.getOrderIns(), employee.getCabare());
     LocalDateTime currentTime = timeService.getCurrentTime();
 
-    Bill bill = new Bill();
-    bill.setNumberOfPersons(billDto.getNumberOfPersons());
-    bill.setTableNumber(billDto.getTableNumber());
-    bill.setSaleType(billDto.getSaleType());
-    bill.addOrderItems(orderItems);
+    BillWaiter billWaiter = new BillWaiter();
+    billWaiter.setNumberOfPersons(billDto.getNumberOfPersons());
+    billWaiter.setTableNumber(billDto.getTableNumber());
+    billWaiter.setSaleType(billDto.getSaleType());
+    billWaiter.addOrderItems(orderItems);
 
-    bill.setEmployee(employee);
-    bill.setOpenBillTime(currentTime);
-    bill.setOpened(true);
-    bill.setActiveShift(true);
-    bill.setMoneyPaid(Money.ZERO);
-    bill.setPayStatus(AWAIT);
-    bill.setCabare(employee.getCabare());
-    bill = billRepository.save(bill);
+    billWaiter.setEmployee(employee);
+    billWaiter.setOpenBillTime(currentTime);
+    billWaiter.setOpened(true);
+    billWaiter.setActiveShift(true);
+    billWaiter.setMoneyPaid(Money.ZERO);
+    billWaiter.setPayStatus(AWAIT);
+    billWaiter.setCabare(employee.getCabare());
+    billWaiter = billRepository.save(billWaiter);
 
-    Optional<Bill> first = billRepository
+    Optional<BillWaiter> first = billRepository
         .getBillByOpenedTable(employee, billDto.getTableNumber(), new PageRequest(0, 2))
         .getContent()
         .stream()
         .filter(b -> b.getServedTable() != null)
         .findFirst();
     if (first.isPresent()) {
-      Bill billSliced = first.get();
-      bill.setServedTable(billSliced.getServedTable());
+      BillWaiter billSliced = first.get();
+      billWaiter.setServedTable(billSliced.getServedTable());
     } else {
-      bill.setServedTable(bill.getId());
+      billWaiter.setServedTable(billWaiter.getId());
     }
-    billRepository.save(bill);
+    billRepository.save(billWaiter);
 
-    return bill.getOrderItems().stream()
+    return billWaiter.getOrderItems().stream()
         .map(orderItem -> new OrderPrint(orderItem))
         .collect(Collectors.toList());
   }
@@ -100,8 +100,8 @@ public class BillService {
     return orderIns.stream()
         .filter(orderIn -> orderIn.getQuantity() != null && orderIn.getQuantity() > 0)
         .map(orderIn -> {
-              Dish dish = dishService.findByid(orderIn.getDishId());
-              return new OrderItem(dish, orderIn.getQuantity(), orderIn.getComments(), orderNumber);
+              DishWaiter dishWaiter = dishService.findByid(orderIn.getDishId());
+              return new OrderItem(dishWaiter, orderIn.getQuantity(), orderIn.getComments(), orderNumber);
             }
         ).collect(Collectors.toList());
   }
@@ -111,24 +111,24 @@ public class BillService {
     if (orderIns.isEmpty()) {
       throw new EmptyOrderListException();
     }
-    Bill bill = getBill(billId);
-    if (!bill.isOpened()) {
+    BillWaiter billWaiter = getBill(billId);
+    if (!billWaiter.isOpened()) {
       throw new BillAllreadyClosedException();
     }
     Employee employee = securityService.getEmployeeFromSession();
-    if (!employee.getId().equals(bill.getEmployee().getId())) {
+    if (!employee.getId().equals(billWaiter.getEmployee().getId())) {
       throw new DeniedException();
     }
     List<OrderItem> orderItems = orderInsToOrderItems(orderIns, employee.getCabare());
-    bill.addOrderItems(orderItems);
-    bill = billRepository.save(bill);
+    billWaiter.addOrderItems(orderItems);
+    billWaiter = billRepository.save(billWaiter);
 
-    return bill.getOrderItems().stream()
+    return billWaiter.getOrderItems().stream()
         .map(orderItem -> new OrderPrint(orderItem))
         .collect(Collectors.toList());
   }
 
-  private Bill getBill(long billId) {
+  private BillWaiter getBill(long billId) {
     Employee employee = securityService.getEmployeeFromSession();
     Cabare cabare = employee.getCabare();
     return billRepository.findByIdAndCabare(billId, cabare)
@@ -137,45 +137,45 @@ public class BillService {
 
   @Transactional
   public BillPrint print(Long billId, Long discountId) {
-    Bill bill = getBill(billId);
-    if (bill.isOpened()) {
+    BillWaiter billWaiter = getBill(billId);
+    if (billWaiter.isOpened()) {
       if (discountId != null) {
         Discount discount = discountService.findById(discountId);
         if (discount.isActivated()) {
-          bill.setDiscount(discount);
-          Money totalPrice = bill.getTotalPrice();
-          int discountSize = bill.getDiscount().getSize();
+          billWaiter.setDiscount(discount);
+          Money totalPrice = billWaiter.getTotalPrice();
+          int discountSize = billWaiter.getDiscount().getSize();
           Money discountedSum = totalPrice.multiply(discountSize / 100f);
           Money toPaid = totalPrice.subtract(discountedSum);
-          bill.setMoneyDiscounted(discountedSum);
-          bill.setMoneyPaid(toPaid);
+          billWaiter.setMoneyDiscounted(discountedSum);
+          billWaiter.setMoneyPaid(toPaid);
         }
       } else {
-        bill.setDiscount(null);
-        Money totalPrice = bill.getTotalPrice();
-        bill.setMoneyPaid(totalPrice);
-        bill.setMoneyDiscounted(Money.ZERO);
+        billWaiter.setDiscount(null);
+        Money totalPrice = billWaiter.getTotalPrice();
+        billWaiter.setMoneyPaid(totalPrice);
+        billWaiter.setMoneyDiscounted(Money.ZERO);
       }
-      bill.setPayStatus(AWAIT);
-      billRepository.save(bill);
+      billWaiter.setPayStatus(AWAIT);
+      billRepository.save(billWaiter);
     }
-    return new BillPrint(bill);
+    return new BillPrint(billWaiter);
   }
 
   public void close(Long billId, PayType payType) {
     Employee employeeFromSession = securityService.getEmployeeFromSession();
-    Bill bill = getBill(billId);
-    if (!bill.getEmployee().getId().equals(employeeFromSession.getId())) {
+    BillWaiter billWaiter = getBill(billId);
+    if (!billWaiter.getEmployee().getId().equals(employeeFromSession.getId())) {
       throw new DeniedException();
     }
-    if (bill.getMoneyPaid() == Money.ZERO) {
+    if (billWaiter.getMoneyPaid() == Money.ZERO) {
       throw new NoCheckPrintException();
     }
-    bill.setPayType(payType);
-    bill.setPayStatus(PAID);
-    bill.setOpened(false);
-    bill.setCloseBillTime(timeService.getCurrentTime());
-    billRepository.save(bill);
+    billWaiter.setPayType(payType);
+    billWaiter.setPayStatus(PAID);
+    billWaiter.setOpened(false);
+    billWaiter.setCloseBillTime(timeService.getCurrentTime());
+    billRepository.save(billWaiter);
   }
 
   public List<BillPrint> getOpened() {
@@ -186,11 +186,11 @@ public class BillService {
         .collect(Collectors.toList());
   }
 
-  List<Bill> getCurrentShiftBills(Employee employee) {
+  List<BillWaiter> getCurrentShiftBills(Employee employee) {
     return billRepository.findCurrentShiftBillsByEmployee(employee);
   }
 
-  public List<Bill> findBillsByPeriodAndEmployee(LocalDate startDate, LocalDate endDate,
+  public List<BillWaiter> findBillsByPeriodAndEmployee(LocalDate startDate, LocalDate endDate,
       Employee employee) {
     return billRepository.findBillsByPeriodAndEmployee(
         startDate.atStartOfDay()

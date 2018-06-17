@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import cabare.dto.WaiterStatistic;
 import cabare.entity.domain.Money;
 import cabare.entity.domain.PayType;
-import cabare.entity.model.Bill;
+import cabare.entity.model.BillWaiter;
 import cabare.entity.model.Employee;
 
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class InfoServiceImplTest {
 
   @Before
   public void init() {
-    List<Bill> bills = Arrays.asList(
+    List<BillWaiter> bills = Arrays.asList(
         buildBill(true, new Money("50.00"), CASH),
         buildBill(false, new Money("50.00"), CASH),
         buildBill(false, new Money("20.00"), CASH),
@@ -64,14 +64,14 @@ public class InfoServiceImplTest {
     assertThat(waiterStatistic.getServedTables()).isEqualTo(1);
   }
 
-  private Bill buildBill(Boolean isOpened, Money moneyPaid, PayType payType) {
-    Bill bill = spy(new Bill());
-    when(bill.getTotalPrice()).thenReturn(new Money("50.00"));
-    bill.setOpened(isOpened);
-    bill.setMoneyPaid(moneyPaid);
-    bill.setPayType(payType);
-    bill.setNumberOfPersons(1);
-    return bill;
+  private BillWaiter buildBill(Boolean isOpened, Money moneyPaid, PayType payType) {
+    BillWaiter billWaiter = spy(new BillWaiter());
+    when(billWaiter.getTotalPrice()).thenReturn(new Money("50.00"));
+    billWaiter.setOpened(isOpened);
+    billWaiter.setMoneyPaid(moneyPaid);
+    billWaiter.setPayType(payType);
+    billWaiter.setNumberOfPersons(1);
+    return billWaiter;
   }
 
 }

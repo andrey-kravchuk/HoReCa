@@ -1,7 +1,7 @@
 package cabare.dto;
 
 import cabare.entity.domain.Money;
-import cabare.entity.model.Bill;
+import cabare.entity.model.BillWaiter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -49,22 +49,22 @@ public class BillPrint {
   private Money sum = Money.ZERO;
 
 
-  public BillPrint(Bill bill) {
-    bill.getOrderItems().forEach(orderItem -> {
+  public BillPrint(BillWaiter billWaiter) {
+    billWaiter.getOrderItems().forEach(orderItem -> {
       orders.add(new OrderPrint(orderItem));
       this.sum = orderItem.getTotalPrice().add(sum);
     });
     this.totalSum = sum.getValue();
-    this.toPaid = bill.getMoneyPaid().getValue();
-    this.discountedSum = bill.getMoneyDiscounted().getValue();
-    if (bill.getDiscount() != null) {
-      this.discountSize = bill.getDiscount().getSize();
+    this.toPaid = billWaiter.getMoneyPaid().getValue();
+    this.discountedSum = billWaiter.getMoneyDiscounted().getValue();
+    if (billWaiter.getDiscount() != null) {
+      this.discountSize = billWaiter.getDiscount().getSize();
     }
-    this.billId = bill.getId().toString();
-    this.closeBillDate = bill.getCloseBillTime();
-    this.openBillDate = bill.getOpenBillTime();
-    this.employeeName = bill.getEmployee().getName();
-    this.tableNumber = bill.getTableNumber();
+    this.billId = billWaiter.getId().toString();
+    this.closeBillDate = billWaiter.getCloseBillTime();
+    this.openBillDate = billWaiter.getOpenBillTime();
+    this.employeeName = billWaiter.getEmployee().getName();
+    this.tableNumber = billWaiter.getTableNumber();
   }
 
   public String getToPaid() {

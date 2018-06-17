@@ -1,6 +1,6 @@
 package cabare.service;
 
-import cabare.data.ZoneRepository;
+import cabare.repository.ZoneRepository;
 import cabare.dto.ZoneDto;
 import cabare.entity.model.Cabare;
 import cabare.entity.model.Employee;

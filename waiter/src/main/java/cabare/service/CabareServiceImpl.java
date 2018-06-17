@@ -1,6 +1,6 @@
 package cabare.service;
 
-import cabare.data.CabareRepository;
+import cabare.repository.CabareRepository;
 import cabare.entity.model.Cabare;
 import cabare.exception.CabareNotFoundException;
 import cabare.exception.CabareNotSpecifiedException;

@@ -1,10 +1,10 @@
 package cabare.service;
 
-import cabare.data.DishRepository;
+import cabare.repository.DishRepository;
 import cabare.dto.DishDto;
 import cabare.entity.model.Cabare;
-import cabare.entity.model.Dish;
-import cabare.entity.model.DishCategory;
+import cabare.entity.model.DishWaiter;
+import cabare.entity.model.DishCategoryWaiter;
 import cabare.entity.model.Employee;
 import cabare.exception.DishCategoryNotSpecifiedException;
 import cabare.exception.DishNotFoundException;
@@ -31,7 +31,7 @@ public class DishServiceImpl implements DishService {
   private SecurityService securityService;
 
   @Override
-  public Dish findByid(Long dishId) {
+  public DishWaiter findByid(Long dishId) {
     if (dishId == null) {
       throw new DishNotSpecifiedException();
     }
@@ -48,10 +48,10 @@ public class DishServiceImpl implements DishService {
     if (dishCategoryId == null) {
       throw new DishCategoryNotSpecifiedException();
     }
-    DishCategory dishCategory = dishCategoryServices.findById(dishCategoryId);
+    DishCategoryWaiter dishCategoryWaiter = dishCategoryServices.findById(dishCategoryId);
     LocalDate date = LocalDate.now();
     int day = date.getDayOfYear();
-    return dishRepository.findDishesByDishCategory(dishCategory, day, pageable).getContent()
+    return dishRepository.findDishesByDishCategory(dishCategoryWaiter, day, pageable).getContent()
         .stream()
         .map(dish -> new DishDto(dish))
         .collect(Collectors.toList());

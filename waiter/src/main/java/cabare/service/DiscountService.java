@@ -1,6 +1,6 @@
 package cabare.service;
 
-import cabare.data.DiscountRepository;
+import cabare.repository.DiscountRepository;
 import cabare.entity.model.Cabare;
 import cabare.entity.model.Discount;
 import cabare.entity.model.Employee;
